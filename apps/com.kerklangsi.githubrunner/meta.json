@@ -1,6 +1,6 @@
 {
-  "tagline": "Self-hosted GitHub Actions runner for ZimaOS",
-  "description": "Run self-hosted GitHub Actions CI/CD workflows and automated jobs directly on your ZimaOS home server or homelab.",
+  "tagline": "Self-hosted GitHub Actions runner with Web Dashboard for ZimaOS",
+  "description": "Run self-hosted GitHub Actions CI/CD workflows and automated jobs directly on your ZimaOS home server with built-in Web Management Dashboard.",
   "author": "kerklangsi",
   "developer": "kerklangsi",
   "category": "Developer",
@@ -10,7 +10,7 @@
   "title": "GitHub Actions Runner",
   "base_url": "https://cdn.jsdelivr.net/gh/kerklangsi/zimaos-appstore@gh-pages",
   "id": "com.kerklangsi.githubrunner",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "categories": [
     "developer"
   ],

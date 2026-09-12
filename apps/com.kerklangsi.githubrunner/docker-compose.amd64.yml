@@ -3,20 +3,29 @@ services:
   github-runner:
     image: kerklangsi/github-runner-docker:latest@sha256:b22ebe775a227e748cfaf44a80933f52dd346afdd95d048d57f789b3d5e92248
     container_name: github-runner-docker
+    ports:
+      - target: 8080
+        published: "8080"
+        protocol: tcp
     environment:
       - REPO_URL=https://github.com/kerklangsi/your-repo
       - RUNNER_TOKEN=
+      - AUTO_START=true
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
+      - runner-data:/actions-runner/data
     restart: unless-stopped
+
+volumes:
+  runner-data:
 
 x-casaos:
   id: com.kerklangsi.githubrunner
   main: github-runner
   index: /
-  port_map: ""
+  port_map: "8080"
   scheme: http
   icon: https://cdn.jsdelivr.net/gh/kerklangsi/zimaos-appstore@gh-pages/apps/com.kerklangsi.githubrunner/assets/icon.svg
   title:
     en_US: GitHub Actions Runner
-  version: 1.0.0
+  version: 1.1.0
