@@ -1,2 +1,2 @@
 kerklangsi/amp-docker:latest sha256:20246012d38c5b519bb0f3e6e0ecce3b8d500f9aba27238375563dd3bd2b0ee1
-kerklangsi/github-runner-docker:latest sha256:b22ebe775a227e748cfaf44a80933f52dd346afdd95d048d57f789b3d5e92248
+kerklangsi/github-runner-docker:latest sha256:f13f75aca717ba32ee7c8a5542a05ffec2a48df1577f5bc461f39bc36362ad23
