@@ -22,32 +22,28 @@
 2. Go to **App Store** -> Click **App Store Settings / Add Store**.
 3. Copy and paste any of the ready-to-use static store URLs below:
 
-### Option A: GitHub Raw URL
+### Option A: GitHub Raw URL (v2 `store.json`)
 ```text
 https://raw.githubusercontent.com/kerklangsi/zimaos-appstore/gh-pages/store.json
 ```
 
-### Option B: GitHub Pages URL
-```text
-https://kerklangsi.github.io/zimaos-appstore/store.json
-```
-
-### Option C: jsDelivr CDN URL
+### Option B: jsDelivr CDN URL (v2 `store.json`)
 ```text
 https://cdn.jsdelivr.net/gh/kerklangsi/zimaos-appstore@gh-pages/store.json
 ```
 
-### Option D: GitHub Repository ZIP URL (Legacy CasaOS / Awesome CasaOS List)
+### Option C: GitHub Raw ZIP URL (`appstore.zip`)
+```text
+https://raw.githubusercontent.com/kerklangsi/zimaos-appstore/gh-pages/appstore.zip
+```
+
+### Option D: GitHub Repository Source ZIP (Awesome CasaOS / Legacy List)
 ```text
 https://github.com/kerklangsi/zimaos-appstore/archive/refs/heads/main.zip
 ```
 
-### Option E: Hosted appstore.zip CDN URL
-```text
-https://kerklangsi.github.io/zimaos-appstore/appstore.zip
-```
-
 ---
+
 
 
 ## 🛠️ Repository Structure
