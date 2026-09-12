@@ -161,8 +161,12 @@ def build_store():
         with open(dist_dir / f'index.{lang}.json', 'w', encoding='utf-8') as f:
             json.dump(lang_index_entries, f, indent=2, ensure_ascii=False)
             
-    print(f"Successfully built ZimaOS App Store v2 dist into '{dist_dir}' with {len(index_entries)} app(s).")
+    # Generate appstore.zip archive for legacy CasaOS zip compatibility
+    shutil.make_archive(str(dist_dir / 'appstore'), 'zip', root_dir, 'Apps')
+
+    print(f"Successfully built ZimaOS App Store v2 dist into '{dist_dir}' with {len(index_entries)} app(s) and generated 'appstore.zip'.")
 
 if __name__ == '__main__':
     build_store()
+
 

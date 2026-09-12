@@ -37,7 +37,18 @@ https://kerklangsi.github.io/zimaos-appstore/store.json
 https://cdn.jsdelivr.net/gh/kerklangsi/zimaos-appstore@gh-pages/store.json
 ```
 
+### Option D: GitHub Repository ZIP URL (Legacy CasaOS / Awesome CasaOS List)
+```text
+https://github.com/kerklangsi/zimaos-appstore/archive/refs/heads/main.zip
+```
+
+### Option E: Hosted appstore.zip CDN URL
+```text
+https://kerklangsi.github.io/zimaos-appstore/appstore.zip
+```
+
 ---
+
 
 ## 🛠️ Repository Structure
 
