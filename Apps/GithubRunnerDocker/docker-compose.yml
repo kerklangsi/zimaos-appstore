@@ -3,30 +3,39 @@ services:
   github-runner:
     image: kerklangsi/github-runner-docker:latest
     container_name: github-runner-docker
+    ports:
+      - target: 8080
+        published: "8080"
+        protocol: tcp
     environment:
       - REPO_URL=https://github.com/kerklangsi/your-repo
       - RUNNER_TOKEN=
+      - AUTO_START=true
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
+      - runner-data:/actions-runner/data
     restart: unless-stopped
+
+volumes:
+  runner-data:
 
 x-casaos:
   id: com.kerklangsi.githubrunner
   main: github-runner
   index: /
-  port_map: ""
+  port_map: "8080"
   scheme: http
   icon: https://cdn.jsdelivr.net/gh/kerklangsi/zimaos-appstore@gh-pages/apps/com.kerklangsi.githubrunner/assets/icon.svg
   title:
     en_US: GitHub Actions Runner
   tagline:
-    en_US: Self-hosted GitHub Actions runner for ZimaOS
+    en_US: Self-hosted GitHub Actions runner with Web Dashboard for ZimaOS
   description:
-    en_US: Run self-hosted GitHub Actions CI/CD workflows and automated jobs directly on your ZimaOS home server or homelab.
+    en_US: Run self-hosted GitHub Actions CI/CD workflows and automated jobs directly on your ZimaOS home server with built-in Web Management Dashboard.
   author: kerklangsi
   developer: kerklangsi
   category: Developer
   architectures:
     - amd64
+  version: 1.1.0
 
-  version: 1.0.0
