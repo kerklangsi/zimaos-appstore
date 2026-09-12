@@ -110,9 +110,10 @@ def build_store():
                     else:
                         desc_dict = desc or {}
 
-                    architectures = x_casaos.get('architectures', ['amd64', 'arm64'])
+                    architectures = x_casaos.get('architectures', ['amd64'])
                     if not isinstance(architectures, list):
-                        architectures = ['amd64', 'arm64']
+                        architectures = ['amd64']
+
 
                     port_map = x_casaos.get('port_map', '')
                     if not isinstance(port_map, str):

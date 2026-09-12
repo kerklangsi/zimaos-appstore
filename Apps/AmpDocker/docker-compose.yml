@@ -38,5 +38,5 @@ x-casaos:
   category: Others
   architectures:
     - amd64
-    - arm64
+
   version: 1.0.0

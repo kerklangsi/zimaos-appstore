@@ -28,5 +28,5 @@ x-casaos:
   category: Developer
   architectures:
     - amd64
-    - arm64
+
   version: 1.0.0
