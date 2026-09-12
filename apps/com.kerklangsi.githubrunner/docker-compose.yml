@@ -1,0 +1,22 @@
+name: github-runner-docker
+services:
+  github-runner:
+    image: kerklangsi/github-runner-docker:latest
+    container_name: github-runner-docker
+    environment:
+      - REPO_URL=https://github.com/kerklangsi/your-repo
+      - RUNNER_TOKEN=
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    restart: unless-stopped
+
+x-casaos:
+  id: com.kerklangsi.githubrunner
+  main: github-runner
+  index: /
+  port_map: ""
+  scheme: http
+  icon: https://cdn.jsdelivr.net/gh/kerklangsi/zimaos-appstore@gh-pages/apps/com.kerklangsi.githubrunner/assets/icon.svg
+  title:
+    en_US: GitHub Actions Runner
+  version: 1.0.0

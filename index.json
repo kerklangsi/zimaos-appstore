@@ -1,0 +1,48 @@
+{
+  "version": 2,
+  "updated_at": "2026-09-12T14:09:38Z",
+  "app_count": 2,
+  "base_url": "https://cdn.jsdelivr.net/gh/kerklangsi/zimaos-appstore@gh-pages",
+  "apps": [
+    {
+      "id": "com.kerklangsi.ampdocker",
+      "title": "AMP Game Server",
+      "tagline": "CubeCoders AMP in a Docker container for game server management",
+      "category": "Others",
+      "categories": [
+        "others"
+      ],
+      "author": "kerklangsi",
+      "developer": "CubeCoders / kerklangsi",
+      "architectures": [
+        "amd64"
+      ],
+      "icon": "/apps/com.kerklangsi.ampdocker/assets/icon.svg",
+      "thumbnail": "",
+      "compose_url": "/apps/com.kerklangsi.ampdocker/docker-compose.yml",
+      "meta_url": "/apps/com.kerklangsi.ampdocker/meta.json",
+      "content_hash": "9dde0fd5",
+      "version": "1.0.0"
+    },
+    {
+      "id": "com.kerklangsi.githubrunner",
+      "title": "GitHub Actions Runner",
+      "tagline": "Self-hosted GitHub Actions runner for ZimaOS",
+      "category": "Developer",
+      "categories": [
+        "developer"
+      ],
+      "author": "kerklangsi",
+      "developer": "kerklangsi",
+      "architectures": [
+        "amd64"
+      ],
+      "icon": "/apps/com.kerklangsi.githubrunner/assets/icon.svg",
+      "thumbnail": "",
+      "compose_url": "/apps/com.kerklangsi.githubrunner/docker-compose.yml",
+      "meta_url": "/apps/com.kerklangsi.githubrunner/meta.json",
+      "content_hash": "f376505a",
+      "version": "1.0.0"
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "tagline": "CubeCoders AMP in a Docker container for game server management",
+  "description": "CubeCoders AMP (Application Management Panel) allows you to easily create, host, manage, and monitor dedicated game servers for various titles directly on ZimaOS.",
+  "author": "kerklangsi",
+  "developer": "CubeCoders / kerklangsi",
+  "category": "Others",
+  "architectures": [
+    "amd64"
+  ],
+  "title": "AMP Game Server",
+  "base_url": "https://cdn.jsdelivr.net/gh/kerklangsi/zimaos-appstore@gh-pages",
+  "id": "com.kerklangsi.ampdocker",
+  "version": "1.0.0",
+  "categories": [
+    "others"
+  ],
+  "min_memory": 0,
+  "min_image_size": {
+    "amd64": 2109258693
+  }
+}

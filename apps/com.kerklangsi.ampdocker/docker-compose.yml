@@ -1,0 +1,32 @@
+name: amp-docker
+services:
+  amp-docker:
+    image: kerklangsi/amp-docker:latest
+    container_name: amp-docker
+    environment:
+      - TZ=UTC
+    ports:
+      - target: 8080
+        published: "8080"
+        protocol: tcp
+      - target: 7777
+        published: "7777"
+        protocol: udp
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - amp_data:/home/amp/.local/share/CubeCoders/AMP
+    restart: unless-stopped
+
+volumes:
+  amp_data:
+
+x-casaos:
+  id: com.kerklangsi.ampdocker
+  main: amp-docker
+  index: /
+  port_map: "8080"
+  scheme: http
+  icon: https://cdn.jsdelivr.net/gh/kerklangsi/zimaos-appstore@gh-pages/apps/com.kerklangsi.ampdocker/assets/icon.svg
+  title:
+    en_US: AMP Game Server
+  version: 1.0.0
