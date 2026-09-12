@@ -15,6 +15,9 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
       - runner-data:/actions-runner/data
     restart: unless-stopped
+    tty: true
+    stdin_open: true
+
 
 volumes:
   runner-data:
