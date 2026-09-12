@@ -2,54 +2,14 @@ import os
 import sys
 import json
 import shutil
+import yaml
 from pathlib import Path
 
-def parse_simple_yaml(filepath):
-    lines = open(filepath, 'r', encoding='utf-8').readlines()
-    data = {}
-    stack = [(0, data)]
-    
-    for line in lines:
-        stripped = line.strip()
-        if not stripped or stripped.startswith('#'):
-            continue
-        
-        indent = len(line) - len(line.lstrip(' '))
-        
-        while len(stack) > 1 and indent <= stack[-1][0]:
-            stack.pop()
-        
-        current_dict = stack[-1][1]
-        
-        if ':' in line:
-            parts = line.split(':', 1)
-            key = parts[0].strip()
-            val = parts[1].strip()
-            
-            if val.startswith('"') and val.endswith('"'):
-                val = val[1:-1]
-            elif val.startswith("'") and val.endswith("'"):
-                val = val[1:-1]
-            
-            if not val:
-                new_dict = {}
-                current_dict[key] = new_dict
-                stack.append((indent, new_dict))
-            elif val.startswith('- '):
-                item = val[2:].strip().strip('"').strip("'")
-                if key not in current_dict:
-                    current_dict[key] = []
-                current_dict[key].append(item)
-            else:
-                current_dict[key] = val
-        elif stripped.startswith('- '):
-            item = stripped[2:].strip().strip('"').strip("'")
-            last_key = list(current_dict.keys())[-1] if current_dict else None
-            if last_key:
-                if not isinstance(current_dict[last_key], list):
-                    current_dict[last_key] = []
-                current_dict[last_key].append(item)
-
+def parse_compose_yaml(filepath):
+    with open(filepath, 'r', encoding='utf-8') as f:
+        data = yaml.safe_load(f)
+    if not data:
+        data = {}
     return data
 
 def build_store():
@@ -112,7 +72,7 @@ def build_store():
             if app_folder.is_dir():
                 compose_file = app_folder / 'docker-compose.yml'
                 if compose_file.exists():
-                    yaml_data = parse_simple_yaml(compose_file)
+                    yaml_data = parse_compose_yaml(compose_file)
                     x_casaos = yaml_data.get('x-casaos', {})
                     
                     app_id = x_casaos.get('id', app_folder.name.lower())
@@ -131,23 +91,46 @@ def build_store():
                             if file.name.startswith('icon.'):
                                 icon_filename = file.name
                     
-                    title_dict = x_casaos.get('title', {})
-                    tagline_dict = x_casaos.get('tagline', {})
-                    desc_dict = x_casaos.get('description', {})
-                    
+                    title = x_casaos.get('title', {})
+                    tagline = x_casaos.get('tagline', {})
+                    desc = x_casaos.get('description', {})
+
+                    if isinstance(title, str):
+                        title_dict = {"en_US": title}
+                    else:
+                        title_dict = title or {}
+
+                    if isinstance(tagline, str):
+                        tagline_dict = {"en_US": tagline}
+                    else:
+                        tagline_dict = tagline or {}
+
+                    if isinstance(desc, str):
+                        desc_dict = {"en_US": desc}
+                    else:
+                        desc_dict = desc or {}
+
+                    architectures = x_casaos.get('architectures', ['amd64', 'arm64'])
+                    if not isinstance(architectures, list):
+                        architectures = ['amd64', 'arm64']
+
+                    port_map = x_casaos.get('port_map', '')
+                    if not isinstance(port_map, str):
+                        port_map = str(port_map) if port_map is not None else ''
+
                     meta_data = {
                         "id": app_id,
                         "title": title_dict,
                         "tagline": tagline_dict,
                         "description": desc_dict,
                         "icon": f"apps/{app_id}/assets/{icon_filename}",
-                        "category": x_casaos.get('category', 'Others'),
-                        "author": x_casaos.get('author', ''),
-                        "developer": x_casaos.get('developer', ''),
-                        "architectures": x_casaos.get('architectures', ['amd64']),
-                        "version": x_casaos.get('version', '1.0.0'),
-                        "index": x_casaos.get('index', '/'),
-                        "port_map": x_casaos.get('port_map', '')
+                        "category": str(x_casaos.get('category', 'Others')),
+                        "author": str(x_casaos.get('author', '')),
+                        "developer": str(x_casaos.get('developer', '')),
+                        "architectures": architectures,
+                        "version": str(x_casaos.get('version', '1.0.0')),
+                        "index": str(x_casaos.get('index', '/')),
+                        "port_map": port_map
                     }
                     
                     with open(target_app_dir / 'meta.json', 'w', encoding='utf-8') as f:
@@ -181,3 +164,4 @@ def build_store():
 
 if __name__ == '__main__':
     build_store()
+

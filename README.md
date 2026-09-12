@@ -65,16 +65,18 @@ zimaos-appstore/
 
 ## 💻 Local Development & Build
 
-You can build the store locally using Python:
+You can build the store locally using Python and PyYAML:
 
 ```bash
+pip install pyyaml
 python scripts/build_dist.py
 ```
 
-This will parse all apps under `Apps/`, extract `x-casaos` metadata, and generate the static `dist/` directory containing:
+This will parse all apps under `Apps/`, extract `x-casaos` metadata using PyYAML, and generate the static `dist/` directory containing:
 - `dist/store.json` & `dist/store.en_US.json`
 - `dist/index.json` & `dist/index.en_US.json`
-- `dist/apps/<app-id>/docker-compose.yml`, `meta.json`, and `assets/`
+- `dist/apps/<app-id>/docker-compose.yml`, `meta.json`, `meta.en_US.json`, and `assets/`
+
 
 ---
 
