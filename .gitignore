@@ -1,0 +1,14 @@
+# Build output
+dist/
+build/
+*.tmp
+
+# System & IDE files
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
+# Python files
+__pycache__/
+*.pyc
