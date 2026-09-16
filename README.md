@@ -24,17 +24,17 @@
 
 ### Option A: GitHub Raw URL (v2 `store.json`)
 ```text
-https://raw.githubusercontent.com/kerklangsi/zimaos-appstore/main/store.json
+https://raw.githubusercontent.com/kerklangsi/zimaos-appstore/gh-pages/store.json
 ```
 
 ### Option B: jsDelivr CDN URL (v2 `store.json`)
 ```text
-https://cdn.jsdelivr.net/gh/kerklangsi/zimaos-appstore@main/store.json
+https://cdn.jsdelivr.net/gh/kerklangsi/zimaos-appstore@gh-pages/store.json
 ```
 
 ### Option C: GitHub Raw ZIP URL (`appstore.zip`)
 ```text
-https://raw.githubusercontent.com/kerklangsi/zimaos-appstore/main/appstore.zip
+https://raw.githubusercontent.com/kerklangsi/zimaos-appstore/gh-pages/appstore.zip
 ```
 
 ### Option D: GitHub Repository Source ZIP (Awesome CasaOS / Legacy List)
@@ -56,19 +56,15 @@ zimaos-appstore/
 │   └── GithubRunnerDocker/
 │       ├── docker-compose.yml   # App Compose manifest + x-casaos metadata
 │       └── icon.svg             # Custom SVG App Icon
-├── apps/                        # Compiled app metadata, manifests, & assets
 ├── store-config.json            # Store identity & localized store metadata (en_US)
 ├── supported-languages.json     # Locales candidate list ["en_US"]
-├── store.json                   # Main v2 store index
-├── index.json                   # Apps list index
-├── appstore.zip                 # CasaOS legacy archive
 ├── LICENSE                      # MIT License
 ├── scripts/
 │   └── build_dist.py            # Local zero-dependency v2 build script
 └── .github/
     └── workflows/
         ├── validate.yml         # PR validation workflow
-        └── release.yml          # Store build & release workflow
+        └── release.yml          # GitHub Pages deployment workflow
 ```
 
 ---
@@ -82,16 +78,15 @@ pip install pyyaml
 python scripts/build_dist.py
 ```
 
-This will parse all apps under `Apps/`, extract `x-casaos` metadata using PyYAML, and generate:
-- `store.json` & `store.en_US.json`
-- `index.json` & `index.en_US.json`
-- `apps/<app-id>/docker-compose.yml`, `meta.json`, `meta.en_US.json`, and `assets/`
-- `appstore.zip`
+This will parse all apps under `Apps/`, extract `x-casaos` metadata using PyYAML, and generate the static `dist/` directory containing:
+- `dist/store.json` & `dist/store.en_US.json`
+- `dist/index.json` & `dist/index.en_US.json`
+- `dist/apps/<app-id>/docker-compose.yml`, `meta.json`, `meta.en_US.json`, and `assets/`
 
 
 ---
 
-## 🌐 Publishing Store Updates
+## 🌐 Publishing to GitHub Pages
 
 To push this repository to your GitHub (`kerklangsi`):
 
@@ -103,7 +98,7 @@ git branch -M main
 git push -u origin main
 ```
 
-Upon push to `main`, GitHub Actions automatically compiles and commits updated store files (`store.json`, `index.json`, `apps/`, `appstore.zip`) to `main` branch.
+Upon push to `main`, GitHub Actions automatically compiles the store assets and deploys them to the `gh-pages` branch.
 
 ---
 

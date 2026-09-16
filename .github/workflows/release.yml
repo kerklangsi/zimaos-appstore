@@ -3,8 +3,6 @@ name: Release Store
 on:
   push:
     branches: [ main ]
-    tags:
-      - 'v*'
   workflow_dispatch:
 
 permissions:
@@ -25,29 +23,23 @@ jobs:
         run: |
           python -m pip install pyyaml
 
-      - name: Build ZimaOS Store
+      - name: Build ZimaOS v2 Store
         run: |
           python scripts/build_dist.py
 
-      - name: Commit Built Store Assets to Main Branch
-        uses: stefanzweifel/git-auto-commit-action@v5
+      - name: Build v2 dist with IceWhale Action
+        uses: IceWhaleTech/build-appstore-action@v1
         with:
-          commit_message: "chore: update compiled ZimaOS store assets [skip ci]"
-          file_pattern: "store*.json index*.json Apps/** appstore.zip"
+          source: .
+          output: dist
+          base-url: https://cdn.jsdelivr.net/gh/${{ github.repository }}@gh-pages
 
-      - name: Create GitHub Release
-        uses: softprops/action-gh-release@v2
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
         with:
-          tag_name: latest
-          name: "ZimaOS App Store Release"
-          body: "Latest release of custom ZimaOS App Store assets."
-          files: |
-            appstore.zip
-            store.json
-            index.json
-          draft: false
-          prerelease: false
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: gh-pages
+          publish_dir: ./dist
+
 
 

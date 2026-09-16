@@ -24,7 +24,7 @@ x-casaos:
   index: /
   port_map: "3000"
   scheme: http
-  icon: https://raw.githubusercontent.com/kerklangsi/zimaos-appstore/main/Apps/GithubRunnerDocker/icon.svg
+  icon: https://cdn.jsdelivr.net/gh/kerklangsi/zimaos-appstore@gh-pages/apps/com.kerklangsi.githubrunner/assets/icon.svg
   title:
     en_US: GitHub Runner Manager
   tagline:
