@@ -14,11 +14,8 @@ services:
         protocol: udp
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - amp_data:/home/amp/.local/share/CubeCoders/AMP
+      - /DATA/AppData/$AppID/data:/home/amp/.local/share/CubeCoders/AMP
     restart: unless-stopped
-
-volumes:
-  amp_data:
 
 x-casaos:
   id: com.kerklangsi.ampdocker
@@ -26,7 +23,7 @@ x-casaos:
   index: /
   port_map: "8080"
   scheme: http
-  icon: https://cdn.jsdelivr.net/gh/kerklangsi/zimaos-appstore@gh-pages/apps/com.kerklangsi.ampdocker/assets/icon.svg
+  icon: https://raw.githubusercontent.com/kerklangsi/zimaos-appstore/main/Apps/AmpDocker/icon.svg
   title:
     en_US: AMP Game Server
   tagline:

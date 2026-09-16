@@ -12,15 +12,11 @@ services:
       - ACCESS_TOKEN=
       - RUNNER_TOKEN=
     volumes:
-      - github-runners:/opt/github-runners
-      - app-data:/app/data
+      - /DATA/AppData/$AppID/runners:/opt/github-runners
+      - /DATA/AppData/$AppID/data:/app/data
     restart: unless-stopped
     tty: true
     stdin_open: true
-
-volumes:
-  github-runners:
-  app-data:
 
 x-casaos:
   id: com.kerklangsi.githubrunner
@@ -28,7 +24,7 @@ x-casaos:
   index: /
   port_map: "3000"
   scheme: http
-  icon: https://cdn.jsdelivr.net/gh/kerklangsi/zimaos-appstore@gh-pages/apps/com.kerklangsi.githubrunner/assets/icon.svg
+  icon: https://raw.githubusercontent.com/kerklangsi/zimaos-appstore/main/Apps/GithubRunnerDocker/icon.svg
   title:
     en_US: GitHub Runner Manager
   tagline:
