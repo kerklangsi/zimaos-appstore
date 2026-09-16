@@ -22,8 +22,6 @@ services:
 x-casaos:
   architectures:
     - amd64
-    - arm64
-    - arm
   author: kerklangsi
   category: Others
   description:
