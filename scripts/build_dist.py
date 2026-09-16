@@ -34,6 +34,9 @@ def build_store():
     apps_dist_dir = dist_dir / 'apps'
     apps_dist_dir.mkdir(parents=True, exist_ok=True)
     
+    from datetime import datetime, timezone
+    now_iso = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+
     # Generate store.json
     default_name = store_config.get('name', {}).get('en_US', 'Custom AppStore')
     default_desc = store_config.get('description', {}).get('en_US', '')
@@ -44,7 +47,8 @@ def build_store():
         "name": default_name,
         "description": default_desc,
         "maintainer": store_config.get('maintainer', ''),
-        "url": store_config.get('url', '')
+        "url": store_config.get('url', ''),
+        "updated_at": now_iso
     }
     
     with open(dist_dir / 'store.json', 'w', encoding='utf-8') as f:
@@ -59,7 +63,8 @@ def build_store():
             "name": lang_name,
             "description": lang_desc,
             "maintainer": store_config.get('maintainer', ''),
-            "url": store_config.get('url', '')
+            "url": store_config.get('url', ''),
+            "updated_at": now_iso
         }
         with open(dist_dir / f'store.{lang}.json', 'w', encoding='utf-8') as f:
             json.dump(lang_store_data, f, indent=2, ensure_ascii=False)
