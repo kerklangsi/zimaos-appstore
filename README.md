@@ -12,7 +12,7 @@
 | Application | Category | Description | Source Docker Image |
 | :--- | :--- | :--- | :--- |
 | **AMP Game Server** | `Others` | CubeCoders AMP game server management panel to host dedicated servers on ZimaOS. | `kerklangsi/amp-docker:latest` |
-| **GitHub Actions Runner** | `Developer` | Self-hosted GitHub Actions runner for running CI/CD automation jobs. | `kerklangsi/github-runner-docker:latest` |
+| **GitHub Actions Runner** | `Developer` | Multi-runner GitHub Actions manager with Web Dashboard for ZimaOS. | `kerklangsi/github-runner-docker:latest` |
 
 ---
 
