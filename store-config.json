@@ -6,23 +6,6 @@
   },
   "description": {
     "en_US": "Custom ZimaOS App Store featuring AMP Game Server and GitHub Actions Runner."
-  },
-  "maintainer": "kerklangsi",
-  "url": "https://github.com/kerklangsi/zimaos-appstore",
-  "updated_at": "2026-09-16T15:37:28Z",
-  "categories": [
-    {
-      "name": "Developer",
-      "title": {
-        "en_US": "Developer"
-      }
-    },
-    {
-      "name": "Others",
-      "title": {
-        "en_US": "Others"
-      }
-    }
-  ]
+  }
 }
 
