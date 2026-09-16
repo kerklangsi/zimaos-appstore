@@ -37,3 +37,7 @@ x-casaos:
     - amd64
 
   version: 1.0.0
+  volumes:
+    - container: /home/amp/.local/share/CubeCoders/AMP
+      description:
+        en_US: AMP Application Data Directory

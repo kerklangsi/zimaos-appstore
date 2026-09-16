@@ -37,5 +37,12 @@ x-casaos:
   architectures:
     - amd64
   version: 2.0.0
+  volumes:
+    - container: /opt/github-runners
+      description:
+        en_US: GitHub Runners Storage Directory
+    - container: /app/data
+      description:
+        en_US: Manager Application Data Directory
 
 
