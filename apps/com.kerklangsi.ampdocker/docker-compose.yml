@@ -15,9 +15,7 @@ services:
     restart: unless-stopped
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - type: bind
-        source: /DATA/AppData/$AppID/data
-        target: /home/amp/.local/share/CubeCoders/AMP
+      - /DATA/AppData/$AppID/data:/home/amp/.local/share/CubeCoders/AMP
 
 x-casaos:
   icon: https://cdn.jsdelivr.net/gh/kerklangsi/zimaos-appstore@gh-pages/apps/com.kerklangsi.ampdocker/assets/icon.svg

@@ -15,12 +15,8 @@ services:
     tty: true
     stdin_open: true
     volumes:
-      - type: bind
-        source: /DATA/AppData/$AppID/runners
-        target: /opt/github-runners
-      - type: bind
-        source: /DATA/AppData/$AppID/data
-        target: /app/data
+      - /DATA/AppData/$AppID/runners:/opt/github-runners
+      - /DATA/AppData/$AppID/data:/app/data
 
 x-casaos:
   icon: https://cdn.jsdelivr.net/gh/kerklangsi/zimaos-appstore@gh-pages/apps/com.kerklangsi.githubrunner/assets/icon.svg

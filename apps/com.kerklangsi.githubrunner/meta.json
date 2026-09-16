@@ -7,6 +7,20 @@
   "description": "Manage multiple self-hosted GitHub Actions runners inside a single container with live logs, resource monitoring, and web UI.",
   "developer": "kerklangsi",
   "tagline": "Multi-runner GitHub Actions manager with Web Dashboard for ZimaOS",
+  "volumes": [
+    {
+      "container": "/opt/github-runners",
+      "description": {
+        "en_US": "GitHub Runners Storage"
+      }
+    },
+    {
+      "container": "/app/data",
+      "description": {
+        "en_US": "Application Data"
+      }
+    }
+  ],
   "title": "GitHub Runner Manager",
   "base_url": "https://cdn.jsdelivr.net/gh/kerklangsi/zimaos-appstore@gh-pages",
   "id": "com.kerklangsi.githubrunner",
