@@ -1,4 +1,4 @@
-name: github-runner
+name: com.kerklangsi.githubrunner
 services:
   github-runner:
     image: kerklangsi/github-runner-docker:latest
@@ -15,8 +15,12 @@ services:
     tty: true
     stdin_open: true
     volumes:
-      - /DATA/AppData/$AppID/runner:/opt/github-runners
-      - /DATA/AppData/$AppID/data:/app/data
+      - type: bind
+        source: /DATA/AppData/github-runner/runner
+        target: /opt/github-runners
+      - type: bind
+        source: /DATA/AppData/github-runner/data
+        target: /app/data
 
 x-casaos:
   architectures:
@@ -26,8 +30,8 @@ x-casaos:
   description:
     en_US: Manage multiple self-hosted GitHub Actions runners inside a single container with live logs, resource monitoring, and web UI.
   developer: kerklangsi
-  icon: https://cdn.jsdelivr.net/gh/kerklangsi/zimaos-appstore@gh-pages/apps/github-runner/assets/icon.svg
-  id: github-runner
+  icon: https://cdn.jsdelivr.net/gh/kerklangsi/zimaos-appstore@gh-pages/apps/com.kerklangsi.githubrunner/assets/icon.svg
+  id: com.kerklangsi.githubrunner
   index: /
   main: github-runner
   port_map: "3000"

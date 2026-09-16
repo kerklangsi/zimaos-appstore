@@ -1,4 +1,4 @@
-name: ampdocker
+name: com.kerklangsi.ampdocker
 services:
   amp-docker:
     image: kerklangsi/amp-docker:latest
@@ -14,8 +14,12 @@ services:
         protocol: udp
     restart: unless-stopped
     volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-      - /DATA/AppData/$AppID/data:/home/amp/.local/share/CubeCoders/AMP
+      - type: bind
+        source: /var/run/docker.sock
+        target: /var/run/docker.sock
+      - type: bind
+        source: /DATA/AppData/ampdocker/data
+        target: /home/amp/.local/share/CubeCoders/AMP
 
 x-casaos:
   architectures:
@@ -25,8 +29,8 @@ x-casaos:
   description:
     en_US: CubeCoders AMP (Application Management Panel) allows you to easily create, host, manage, and monitor dedicated game servers for various titles directly on ZimaOS.
   developer: CubeCoders / kerklangsi
-  icon: https://cdn.jsdelivr.net/gh/kerklangsi/zimaos-appstore@gh-pages/apps/ampdocker/assets/icon.svg
-  id: ampdocker
+  icon: https://cdn.jsdelivr.net/gh/kerklangsi/zimaos-appstore@gh-pages/apps/com.kerklangsi.ampdocker/assets/icon.svg
+  id: com.kerklangsi.ampdocker
   index: /
   main: amp-docker
   port_map: "8080"
