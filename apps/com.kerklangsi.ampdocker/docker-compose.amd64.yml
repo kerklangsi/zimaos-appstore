@@ -18,7 +18,7 @@ services:
         source: /var/run/docker.sock
         target: /var/run/docker.sock
       - type: bind
-        source: /DATA/AppData/$AppID/data
+        source: /DATA/AppData/ampdocker/data
         target: /home/amp/.local/share/CubeCoders/AMP
 
 x-casaos:
