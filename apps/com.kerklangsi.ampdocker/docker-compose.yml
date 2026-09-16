@@ -14,11 +14,8 @@ services:
         protocol: udp
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - amp_data:/home/amp/.local/share/CubeCoders/AMP
+      - /DATA/AppData/$AppID/data:/home/amp/.local/share/CubeCoders/AMP
     restart: unless-stopped
-
-volumes:
-  amp_data:
 
 x-casaos:
   id: com.kerklangsi.ampdocker
