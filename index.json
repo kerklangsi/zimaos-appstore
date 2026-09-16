@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updated_at": "2026-09-16T15:03:38Z",
+  "updated_at": "2026-09-16T15:09:29Z",
   "app_count": 2,
   "base_url": "https://cdn.jsdelivr.net/gh/kerklangsi/zimaos-appstore@gh-pages",
   "apps": [
@@ -21,7 +21,7 @@
       "thumbnail": "",
       "compose_url": "/apps/com.kerklangsi.ampdocker/docker-compose.yml",
       "meta_url": "/apps/com.kerklangsi.ampdocker/meta.json",
-      "content_hash": "a5bba684",
+      "content_hash": "3405b68e",
       "version": "1.0.0"
     },
     {
@@ -41,7 +41,7 @@
       "thumbnail": "",
       "compose_url": "/apps/com.kerklangsi.githubrunner/docker-compose.yml",
       "meta_url": "/apps/com.kerklangsi.githubrunner/meta.json",
-      "content_hash": "833063a1",
+      "content_hash": "055c8579",
       "version": "2.0.0"
     }
   ]

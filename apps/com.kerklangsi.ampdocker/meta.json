@@ -7,6 +7,14 @@
   "architectures": [
     "amd64"
   ],
+  "volumes": [
+    {
+      "container": "/home/amp/.local/share/CubeCoders/AMP",
+      "description": {
+        "en_US": "AMP Application Data Directory"
+      }
+    }
+  ],
   "title": "AMP Game Server",
   "base_url": "https://cdn.jsdelivr.net/gh/kerklangsi/zimaos-appstore@gh-pages",
   "id": "com.kerklangsi.ampdocker",
