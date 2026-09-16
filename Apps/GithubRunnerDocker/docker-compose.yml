@@ -36,6 +36,8 @@ x-casaos:
   category: Developer
   architectures:
     - amd64
+    - arm64
+    - arm
   version: 2.0.0
   volumes:
     - container: /opt/github-runners
