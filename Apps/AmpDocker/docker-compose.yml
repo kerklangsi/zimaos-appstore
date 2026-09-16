@@ -15,9 +15,7 @@ services:
     restart: unless-stopped
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - type: bind
-        source: /DATA/AppData/$AppID/data
-        target: /home/amp/.local/share/CubeCoders/AMP
+      - /DATA/AppData/$AppID/data:/home/amp/.local/share/CubeCoders/AMP
 
 x-casaos:
   architectures:
@@ -38,3 +36,10 @@ x-casaos:
   title:
     en_US: AMP Game Server
   version: 1.0.0
+  volumes:
+    - container: /var/run/docker.sock
+      description:
+        en_US: Docker Socket
+    - container: /home/amp/.local/share/CubeCoders/AMP
+      description:
+        en_US: AMP Data Directory
