@@ -1,7 +1,7 @@
 name: com.kerklangsi.githubrunner
 services:
   github-runner:
-    image: kerklangsi/github-runner-docker:latest@sha256:cc893d53a58874c931134298752ced6907b4a71c3becc94b0141c3ff723ec8aa
+    image: kerklangsi/github-runner-docker:latest
     container_name: github-runner-docker
     ports:
       - target: 3000
@@ -19,12 +19,30 @@ services:
       - /DATA/AppData/$AppID/data:/app/data
 
 x-casaos:
+  architectures:
+    - amd64
+  author: kerklangsi
+  category: Developer
+  description:
+    en_US: Manage multiple self-hosted GitHub Actions runners inside a single container with live logs, resource monitoring, and web UI.
+  developer: kerklangsi
   icon: https://cdn.jsdelivr.net/gh/kerklangsi/zimaos-appstore@gh-pages/apps/com.kerklangsi.githubrunner/assets/icon.svg
   id: com.kerklangsi.githubrunner
   index: /
   main: github-runner
   port_map: "3000"
   scheme: http
+  tagline:
+    en_US: Multi-runner GitHub Actions manager with Web Dashboard for ZimaOS
   title:
     en_US: GitHub Runner Manager
   version: 2.0.0
+  volumes:
+    - container: /opt/github-runners
+      description:
+        en_US: GitHub Runners Storage
+    - container: /app/data
+      description:
+        en_US: Application Data
+
+

@@ -1,35 +1,22 @@
 {
+  "id": "com.kerklangsi.githubrunner",
+  "title": {
+    "en_US": "GitHub Runner Manager"
+  },
+  "tagline": {
+    "en_US": "Multi-runner GitHub Actions manager with Web Dashboard for ZimaOS"
+  },
+  "description": {
+    "en_US": "Manage multiple self-hosted GitHub Actions runners inside a single container with live logs, resource monitoring, and web UI."
+  },
+  "icon": "apps/com.kerklangsi.githubrunner/assets/icon.svg",
+  "category": "Developer",
+  "author": "kerklangsi",
+  "developer": "kerklangsi",
   "architectures": [
     "amd64"
   ],
-  "author": "kerklangsi",
-  "category": "Developer",
-  "description": "Manage multiple self-hosted GitHub Actions runners inside a single container with live logs, resource monitoring, and web UI.",
-  "developer": "kerklangsi",
-  "tagline": "Multi-runner GitHub Actions manager with Web Dashboard for ZimaOS",
-  "volumes": [
-    {
-      "container": "/opt/github-runners",
-      "description": {
-        "en_US": "GitHub Runners Storage"
-      }
-    },
-    {
-      "container": "/app/data",
-      "description": {
-        "en_US": "Application Data"
-      }
-    }
-  ],
-  "title": "GitHub Runner Manager",
-  "base_url": "https://cdn.jsdelivr.net/gh/kerklangsi/zimaos-appstore@gh-pages",
-  "id": "com.kerklangsi.githubrunner",
   "version": "2.0.0",
-  "categories": [
-    "developer"
-  ],
-  "min_memory": 0,
-  "min_image_size": {
-    "amd64": 586991391
-  }
+  "index": "/",
+  "port_map": "3000"
 }
