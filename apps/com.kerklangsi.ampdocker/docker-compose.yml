@@ -1,4 +1,4 @@
-name: amp-docker
+name: com.kerklangsi.ampdocker
 services:
   amp-docker:
     image: kerklangsi/amp-docker:latest
@@ -12,18 +12,20 @@ services:
       - target: 7777
         published: "7777"
         protocol: udp
+    restart: unless-stopped
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - /DATA/AppData/$AppID/data:/home/amp/.local/share/CubeCoders/AMP
-    restart: unless-stopped
+      - type: bind
+        source: /DATA/AppData/$AppID/data
+        target: /home/amp/.local/share/CubeCoders/AMP
 
 x-casaos:
+  icon: https://cdn.jsdelivr.net/gh/kerklangsi/zimaos-appstore@gh-pages/apps/com.kerklangsi.ampdocker/assets/icon.svg
   id: com.kerklangsi.ampdocker
-  main: amp-docker
   index: /
+  main: amp-docker
   port_map: "8080"
   scheme: http
-  icon: https://cdn.jsdelivr.net/gh/kerklangsi/zimaos-appstore@gh-pages/apps/com.kerklangsi.ampdocker/assets/icon.svg
   title:
     en_US: AMP Game Server
   version: 1.0.0

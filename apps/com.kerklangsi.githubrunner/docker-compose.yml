@@ -1,4 +1,4 @@
-name: github-runner-docker
+name: com.kerklangsi.githubrunner
 services:
   github-runner:
     image: kerklangsi/github-runner-docker:latest
@@ -11,20 +11,24 @@ services:
       - REPO_URL=https://github.com/kerklangsi/your-repo
       - ACCESS_TOKEN=
       - RUNNER_TOKEN=
-    volumes:
-      - /DATA/AppData/$AppID/runners:/opt/github-runners
-      - /DATA/AppData/$AppID/data:/app/data
     restart: unless-stopped
     tty: true
     stdin_open: true
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/runners
+        target: /opt/github-runners
+      - type: bind
+        source: /DATA/AppData/$AppID/data
+        target: /app/data
 
 x-casaos:
+  icon: https://cdn.jsdelivr.net/gh/kerklangsi/zimaos-appstore@gh-pages/apps/com.kerklangsi.githubrunner/assets/icon.svg
   id: com.kerklangsi.githubrunner
-  main: github-runner
   index: /
+  main: github-runner
   port_map: "3000"
   scheme: http
-  icon: https://cdn.jsdelivr.net/gh/kerklangsi/zimaos-appstore@gh-pages/apps/com.kerklangsi.githubrunner/assets/icon.svg
   title:
     en_US: GitHub Runner Manager
   version: 2.0.0
