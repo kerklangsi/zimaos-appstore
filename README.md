@@ -20,30 +20,24 @@
 
 1. Open your **ZimaOS** or **CasaOS** Web Dashboard.
 2. Go to **App Store** -> Click **App Store Settings / Add Store**.
-3. Copy and paste any of the ready-to-use static store URLs below:
+3. Copy and paste any of the ready-to-use release store URLs below:
 
-### Option A: GitHub Raw URL (v2 `store.json`)
+### Option A: GitHub Release Latest `store.json` (v2 Store)
 ```text
-https://raw.githubusercontent.com/kerklangsi/zimaos-appstore/gh-pages/store.json
+https://github.com/kerklangsi/zimaos-appstore/releases/latest/download/store.json
 ```
 
-### Option B: jsDelivr CDN URL (v2 `store.json`)
+### Option B: GitHub Release Latest `appstore.zip` (CasaOS ZIP)
 ```text
-https://cdn.jsdelivr.net/gh/kerklangsi/zimaos-appstore@gh-pages/store.json
+https://github.com/kerklangsi/zimaos-appstore/releases/latest/download/appstore.zip
 ```
 
-### Option C: GitHub Raw ZIP URL (`appstore.zip`)
-```text
-https://raw.githubusercontent.com/kerklangsi/zimaos-appstore/gh-pages/appstore.zip
-```
-
-### Option D: GitHub Repository Source ZIP (Awesome CasaOS / Legacy List)
+### Option C: GitHub Repository Source ZIP (Awesome CasaOS / Legacy List)
 ```text
 https://github.com/kerklangsi/zimaos-appstore/archive/refs/heads/main.zip
 ```
 
 ---
-
 
 
 ## 🛠️ Repository Structure
@@ -65,7 +59,7 @@ zimaos-appstore/
 └── .github/
     └── workflows/
         ├── validate.yml         # PR validation workflow
-        └── release.yml          # GitHub Pages deployment workflow
+        └── release.yml          # GitHub Releases deployment workflow
 ```
 
 ---
@@ -87,19 +81,19 @@ This will parse all apps under `Apps/`, extract `x-casaos` metadata using PyYAML
 
 ---
 
-## 🌐 Publishing to GitHub Pages
+## 🌐 Publishing Releases
 
 To push this repository to your GitHub (`kerklangsi`):
 
 ```bash
 git add .
-git commit -m "Update store URLs for kerklangsi GitHub"
+git commit -m "Update store deployment to GitHub Releases"
 git remote add origin https://github.com/kerklangsi/zimaos-appstore.git
 git branch -M main
 git push -u origin main
 ```
 
-Upon push to `main`, GitHub Actions automatically compiles the store assets and deploys them to the `gh-pages` branch.
+Upon push to `main` (or pushing a version tag such as `v1.0.0`), GitHub Actions automatically compiles the store assets (`store.json`, `index.json`, `appstore.zip`, `dist.zip`) and attaches them to the `latest` GitHub Release.
 
 ---
 
