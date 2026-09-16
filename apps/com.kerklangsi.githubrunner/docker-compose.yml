@@ -32,6 +32,7 @@ x-casaos:
   developer: kerklangsi
   icon: https://cdn.jsdelivr.net/gh/kerklangsi/zimaos-appstore@gh-pages/apps/com.kerklangsi.githubrunner/assets/icon.svg
   id: com.kerklangsi.githubrunner
+  store_app_id: githubrunner
   index: /
   main: github-runner
   port_map: "3000"
