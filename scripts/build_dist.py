@@ -78,6 +78,7 @@ def build_store():
                     
                     # Copy compose file
                     shutil.copy2(compose_file, target_app_dir / 'docker-compose.yml')
+                    shutil.copy2(compose_file, target_app_dir / 'docker-compose.amd64.yml')
                     
                     # Copy assets
                     icon_filename = "icon.svg"
