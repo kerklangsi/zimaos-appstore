@@ -29,9 +29,11 @@ jobs:
         run: |
           python scripts/build_dist.py
 
-      - name: Create Zip Archives
-        run: |
-          cd dist && zip -r ../dist.zip . && cd ..
+      - name: Commit Built Store Assets to Main Branch
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "chore: update compiled ZimaOS store assets [skip ci]"
+          file_pattern: "store*.json index*.json Apps/** appstore.zip"
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
@@ -40,12 +42,12 @@ jobs:
           name: "ZimaOS App Store Release"
           body: "Latest release of custom ZimaOS App Store assets."
           files: |
-            dist.zip
-            dist/appstore.zip
-            dist/store.json
-            dist/index.json
+            appstore.zip
+            store.json
+            index.json
           draft: false
           prerelease: false
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
 
