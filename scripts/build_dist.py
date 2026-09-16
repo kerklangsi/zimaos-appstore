@@ -144,21 +144,50 @@ def build_store():
                         with open(target_app_dir / f'meta.{lang}.json', 'w', encoding='utf-8') as f:
                             json.dump(localized_meta, f, indent=2, ensure_ascii=False)
                             
-                    index_entries.append(meta_data)
+                    index_entry = {
+                        "id": app_id,
+                        "title": title_dict.get('en_US', ''),
+                        "tagline": tagline_dict.get('en_US', ''),
+                        "category": str(x_casaos.get('category', 'Others')),
+                        "author": str(x_casaos.get('author', '')),
+                        "developer": str(x_casaos.get('developer', '')),
+                        "architectures": architectures,
+                        "icon": f"/apps/{app_id}/assets/{icon_filename}",
+                        "compose_url": f"/apps/{app_id}/docker-compose.yml",
+                        "meta_url": f"/apps/{app_id}/meta.json",
+                        "version": str(x_casaos.get('version', '1.0.0'))
+                    }
+                    index_entries.append(index_entry)
                     
+    from datetime import datetime, timezone
+    now_iso = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+    base_url = f"https://cdn.jsdelivr.net/gh/kerklangsi/zimaos-appstore@gh-pages"
+
+    index_data = {
+        "version": 2,
+        "updated_at": now_iso,
+        "app_count": len(index_entries),
+        "base_url": base_url,
+        "apps": index_entries
+    }
+
     with open(dist_dir / 'index.json', 'w', encoding='utf-8') as f:
-        json.dump(index_entries, f, indent=2, ensure_ascii=False)
+        json.dump(index_data, f, indent=2, ensure_ascii=False)
         
     for lang in languages:
-        lang_index_entries = []
+        lang_apps = []
         for entry in index_entries:
             loc_entry = dict(entry)
-            loc_entry["title"] = entry["title"].get(lang, entry["title"].get('en_US', ''))
-            loc_entry["tagline"] = entry["tagline"].get(lang, entry["tagline"].get('en_US', ''))
-            loc_entry["description"] = entry["description"].get(lang, entry["description"].get('en_US', ''))
-            lang_index_entries.append(loc_entry)
+            lang_apps.append(loc_entry)
+        lang_index_data = {
+            "version": 2,
+            "updated_at": now_iso,
+            "app_count": len(lang_apps),
+            "base_url": base_url,
+            "apps": lang_apps
+        }
         with open(dist_dir / f'index.{lang}.json', 'w', encoding='utf-8') as f:
-            json.dump(lang_index_entries, f, indent=2, ensure_ascii=False)
+            json.dump(lang_index_data, f, indent=2, ensure_ascii=False)
             
     # Generate appstore.zip archive for legacy CasaOS zip compatibility
     shutil.make_archive(str(dist_dir / 'appstore'), 'zip', root_dir, 'Apps')

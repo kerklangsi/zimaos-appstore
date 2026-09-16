@@ -1,4 +1,4 @@
-name: github-runner-docker
+name: com.kerklangsi.githubrunner
 services:
   github-runner:
     image: kerklangsi/github-runner-docker:latest
@@ -11,40 +11,37 @@ services:
       - REPO_URL=https://github.com/kerklangsi/your-repo
       - ACCESS_TOKEN=
       - RUNNER_TOKEN=
-    volumes:
-      - /DATA/AppData/$AppID/runners:/opt/github-runners
-      - /DATA/AppData/$AppID/data:/app/data
     restart: unless-stopped
     tty: true
     stdin_open: true
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/runners
+        target: /opt/github-runners
+      - type: bind
+        source: /DATA/AppData/$AppID/data
+        target: /app/data
 
 x-casaos:
-  id: com.kerklangsi.githubrunner
-  main: github-runner
-  index: /
-  port_map: "3000"
-  scheme: http
-  icon: https://cdn.jsdelivr.net/gh/kerklangsi/zimaos-appstore@gh-pages/apps/com.kerklangsi.githubrunner/assets/icon.svg
-  title:
-    en_US: GitHub Runner Manager
-  tagline:
-    en_US: Multi-runner GitHub Actions manager with Web Dashboard for ZimaOS
-  description:
-    en_US: Manage multiple self-hosted GitHub Actions runners inside a single container with live logs, resource monitoring, and web UI.
-  author: kerklangsi
-  developer: kerklangsi
-  category: Developer
   architectures:
     - amd64
     - arm64
     - arm
+  author: kerklangsi
+  category: Developer
+  description:
+    en_US: Manage multiple self-hosted GitHub Actions runners inside a single container with live logs, resource monitoring, and web UI.
+  developer: kerklangsi
+  icon: https://cdn.jsdelivr.net/gh/kerklangsi/zimaos-appstore@gh-pages/apps/com.kerklangsi.githubrunner/assets/icon.svg
+  id: com.kerklangsi.githubrunner
+  index: /
+  main: github-runner
+  port_map: "3000"
+  scheme: http
+  tagline:
+    en_US: Multi-runner GitHub Actions manager with Web Dashboard for ZimaOS
+  title:
+    en_US: GitHub Runner Manager
   version: 2.0.0
-  volumes:
-    - container: /opt/github-runners
-      description:
-        en_US: GitHub Runners Storage Directory
-    - container: /app/data
-      description:
-        en_US: Manager Application Data Directory
 
 
