@@ -15,7 +15,7 @@ services:
     tty: true
     stdin_open: true
     volumes:
-      - /DATA/AppData/$AppID/runners:/opt/github-runners
+      - /DATA/AppData/$AppID/runner:/opt/github-runners
       - /DATA/AppData/$AppID/data:/app/data
 
 x-casaos:

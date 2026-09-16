@@ -4,21 +4,6 @@
   "base_url": "https://cdn.jsdelivr.net/gh/kerklangsi/zimaos-appstore@gh-pages",
   "apps": [
     {
-      "id": "com.kerklangsi.ampdocker",
-      "title": "AMP Game Server",
-      "tagline": "CubeCoders AMP in a Docker container for game server management",
-      "category": "Others",
-      "author": "kerklangsi",
-      "developer": "CubeCoders / kerklangsi",
-      "architectures": [
-        "amd64"
-      ],
-      "icon": "/apps/com.kerklangsi.ampdocker/assets/icon.svg",
-      "compose_url": "/apps/com.kerklangsi.ampdocker/docker-compose.yml",
-      "meta_url": "/apps/com.kerklangsi.ampdocker/meta.json",
-      "version": "1.0.0"
-    },
-    {
       "id": "com.kerklangsi.githubrunner",
       "title": "GitHub Runner Manager",
       "tagline": "Multi-runner GitHub Actions manager with Web Dashboard for ZimaOS",
@@ -32,6 +17,21 @@
       "compose_url": "/apps/com.kerklangsi.githubrunner/docker-compose.yml",
       "meta_url": "/apps/com.kerklangsi.githubrunner/meta.json",
       "version": "2.0.0"
+    },
+    {
+      "id": "com.kerklangsi.ampdocker",
+      "title": "AMP Game Server",
+      "tagline": "CubeCoders AMP in a Docker container for game server management",
+      "category": "Others",
+      "author": "kerklangsi",
+      "developer": "CubeCoders / kerklangsi",
+      "architectures": [
+        "amd64"
+      ],
+      "icon": "/apps/com.kerklangsi.ampdocker/assets/icon.svg",
+      "compose_url": "/apps/com.kerklangsi.ampdocker/docker-compose.yml",
+      "meta_url": "/apps/com.kerklangsi.ampdocker/meta.json",
+      "version": "1.0.0"
     }
   ]
 }
