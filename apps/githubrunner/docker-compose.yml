@@ -37,8 +37,8 @@ x-casaos:
       - **Live Monitoring:** View live execution logs, CPU/Memory usage, and job status from the Web UI.
       - **Persistent Storage:** Workspaces and runner states persist across container restarts.
   developer: kerklangsi
-  icon: https://cdn.jsdelivr.net/gh/kerklangsi/zimaos-appstore@gh-pages/apps/github-runner/assets/icon.svg
-  id: github-runner
+  icon: https://cdn.jsdelivr.net/gh/kerklangsi/zimaos-appstore@gh-pages/apps/com.kerklangsi.githubrunner/assets/icon.svg
+  id: com.kerklangsi.githubrunner
   index: /
   main: github-runner
   port_map: "3000"
