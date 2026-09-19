@@ -37,7 +37,7 @@ x-casaos:
       - **Web Interface:** Full-featured web GUI on port 8080.
       - **Dockerized Execution:** Isolated and containerized instance environment using Docker socket access.
   developer: CubeCoders / kerklangsi
-  icon: https://cdn.jsdelivr.net/gh/kerklangsi/zimaos-appstore@gh-pages/apps/com.kerklangsi.ampdocker/assets/icon.svg
+  icon: https://kerklangsi.github.io/zimaos-appstore/apps/ampdocker/assets/icon.svg
   id: com.kerklangsi.ampdocker
   index: /
   main: amp-docker

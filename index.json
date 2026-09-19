@@ -16,9 +16,9 @@
       "architectures": [
         "amd64"
       ],
-      "icon": "/apps/com.kerklangsi.githubrunner/assets/icon.svg",
-      "compose_url": "/apps/com.kerklangsi.githubrunner/docker-compose.yml",
-      "meta_url": "/apps/com.kerklangsi.githubrunner/meta.json",
+      "icon": "apps/com.kerklangsi.githubrunner/assets/icon.svg",
+      "compose_url": "apps/com.kerklangsi.githubrunner/docker-compose.yml",
+      "meta_url": "apps/com.kerklangsi.githubrunner/meta.json",
       "version": "2.0.0"
     },
     {
@@ -31,9 +31,9 @@
       "architectures": [
         "amd64"
       ],
-      "icon": "/apps/com.kerklangsi.ampdocker/assets/icon.svg",
-      "compose_url": "/apps/com.kerklangsi.ampdocker/docker-compose.yml",
-      "meta_url": "/apps/com.kerklangsi.ampdocker/meta.json",
+      "icon": "apps/com.kerklangsi.ampdocker/assets/icon.svg",
+      "compose_url": "apps/com.kerklangsi.ampdocker/docker-compose.yml",
+      "meta_url": "apps/com.kerklangsi.ampdocker/meta.json",
       "version": "1.0.0"
     }
   ],
