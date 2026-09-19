@@ -1,5 +1,5 @@
 {
-  "id": "com.kerklangsi.githubrunner",
+  "id": "github-runner",
   "title": {
     "en_US": "GitHub Runner Manager"
   },
@@ -9,7 +9,7 @@
   "description": {
     "en_US": "Manage multiple self-hosted GitHub Actions runners inside a single container with live logs, resource monitoring, and web UI."
   },
-  "icon": "apps/com.kerklangsi.githubrunner/assets/icon.svg",
+  "icon": "apps/github-runner/assets/icon.svg",
   "category": "Developer",
   "author": "kerklangsi",
   "developer": "kerklangsi",

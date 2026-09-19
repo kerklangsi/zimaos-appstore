@@ -1,4 +1,4 @@
-name: com.kerklangsi.githubrunner
+name: github-runner
 services:
   github-runner:
     image: kerklangsi/github-runner-docker:latest
@@ -30,8 +30,8 @@ x-casaos:
   description:
     en_US: Manage multiple self-hosted GitHub Actions runners inside a single container with live logs, resource monitoring, and web UI.
   developer: kerklangsi
-  icon: https://cdn.jsdelivr.net/gh/kerklangsi/zimaos-appstore@gh-pages/apps/com.kerklangsi.githubrunner/assets/icon.svg
-  id: com.kerklangsi.githubrunner
+  icon: https://cdn.jsdelivr.net/gh/kerklangsi/zimaos-appstore@gh-pages/apps/github-runner/assets/icon.svg
+  id: github-runner
   store_app_id: githubrunner
   index: /
   main: github-runner

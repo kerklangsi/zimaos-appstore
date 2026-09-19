@@ -1,0 +1,16 @@
+{
+  "id": "github-runner",
+  "title": "GitHub Runner Manager",
+  "tagline": "Multi-runner GitHub Actions manager with Web Dashboard for ZimaOS",
+  "description": "Manage multiple self-hosted GitHub Actions runners inside a single container with live logs, resource monitoring, and web UI.",
+  "icon": "apps/github-runner/assets/icon.svg",
+  "category": "Developer",
+  "author": "kerklangsi",
+  "developer": "kerklangsi",
+  "architectures": [
+    "amd64"
+  ],
+  "version": "2.0.0",
+  "index": "/",
+  "port_map": "3000"
+}

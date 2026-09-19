@@ -1,9 +1,9 @@
 {
-  "id": "com.kerklangsi.githubrunner",
+  "id": "com.kerklangsi.github-runner",
   "title": "GitHub Runner Manager",
   "tagline": "Multi-runner GitHub Actions manager with Web Dashboard for ZimaOS",
   "description": "Manage multiple self-hosted GitHub Actions runners inside a single container with live logs, resource monitoring, and web UI.",
-  "icon": "apps/com.kerklangsi.githubrunner/assets/icon.svg",
+  "icon": "apps/com.kerklangsi.github-runner/assets/icon.svg",
   "category": "Developer",
   "author": "kerklangsi",
   "developer": "kerklangsi",
