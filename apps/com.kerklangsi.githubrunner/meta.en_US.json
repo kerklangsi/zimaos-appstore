@@ -1,0 +1,35 @@
+{
+  "id": "com.kerklangsi.githubrunner",
+  "title": "GitHub Runner Manager",
+  "tagline": "Multi-runner GitHub Actions manager with Web Dashboard for ZimaOS",
+  "description": "GitHub Runner Manager allows you to easily spawn, configure, and monitor self-hosted GitHub Actions runners directly on ZimaOS.\n\n### Features:\n- **Multi-Runner Support:** Run multiple isolated GitHub runners in parallel.\n- **Live Monitoring:** View live execution logs, CPU/Memory usage, and job status from the Web UI.\n- **Persistent Storage:** Workspaces and runner states persist across container restarts.\n",
+  "icon": "apps/com.kerklangsi.githubrunner/assets/icon.svg",
+  "category": "Developer",
+  "author": "kerklangsi",
+  "developer": "kerklangsi",
+  "architectures": [
+    "amd64"
+  ],
+  "version": "2.0.0",
+  "index": "/",
+  "port_map": "3000",
+  "release_notes": "### What's New in v2.0.0\n- Full ZimaOS V2 App Store integration.\n- Enhanced web dashboard with real-time log streaming.\n- Improved persistent bind mount volume support.\n",
+  "tips": {
+    "before_install": "Make sure you have your GitHub repository URL and a Personal Access Token (PAT) or Runner Registration Token from GitHub Settings -> Actions -> Runners.",
+    "after_install": "Access the Web Dashboard on port 3000 (http://<your-zimaos-ip>:3000) to configure your repository connection and manage active runners."
+  },
+  "volumes": [
+    {
+      "container": "/opt/github-runners",
+      "description": {
+        "en_US": "GitHub Runners Storage"
+      }
+    },
+    {
+      "container": "/app/data",
+      "description": {
+        "en_US": "Application Data"
+      }
+    }
+  ]
+}
