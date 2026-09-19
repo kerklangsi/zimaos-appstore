@@ -104,6 +104,25 @@ def build_store():
                     if not isinstance(port_map, str):
                         port_map = str(port_map) if port_map is not None else ''
 
+                    release_notes = x_casaos.get('release_notes', {})
+                    tips = x_casaos.get('tips', {})
+                    volumes = x_casaos.get('volumes', [])
+
+                    if isinstance(release_notes, str):
+                        release_notes_dict = {"en_US": release_notes}
+                    else:
+                        release_notes_dict = release_notes or {}
+
+                    tips_dict = {}
+                    if isinstance(tips, dict):
+                        for tip_k, tip_v in tips.items():
+                            if isinstance(tip_v, str):
+                                tips_dict[tip_k] = {"en_US": tip_v}
+                            elif isinstance(tip_v, dict):
+                                tips_dict[tip_k] = tip_v
+                            else:
+                                tips_dict[tip_k] = str(tip_v)
+
                     icon_filename = "icon.svg"
                     for target_id in target_app_ids:
                         target_app_dir = apps_dist_dir / target_id
@@ -133,7 +152,10 @@ def build_store():
                             "architectures": architectures,
                             "version": str(x_casaos.get('version', '1.0.0')),
                             "index": str(x_casaos.get('index', '/')),
-                            "port_map": port_map
+                            "port_map": port_map,
+                            "release_notes": release_notes_dict,
+                            "tips": tips_dict,
+                            "volumes": volumes
                         }
                         
                         with open(target_app_dir / 'meta.json', 'w', encoding='utf-8') as f:
@@ -144,6 +166,16 @@ def build_store():
                             localized_meta["title"] = title_dict.get(lang, title_dict.get('en_US', ''))
                             localized_meta["tagline"] = tagline_dict.get(lang, tagline_dict.get('en_US', ''))
                             localized_meta["description"] = desc_dict.get(lang, desc_dict.get('en_US', ''))
+                            localized_meta["release_notes"] = release_notes_dict.get(lang, release_notes_dict.get('en_US', ''))
+                            
+                            loc_tips = {}
+                            for tk, tv in tips_dict.items():
+                                if isinstance(tv, dict):
+                                    loc_tips[tk] = tv.get(lang, tv.get('en_US', ''))
+                                else:
+                                    loc_tips[tk] = tv
+                            localized_meta["tips"] = loc_tips
+                            
                             with open(target_app_dir / f'meta.{lang}.json', 'w', encoding='utf-8') as f:
                                 json.dump(localized_meta, f, indent=2, ensure_ascii=False)
                             
