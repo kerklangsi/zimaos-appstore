@@ -197,7 +197,7 @@ def build_store():
                     }
                     index_entries.append(index_entry)
                     
-    base_url = f"https://cdn.jsdelivr.net/gh/kerklangsi/zimaos-appstore@gh-pages"
+    base_url = f"https://kerklangsi.github.io/zimaos-appstore"
 
     index_data = {
         "version": 2,
