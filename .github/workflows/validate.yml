@@ -11,17 +11,11 @@ jobs:
   validate:
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v7
-
-      - name: Setup Python
-        uses: actions/setup-python@v7
-        with:
-          python-version: '3.11'
-
-      - name: Install Dependencies
+      - name: Checkout Code
         run: |
-          python -m pip install pyyaml
+          git clone --depth=1 "https://github.com/${{ github.repository }}.git" .
 
-      - name: Validate and Build local dist
+      - name: Install Dependencies & Validate Build
         run: |
-          python scripts/build_dist.py
+          python3 -m pip install pyyaml --break-system-packages
+          python3 scripts/build_dist.py

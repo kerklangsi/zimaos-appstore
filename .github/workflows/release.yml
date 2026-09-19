@@ -7,50 +7,31 @@ on:
 
 permissions:
   contents: write
-  pages: write
-  id-token: write
-
-concurrency:
-  group: "pages"
-  cancel-in-progress: false
 
 jobs:
   release:
     runs-on: ubuntu-24.04
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
     steps:
-      - uses: actions/checkout@v4
-
-      - name: Setup Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.11'
-
-      - name: Install Dependencies
+      - name: Checkout Code
         run: |
-          python -m pip install pyyaml
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git clone --depth=1 "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git" .
 
-      - name: Build ZimaOS v2 Store
+      - name: Install Dependencies & Build Store
         run: |
-          python scripts/build_dist.py
+          python3 -m pip install pyyaml --break-system-packages
+          python3 scripts/build_dist.py
 
-      - name: Deploy to gh-pages branch (jsDelivr CDN)
-        uses: peaceiris/actions-gh-pages@v4
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_branch: gh-pages
-          publish_dir: ./dist
-
-      - name: Setup Pages
-        uses: actions/configure-pages@v5
-
-      - name: Upload Pages Artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: './dist'
-
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+      - name: Deploy to gh-pages Branch
+        run: |
+          rm -rf /tmp/dist_out
+          cp -r dist /tmp/dist_out
+          git fetch origin gh-pages:gh-pages || git checkout --orphan gh-pages
+          git checkout gh-pages
+          rm -rf *
+          cp -r /tmp/dist_out/* .
+          touch .nojekyll
+          git add -A
+          git commit -m "Deploy dist from commit ${{ github.sha }}" || echo "No changes to commit"
+          git push origin gh-pages
