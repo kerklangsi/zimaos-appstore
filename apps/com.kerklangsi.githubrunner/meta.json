@@ -10,6 +10,7 @@
     "en_US": "GitHub Runner Manager allows you to easily spawn, configure, and monitor self-hosted GitHub Actions runners directly on ZimaOS.\n\n### Features:\n- **Multi-Runner Support:** Run multiple isolated GitHub runners in parallel.\n- **Live Monitoring:** View live execution logs, CPU/Memory usage, and job status from the Web UI.\n- **Persistent Storage:** Workspaces and runner states persist across container restarts.\n"
   },
   "icon": "apps/com.kerklangsi.githubrunner/assets/icon.svg",
+  "thumbnail": "",
   "screenshot_link": [
     "apps/com.kerklangsi.githubrunner/assets/image2.png",
     "apps/com.kerklangsi.githubrunner/assets/image3.png",
@@ -35,6 +36,7 @@
   "version": "2.0.0",
   "index": "/",
   "port_map": "3000",
+  "base_url": "https://kerklangsi.github.io/zimaos-appstore",
   "release_notes": {
     "en_US": "### What's New in v2.0.0\n- Full ZimaOS V2 App Store integration.\n- Enhanced web dashboard with real-time log streaming.\n- Improved persistent bind mount volume support.\n"
   },

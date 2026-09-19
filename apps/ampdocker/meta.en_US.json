@@ -4,6 +4,7 @@
   "tagline": "Powerful Game Server Management Panel in Docker for ZimaOS",
   "description": "CubeCoders AMP (Application Management Panel) is a powerful, web-based management system designed specifically for hosting and managing dedicated game servers (Minecraft, Source games, Rust, Valheim, and more) directly on ZimaOS.\n\n### Features:\n- **Multi-Game Support:** Manage multiple game servers from a single dashboard.\n- **Automated Management:** Built-in server updates, automated backups, and scheduled restarts.\n- **Web Interface:** Full-featured web GUI on port 8080.\n- **Dockerized Execution:** Isolated and containerized instance environment using Docker socket access.\n",
   "icon": "apps/ampdocker/assets/icon.svg",
+  "thumbnail": "",
   "screenshot_link": [],
   "category": "Others",
   "categories": [
@@ -25,6 +26,7 @@
   "version": "1.0.0",
   "index": "/",
   "port_map": "8080",
+  "base_url": "https://kerklangsi.github.io/zimaos-appstore",
   "release_notes": "### What's New in v1.0.0\n- Initial release of CubeCoders AMP container for ZimaOS App Store.\n- Preconfigured Docker socket binding and persistent storage for server data.\n",
   "tips": {
     "before_install": "Ensure host ports 8080 (Web UI) and 7777 (UDP) are free. Container requires access to Docker socket (/var/run/docker.sock).",
