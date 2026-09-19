@@ -3,6 +3,8 @@ import sys
 import json
 import shutil
 import stat
+import hashlib
+from datetime import datetime, timezone
 import yaml
 from pathlib import Path
 
@@ -92,6 +94,7 @@ def build_store():
     apps_dist_dir.mkdir(parents=True, exist_ok=True)
 
     base_url = "https://kerklangsi.github.io/zimaos-appstore"
+    updated_at = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
     default_name = store_config.get('name', {}).get('en_US', 'Custom AppStore')
     default_desc = store_config.get('description', {}).get('en_US', '')
     
@@ -143,6 +146,8 @@ def build_store():
                 min_disk_str = f"{min_disk_mb / 1000:.1f} GB" if min_disk_mb >= 1000 else f"{min_disk_mb} MB"
                 min_disk_bytes = min_disk_mb * 1024 * 1024
 
+                content_hash = hashlib.md5(compose_file.read_bytes()).hexdigest()[:8]
+
                 icon_filename = "icon.svg"
                 for target_id in target_app_ids:
                     target_app_dir = apps_dist_dir / target_id
@@ -160,7 +165,7 @@ def build_store():
                             if file.name.startswith('icon.'):
                                 icon_filename = file.name
                             else:
-                                asset_rel = f"apps/{target_id}/assets/{file.name}"
+                                asset_rel = f"/apps/{target_id}/assets/{file.name}"
                                 if asset_rel not in local_screenshots:
                                     local_screenshots.append(asset_rel)
 
@@ -171,7 +176,7 @@ def build_store():
                         "title": title_dict,
                         "tagline": tagline_dict,
                         "description": desc_dict,
-                        "icon": f"apps/{target_id}/assets/{icon_filename}",
+                        "icon": f"/apps/{target_id}/assets/{icon_filename}",
                         "thumbnail": "",
                         "screenshot_link": app_screenshots,
                         "category": category_name,
@@ -213,13 +218,16 @@ def build_store():
                     "title": title_dict.get('en_US', ''),
                     "tagline": tagline_dict.get('en_US', ''),
                     "category": category_name,
+                    "categories": [category_name.lower()],
                     "author": str(x_casaos.get('author', '')),
                     "developer": str(x_casaos.get('developer', '')),
                     "architectures": architectures,
-                    "icon": f"apps/{app_id}/assets/{icon_filename}",
-                    "compose_url": f"apps/{app_id}/docker-compose.yml",
-                    "meta_url": f"apps/{app_id}/meta.json",
-                    "version": str(x_casaos.get('version', '1.0.0'))
+                    "icon": f"/apps/{app_id}/assets/{icon_filename}",
+                    "thumbnail": "",
+                    "compose_url": f"/apps/{app_id}/docker-compose.yml",
+                    "meta_url": f"/apps/{app_id}/meta.json",
+                    "version": str(x_casaos.get('version', '1.0.0')),
+                    "content_hash": content_hash
                 })
 
     recommend_ids = [e['id'] for e in index_entries]
@@ -238,6 +246,7 @@ def build_store():
             "description": desc,
             "maintainer": store_config.get('maintainer', 'kerklangsi'),
             "url": "https://github.com/kerklangsi/zimaos-appstore",
+            "updated_at": updated_at,
             "app_count": len(index_entries),
             "base_url": base_url,
             "apps": index_entries,
