@@ -2,5 +2,43 @@
   "version": 2,
   "store_id": "kerklangsi-appstore",
   "name": "KerkLangsi Apps",
-  "description": "Custom ZimaOS App Store featuring AMP Game Server and GitHub Actions Runner."
+  "description": "Custom ZimaOS App Store featuring AMP Game Server and GitHub Actions Runner.",
+  "app_count": 2,
+  "base_url": "https://kerklangsi.github.io/zimaos-appstore",
+  "apps": [
+    {
+      "id": "github-runner",
+      "title": "GitHub Runner Manager",
+      "tagline": "Multi-runner GitHub Actions manager with Web Dashboard for ZimaOS",
+      "category": "Developer",
+      "author": "kerklangsi",
+      "developer": "kerklangsi",
+      "architectures": [
+        "amd64"
+      ],
+      "icon": "/apps/github-runner/assets/icon.svg",
+      "compose_url": "/apps/github-runner/docker-compose.yml",
+      "meta_url": "/apps/github-runner/meta.json",
+      "version": "2.0.0"
+    },
+    {
+      "id": "amp-docker",
+      "title": "AMP Game Server",
+      "tagline": "Powerful Game Server Management Panel in Docker for ZimaOS",
+      "category": "Utilities",
+      "author": "kerklangsi",
+      "developer": "CubeCoders / kerklangsi",
+      "architectures": [
+        "amd64"
+      ],
+      "icon": "/apps/amp-docker/assets/icon.svg",
+      "compose_url": "/apps/amp-docker/docker-compose.yml",
+      "meta_url": "/apps/amp-docker/meta.json",
+      "version": "1.0.0"
+    }
+  ],
+  "recommend": [
+    "github-runner",
+    "amp-docker"
+  ]
 }

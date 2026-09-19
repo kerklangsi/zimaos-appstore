@@ -1,5 +1,8 @@
 {
   "version": 2,
+  "store_id": "kerklangsi-appstore",
+  "name": "KerkLangsi Apps",
+  "description": "Custom ZimaOS App Store featuring AMP Game Server and GitHub Actions Runner.",
   "app_count": 2,
   "base_url": "https://kerklangsi.github.io/zimaos-appstore",
   "apps": [
@@ -33,5 +36,9 @@
       "meta_url": "/apps/amp-docker/meta.json",
       "version": "1.0.0"
     }
+  ],
+  "recommend": [
+    "github-runner",
+    "amp-docker"
   ]
 }
