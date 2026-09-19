@@ -12,3 +12,7 @@ Thumbs.db
 # Python files
 __pycache__/
 *.pyc
+
+# Local agents customization
+.agents/
+
