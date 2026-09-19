@@ -24,12 +24,13 @@ def load_json(filepath):
     with open(filepath, 'r', encoding='utf-8') as f:
         return json.load(f)
 
-# Parses memory and disk text values into numeric MB integers.
-def parse_mb_int(val, default):
+# Parses memory and disk text values into Byte integers (MB * 1024 * 1024).
+def parse_bytes(val, default_mb):
     if not val:
-        return default
+        return default_mb * 1024 * 1024
     digits = ''.join(c for c in str(val) if c.isdigit())
-    return int(digits) if digits else default
+    mb = int(digits) if digits else default_mb
+    return mb * 1024 * 1024
 
 # Safely parses docker-compose.yml manifest using PyYAML.
 def parse_compose_yaml(filepath):
@@ -129,8 +130,8 @@ def build_store():
 
                 compose_yaml = parse_compose_yaml(compose_file)
                 service_mem = next((s.get('deploy', {}).get('resources', {}).get('reservations', {}).get('memory') or s.get('deploy', {}).get('resources', {}).get('limits', {}).get('memory') for s in compose_yaml.get('services', {}).values() if isinstance(s, dict)), None)
-                min_memory = parse_mb_int(x_casaos.get('min_memory') or service_mem, 256)
-                min_disk = parse_mb_int(x_casaos.get('min_disk'), 1000)
+                min_memory = parse_bytes(x_casaos.get('min_memory') or service_mem, 256)
+                min_disk = parse_bytes(x_casaos.get('min_disk'), 1000)
 
                 icon_filename = "icon.svg"
                 for target_id in target_app_ids:
