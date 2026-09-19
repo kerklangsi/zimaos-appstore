@@ -32,6 +32,13 @@ def parse_bytes(val, default_mb):
     mb = int(digits) if digits else default_mb
     return mb * 1024 * 1024
 
+# Extracts numeric MB integer from string.
+def parse_mb_num(val, default_mb):
+    if not val:
+        return default_mb
+    digits = ''.join(c for c in str(val) if c.isdigit())
+    return int(digits) if digits else default_mb
+
 # Safely parses docker-compose.yml manifest using PyYAML.
 def parse_compose_yaml(filepath):
     with open(filepath, 'r', encoding='utf-8') as f:
@@ -131,7 +138,9 @@ def build_store():
                 compose_yaml = parse_compose_yaml(compose_file)
                 service_mem = next((s.get('deploy', {}).get('resources', {}).get('reservations', {}).get('memory') or s.get('deploy', {}).get('resources', {}).get('limits', {}).get('memory') for s in compose_yaml.get('services', {}).values() if isinstance(s, dict)), None)
                 min_memory = parse_bytes(x_casaos.get('min_memory') or service_mem, 256)
-                min_disk = parse_bytes(x_casaos.get('min_disk'), 1000)
+                min_disk_mb = parse_mb_num(x_casaos.get('min_disk'), 1000)
+                min_disk_str = f"{min_disk_mb / 1000:.1f} GB" if min_disk_mb >= 1000 else f"{min_disk_mb} MB"
+                min_disk_bytes = min_disk_mb * 1024 * 1024
 
                 icon_filename = "icon.svg"
                 for target_id in target_app_ids:
@@ -168,7 +177,10 @@ def build_store():
                         "developer": str(x_casaos.get('developer', '')),
                         "architectures": architectures,
                         "min_memory": min_memory,
-                        "min_disk": min_disk,
+                        "min_disk": min_disk_str,
+                        "disk": min_disk_str,
+                        "estimated_disk": min_disk_str,
+                        "min_storage": min_disk_bytes,
                         "version": str(x_casaos.get('version', '1.0.0')),
                         "index": str(x_casaos.get('index', '/')),
                         "port_map": port_map,
