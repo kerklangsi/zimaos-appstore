@@ -33,33 +33,10 @@ def build_store():
     dist_dir.mkdir(parents=True, exist_ok=True)
     apps_dist_dir = dist_dir / 'apps'
     apps_dist_dir.mkdir(parents=True, exist_ok=True)
-    
-    # Generate store.json
+
     default_name = store_config.get('name', {}).get('en_US', 'Custom AppStore')
     default_desc = store_config.get('description', {}).get('en_US', '')
     
-    main_store_data = {
-        "version": store_config.get('version', 2),
-        "store_id": store_config.get('store_id', 'custom-appstore'),
-        "name": default_name,
-        "description": default_desc
-    }
-    
-    with open(dist_dir / 'store.json', 'w', encoding='utf-8') as f:
-        json.dump(main_store_data, f, indent=2, ensure_ascii=False)
-        
-    for lang in languages:
-        lang_name = store_config.get('name', {}).get(lang, default_name)
-        lang_desc = store_config.get('description', {}).get(lang, default_desc)
-        lang_store_data = {
-            "version": store_config.get('version', 2),
-            "store_id": store_config.get('store_id', 'custom-appstore'),
-            "name": lang_name,
-            "description": lang_desc
-        }
-        with open(dist_dir / f'store.{lang}.json', 'w', encoding='utf-8') as f:
-            json.dump(lang_store_data, f, indent=2, ensure_ascii=False)
-
     apps_source_dir = root_dir / 'Apps'
     index_entries = []
     
@@ -196,33 +173,63 @@ def build_store():
                         "version": str(x_casaos.get('version', '1.0.0'))
                     }
                     index_entries.append(index_entry)
-                    
-    base_url = f"https://kerklangsi.github.io/zimaos-appstore"
 
-    index_data = {
-        "version": 2,
+    base_url = f"https://kerklangsi.github.io/zimaos-appstore"
+    recommend_ids = [entry['id'] for entry in index_entries]
+
+    # Collect categories
+    categories_map = {}
+    for entry in index_entries:
+        cat = entry.get('category', 'Others')
+        categories_map[cat] = categories_map.get(cat, 0) + 1
+    category_list = [{"id": k, "name": k, "count": v} for k, v in categories_map.items()]
+
+    main_store_data = {
+        "version": store_config.get('version', 2),
+        "store_id": store_config.get('store_id', 'custom-appstore'),
+        "name": default_name,
+        "description": default_desc,
         "app_count": len(index_entries),
         "base_url": base_url,
-        "apps": index_entries
+        "apps": index_entries,
+        "recommend": recommend_ids
     }
-
-    with open(dist_dir / 'index.json', 'w', encoding='utf-8') as f:
-        json.dump(index_data, f, indent=2, ensure_ascii=False)
+    
+    # Write store.json, index.json, recommend.json, category.json
+    with open(dist_dir / 'store.json', 'w', encoding='utf-8') as f:
+        json.dump(main_store_data, f, indent=2, ensure_ascii=False)
         
+    with open(dist_dir / 'index.json', 'w', encoding='utf-8') as f:
+        json.dump(main_store_data, f, indent=2, ensure_ascii=False)
+
+    with open(dist_dir / 'recommend.json', 'w', encoding='utf-8') as f:
+        json.dump(recommend_ids, f, indent=2, ensure_ascii=False)
+
+    with open(dist_dir / 'category.json', 'w', encoding='utf-8') as f:
+        json.dump(category_list, f, indent=2, ensure_ascii=False)
+
     for lang in languages:
-        lang_apps = []
-        for entry in index_entries:
-            loc_entry = dict(entry)
-            lang_apps.append(loc_entry)
-        lang_index_data = {
-            "version": 2,
-            "app_count": len(lang_apps),
+        lang_name = store_config.get('name', {}).get(lang, default_name)
+        lang_desc = store_config.get('description', {}).get(lang, default_desc)
+        lang_store_data = {
+            "version": store_config.get('version', 2),
+            "store_id": store_config.get('store_id', 'custom-appstore'),
+            "name": lang_name,
+            "description": lang_desc,
+            "app_count": len(index_entries),
             "base_url": base_url,
-            "apps": lang_apps
+            "apps": index_entries,
+            "recommend": recommend_ids
         }
+        with open(dist_dir / f'store.{lang}.json', 'w', encoding='utf-8') as f:
+            json.dump(lang_store_data, f, indent=2, ensure_ascii=False)
         with open(dist_dir / f'index.{lang}.json', 'w', encoding='utf-8') as f:
-            json.dump(lang_index_data, f, indent=2, ensure_ascii=False)
-            
+            json.dump(lang_store_data, f, indent=2, ensure_ascii=False)
+        with open(dist_dir / f'recommend.{lang}.json', 'w', encoding='utf-8') as f:
+            json.dump(recommend_ids, f, indent=2, ensure_ascii=False)
+        with open(dist_dir / f'category.{lang}.json', 'w', encoding='utf-8') as f:
+            json.dump(category_list, f, indent=2, ensure_ascii=False)
+
     # Generate appstore.zip archive for legacy CasaOS zip compatibility
     shutil.make_archive(str(dist_dir / 'appstore'), 'zip', root_dir, 'Apps')
 
@@ -230,5 +237,3 @@ def build_store():
 
 if __name__ == '__main__':
     build_store()
-
-
