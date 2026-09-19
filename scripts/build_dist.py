@@ -181,9 +181,9 @@ def build_store():
                     "author": str(x_casaos.get('author', '')),
                     "developer": str(x_casaos.get('developer', '')),
                     "architectures": architectures,
-                    "icon": f"/apps/{app_id}/assets/{icon_filename}",
-                    "compose_url": f"/apps/{app_id}/docker-compose.yml",
-                    "meta_url": f"/apps/{app_id}/meta.json",
+                    "icon": f"apps/{app_id}/assets/{icon_filename}",
+                    "compose_url": f"apps/{app_id}/docker-compose.yml",
+                    "meta_url": f"apps/{app_id}/meta.json",
                     "version": str(x_casaos.get('version', '1.0.0'))
                 })
 
