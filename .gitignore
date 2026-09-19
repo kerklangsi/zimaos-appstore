@@ -8,6 +8,7 @@ build/
 Thumbs.db
 .idea/
 .vscode/
+.agents/
 
 # Python files
 __pycache__/
