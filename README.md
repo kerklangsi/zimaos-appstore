@@ -16,30 +16,25 @@
 
 ---
 
-## 📱 How to Add Store to ZimaOS
+## 📱 How to Add Store to CasaOS & ZimaOS
 
-1. Open your **ZimaOS** or **CasaOS** Web Dashboard.
+1. Open your **CasaOS** or **ZimaOS** Web Dashboard.
 2. Go to **App Store** -> Click **App Store Settings / Add Store**.
 3. Copy and paste any of the ready-to-use store URLs below:
 
-### Option A: GitHub Raw URL (v2 `store.json`)
-```text
-https://raw.githubusercontent.com/kerklangsi/zimaos-appstore/gh-pages/store.json
-```
-
-### Option B: jsDelivr CDN URL (v2 `store.json`)
-```text
-https://cdn.jsdelivr.net/gh/kerklangsi/zimaos-appstore@gh-pages/store.json
-```
-
-### Option C: GitHub Raw ZIP URL (`appstore.zip`)
-```text
-https://raw.githubusercontent.com/kerklangsi/zimaos-appstore/gh-pages/appstore.zip
-```
-
-### Option D: GitHub Repository Source ZIP (Awesome CasaOS / Legacy List)
+### Option A: Standard CasaOS Store URL (Recommended - Zip Format)
 ```text
 https://github.com/kerklangsi/zimaos-appstore/archive/refs/heads/main.zip
+```
+
+### Option B: ZimaOS v2 Store Index URL (JSON Format)
+```text
+https://cdn.jsdelivr.net/gh/kerklangsi/zimaos-appstore@gh-pages/index.json
+```
+
+### Option C: jsDelivr CDN Zip URL
+```text
+https://cdn.jsdelivr.net/gh/kerklangsi/zimaos-appstore@gh-pages/appstore.zip
 ```
 
 ---
