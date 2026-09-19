@@ -27,9 +27,9 @@
 https://github.com/kerklangsi/zimaos-appstore/archive/refs/heads/main.zip
 ```
 
-### Option B: ZimaOS v2 Store Index URL (Recommended JSON Format)
+### Option B: ZimaOS v2 Store URL (Recommended JSON Format)
 ```text
-https://kerklangsi.github.io/zimaos-appstore/index.json
+https://kerklangsi.github.io/zimaos-appstore/store.json
 ```
 
 ### Option C: jsDelivr CDN Zip URL

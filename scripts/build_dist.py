@@ -64,10 +64,10 @@ def clean_empty_dirs(path):
                     pass
 
 # Batch generates store, index, recommend, and category feed files.
-def write_store_bundle(dist_dir, store_data, recommend_ids, category_list, suffix=""):
+def write_store_bundle(dist_dir, store_info, index_data, recommend_ids, category_list, suffix=""):
     ext = f".{suffix}.json" if suffix else ".json"
-    save_json(dist_dir / f"store{ext}", store_data)
-    save_json(dist_dir / f"index{ext}", store_data)
+    save_json(dist_dir / f"store{ext}", store_info)
+    save_json(dist_dir / f"index{ext}", index_data)
     save_json(dist_dir / f"recommend{ext}", recommend_ids)
     save_json(dist_dir / f"category{ext}", category_list)
 
@@ -238,27 +238,33 @@ def build_store():
         cat_counts[cat] = cat_counts.get(cat, 0) + 1
     category_list = [{"id": k, "name": k, "count": v} for k, v in cat_counts.items()]
 
-    def make_store_data(name, desc):
+    def make_store_info(name, desc):
         return {
             "version": store_config.get('version', 2),
             "store_id": store_config.get('store_id', 'custom-appstore'),
             "name": name,
             "description": desc,
             "maintainer": store_config.get('maintainer', 'kerklangsi'),
-            "url": "https://github.com/kerklangsi/zimaos-appstore",
+            "url": "https://github.com/kerklangsi/zimaos-appstore"
+        }
+
+    def make_index_data(name, desc):
+        info = make_store_info(name, desc)
+        info.update({
             "updated_at": updated_at,
             "app_count": len(index_entries),
             "base_url": base_url,
             "apps": index_entries,
             "recommend": recommend_ids
-        }
+        })
+        return info
 
-    write_store_bundle(dist_dir, make_store_data(default_name, default_desc), recommend_ids, category_list)
+    write_store_bundle(dist_dir, make_store_info(default_name, default_desc), make_index_data(default_name, default_desc), recommend_ids, category_list)
 
     for lang in languages:
         lang_name = store_config.get('name', {}).get(lang, default_name)
         lang_desc = store_config.get('description', {}).get(lang, default_desc)
-        write_store_bundle(dist_dir, make_store_data(lang_name, lang_desc), recommend_ids, category_list, suffix=lang)
+        write_store_bundle(dist_dir, make_store_info(lang_name, lang_desc), make_index_data(lang_name, lang_desc), recommend_ids, category_list, suffix=lang)
 
     shutil.make_archive(str(dist_dir / 'appstore'), 'zip', root_dir, 'Apps')
     clean_empty_dirs(dist_dir)
