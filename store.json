@@ -25,7 +25,7 @@
       "id": "com.kerklangsi.ampdocker",
       "title": "AMP Game Server",
       "tagline": "Powerful Game Server Management Panel in Docker for ZimaOS",
-      "category": "Developer",
+      "category": "Others",
       "author": "kerklangsi",
       "developer": "CubeCoders / kerklangsi",
       "architectures": [

@@ -22,7 +22,10 @@
     "amd64"
   ],
   "min_memory": 268435456,
-  "min_disk": 1048576000,
+  "min_disk": "1.0 GB",
+  "disk": "1.0 GB",
+  "estimated_disk": "1.0 GB",
+  "min_storage": 1048576000,
   "version": "2.0.0",
   "index": "/",
   "port_map": "3000",

@@ -2,6 +2,11 @@
   {
     "id": "Developer",
     "name": "Developer",
-    "count": 2
+    "count": 1
+  },
+  {
+    "id": "Others",
+    "name": "Others",
+    "count": 1
   }
 ]

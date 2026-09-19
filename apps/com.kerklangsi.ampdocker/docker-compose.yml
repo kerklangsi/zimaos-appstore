@@ -26,7 +26,7 @@ x-casaos:
   architectures:
     - amd64
   author: kerklangsi
-  category: Developer
+  category: Others
   min_memory: "512MB"
   min_disk: "2000MB"
   description:
