@@ -1,7 +1,7 @@
 {
   "version": 2,
   "app_count": 2,
-  "base_url": "https://cdn.jsdelivr.net/gh/kerklangsi/zimaos-appstore@gh-pages",
+  "base_url": "https://kerklangsi.github.io/zimaos-appstore",
   "apps": [
     {
       "id": "github-runner",
