@@ -87,6 +87,9 @@ def build_store():
                     release_notes = x_casaos.get('release_notes', {})
                     tips = x_casaos.get('tips', {})
                     volumes = x_casaos.get('volumes', [])
+                    screenshot_link = x_casaos.get('screenshot_link', [])
+                    if not isinstance(screenshot_link, list):
+                        screenshot_link = [screenshot_link] if screenshot_link else []
 
                     if isinstance(release_notes, str):
                         release_notes_dict = {"en_US": release_notes}
@@ -113,12 +116,20 @@ def build_store():
                         shutil.copy2(compose_file, target_app_dir / 'docker-compose.yml')
                         shutil.copy2(compose_file, target_app_dir / 'docker-compose.amd64.yml')
                         
-                        # Copy assets
-                        for file in app_folder.iterdir():
-                            if file.is_file() and (file.name.startswith('icon.') or file.name.startswith('screenshot') or file.name.startswith('thumbnail')):
+                        # Copy assets recursively (supports image/screenshot/picture subdirectories)
+                        local_screenshots = []
+                        valid_exts = {'.png', '.jpg', '.jpeg', '.webp', '.svg', '.gif'}
+                        for file in app_folder.rglob('*'):
+                            if file.is_file() and file.suffix.lower() in valid_exts:
                                 shutil.copy2(file, target_assets_dir / file.name)
                                 if file.name.startswith('icon.'):
                                     icon_filename = file.name
+                                else:
+                                    asset_rel_path = f"apps/{target_id}/assets/{file.name}"
+                                    if asset_rel_path not in local_screenshots:
+                                        local_screenshots.append(asset_rel_path)
+
+                        app_screenshots = screenshot_link if screenshot_link else local_screenshots
 
                         meta_data = {
                             "id": target_id,
@@ -126,6 +137,7 @@ def build_store():
                             "tagline": tagline_dict,
                             "description": desc_dict,
                             "icon": f"apps/{target_id}/assets/{icon_filename}",
+                            "screenshot_link": app_screenshots,
                             "category": str(x_casaos.get('category', 'Others')),
                             "author": str(x_casaos.get('author', '')),
                             "developer": str(x_casaos.get('developer', '')),
