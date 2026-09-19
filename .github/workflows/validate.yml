@@ -7,15 +7,29 @@ on:
     branches: [ main ]
   workflow_dispatch:
 
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: 'true'
+
 jobs:
   validate:
     runs-on: ubuntu-24.04
     steps:
-      - name: Checkout Code
-        run: |
-          git clone --depth=1 "https://github.com/${{ github.repository }}.git" .
+      - uses: actions/checkout@v4
 
-      - name: Install Dependencies & Validate Build
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install Dependencies
         run: |
-          python3 -m pip install pyyaml --break-system-packages
-          python3 scripts/build_dist.py
+          python -m pip install pyyaml
+
+      - name: Validate and Build local dist
+        run: |
+          python scripts/build_dist.py
