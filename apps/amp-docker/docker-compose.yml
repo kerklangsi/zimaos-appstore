@@ -3,6 +3,7 @@ services:
   amp-docker:
     image: kerklangsi/amp-docker:latest
     container_name: amp-docker
+    network_mode: bridge
     environment:
       - TZ=UTC
     ports:

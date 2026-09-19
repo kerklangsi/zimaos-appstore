@@ -3,6 +3,7 @@ services:
   github-runner:
     image: kerklangsi/github-runner-docker:latest
     container_name: github-runner-docker
+    network_mode: bridge
     ports:
       - target: 3000
         published: "3000"
