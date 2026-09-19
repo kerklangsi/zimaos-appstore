@@ -57,7 +57,7 @@ x-casaos:
     before_install:
       en_US: Ensure host ports 8080 (Web UI) and 7777 (UDP) are free. Container requires access to Docker socket (/var/run/docker.sock).
     after_install:
-      en_US: Open the AMP Web Interface at http://<your-zimaos-ip>:8080 to complete the initial setup wizard and create your first game server instance.
+      en_US: "Login Info: Open the AMP Web Interface at http://<your-zimaos-ip>:8080. On first launch, follow the Web Setup Wizard to create your admin username and password."
   volumes:
     - container: /var/run/docker.sock
       description:
