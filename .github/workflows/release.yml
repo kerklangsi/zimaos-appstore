@@ -23,15 +23,7 @@ jobs:
         run: |
           python -m pip install pyyaml
 
-      - name: Build v2 dist with IceWhale Action
-        continue-on-error: true
-        uses: IceWhaleTech/build-appstore-action@v1
-        with:
-          source: .
-          output: dist
-          base-url: https://cdn.jsdelivr.net/gh/${{ github.repository }}@gh-pages
-
-      - name: Build ZimaOS v2 Store (Full Compose Copy)
+      - name: Build ZimaOS v2 Store
         run: |
           python scripts/build_dist.py
 
