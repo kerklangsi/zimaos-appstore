@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "store_id": "kerklangsi-appstore",
+  "store_id": "com.kerklangsi.appstore",
   "name": {
     "en_US": "KerkLangsi Apps"
   },
@@ -8,4 +8,3 @@
     "en_US": "Custom ZimaOS App Store featuring AMP Game Server and GitHub Actions Runner."
   }
 }
-
