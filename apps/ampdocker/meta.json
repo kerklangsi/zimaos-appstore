@@ -17,6 +17,8 @@
   "architectures": [
     "amd64"
   ],
+  "min_memory": 512,
+  "min_disk": 2000,
   "version": "1.0.0",
   "index": "/",
   "port_map": "8080",
