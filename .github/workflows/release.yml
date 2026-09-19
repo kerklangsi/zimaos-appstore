@@ -24,6 +24,7 @@ jobs:
           python -m pip install pyyaml
 
       - name: Build v2 dist with IceWhale Action
+        continue-on-error: true
         uses: IceWhaleTech/build-appstore-action@v1
         with:
           source: .

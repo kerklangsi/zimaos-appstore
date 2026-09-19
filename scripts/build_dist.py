@@ -72,22 +72,11 @@ def build_store():
                     x_casaos = yaml_data.get('x-casaos', {})
                     
                     app_id = x_casaos.get('id', app_folder.name.lower())
-                    target_app_dir = apps_dist_dir / app_id
-                    target_assets_dir = target_app_dir / 'assets'
-                    target_assets_dir.mkdir(parents=True, exist_ok=True)
                     
-                    # Copy compose file
-                    shutil.copy2(compose_file, target_app_dir / 'docker-compose.yml')
-                    shutil.copy2(compose_file, target_app_dir / 'docker-compose.amd64.yml')
-                    
-                    # Copy assets
-                    icon_filename = "icon.svg"
-                    for file in app_folder.iterdir():
-                        if file.is_file() and (file.name.startswith('icon.') or file.name.startswith('screenshot') or file.name.startswith('thumbnail')):
-                            shutil.copy2(file, target_assets_dir / file.name)
-                            if file.name.startswith('icon.'):
-                                icon_filename = file.name
-                    
+                    target_app_ids = [app_id]
+                    if '.' not in app_id:
+                        target_app_ids.append(f"com.kerklangsi.{app_id}")
+
                     title = x_casaos.get('title', {})
                     tagline = x_casaos.get('tagline', {})
                     desc = x_casaos.get('description', {})
@@ -115,31 +104,48 @@ def build_store():
                     if not isinstance(port_map, str):
                         port_map = str(port_map) if port_map is not None else ''
 
-                    meta_data = {
-                        "id": app_id,
-                        "title": title_dict,
-                        "tagline": tagline_dict,
-                        "description": desc_dict,
-                        "icon": f"apps/{app_id}/assets/{icon_filename}",
-                        "category": str(x_casaos.get('category', 'Others')),
-                        "author": str(x_casaos.get('author', '')),
-                        "developer": str(x_casaos.get('developer', '')),
-                        "architectures": architectures,
-                        "version": str(x_casaos.get('version', '1.0.0')),
-                        "index": str(x_casaos.get('index', '/')),
-                        "port_map": port_map
-                    }
-                    
-                    with open(target_app_dir / 'meta.json', 'w', encoding='utf-8') as f:
-                        json.dump(meta_data, f, indent=2, ensure_ascii=False)
+                    icon_filename = "icon.svg"
+                    for target_id in target_app_ids:
+                        target_app_dir = apps_dist_dir / target_id
+                        target_assets_dir = target_app_dir / 'assets'
+                        target_assets_dir.mkdir(parents=True, exist_ok=True)
                         
-                    for lang in languages:
-                        localized_meta = dict(meta_data)
-                        localized_meta["title"] = title_dict.get(lang, title_dict.get('en_US', ''))
-                        localized_meta["tagline"] = tagline_dict.get(lang, tagline_dict.get('en_US', ''))
-                        localized_meta["description"] = desc_dict.get(lang, desc_dict.get('en_US', ''))
-                        with open(target_app_dir / f'meta.{lang}.json', 'w', encoding='utf-8') as f:
-                            json.dump(localized_meta, f, indent=2, ensure_ascii=False)
+                        # Copy compose file
+                        shutil.copy2(compose_file, target_app_dir / 'docker-compose.yml')
+                        shutil.copy2(compose_file, target_app_dir / 'docker-compose.amd64.yml')
+                        
+                        # Copy assets
+                        for file in app_folder.iterdir():
+                            if file.is_file() and (file.name.startswith('icon.') or file.name.startswith('screenshot') or file.name.startswith('thumbnail')):
+                                shutil.copy2(file, target_assets_dir / file.name)
+                                if file.name.startswith('icon.'):
+                                    icon_filename = file.name
+
+                        meta_data = {
+                            "id": target_id,
+                            "title": title_dict,
+                            "tagline": tagline_dict,
+                            "description": desc_dict,
+                            "icon": f"apps/{target_id}/assets/{icon_filename}",
+                            "category": str(x_casaos.get('category', 'Others')),
+                            "author": str(x_casaos.get('author', '')),
+                            "developer": str(x_casaos.get('developer', '')),
+                            "architectures": architectures,
+                            "version": str(x_casaos.get('version', '1.0.0')),
+                            "index": str(x_casaos.get('index', '/')),
+                            "port_map": port_map
+                        }
+                        
+                        with open(target_app_dir / 'meta.json', 'w', encoding='utf-8') as f:
+                            json.dump(meta_data, f, indent=2, ensure_ascii=False)
+                            
+                        for lang in languages:
+                            localized_meta = dict(meta_data)
+                            localized_meta["title"] = title_dict.get(lang, title_dict.get('en_US', ''))
+                            localized_meta["tagline"] = tagline_dict.get(lang, tagline_dict.get('en_US', ''))
+                            localized_meta["description"] = desc_dict.get(lang, desc_dict.get('en_US', ''))
+                            with open(target_app_dir / f'meta.{lang}.json', 'w', encoding='utf-8') as f:
+                                json.dump(localized_meta, f, indent=2, ensure_ascii=False)
                             
                     index_entry = {
                         "id": app_id,
