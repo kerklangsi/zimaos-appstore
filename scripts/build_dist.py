@@ -91,6 +91,7 @@ def build_store():
     apps_dist_dir = dist_dir / 'apps'
     apps_dist_dir.mkdir(parents=True, exist_ok=True)
 
+    base_url = "https://kerklangsi.github.io/zimaos-appstore"
     default_name = store_config.get('name', {}).get('en_US', 'Custom AppStore')
     default_desc = store_config.get('description', {}).get('en_US', '')
     
@@ -171,6 +172,7 @@ def build_store():
                         "tagline": tagline_dict,
                         "description": desc_dict,
                         "icon": f"apps/{target_id}/assets/{icon_filename}",
+                        "thumbnail": "",
                         "screenshot_link": app_screenshots,
                         "category": category_name,
                         "categories": [category_name.lower()],
@@ -186,6 +188,7 @@ def build_store():
                         "version": str(x_casaos.get('version', '1.0.0')),
                         "index": str(x_casaos.get('index', '/')),
                         "port_map": port_map,
+                        "base_url": base_url,
                         "release_notes": release_notes_dict,
                         "tips": tips_dict,
                         "volumes": x_casaos.get('volumes', [])
@@ -219,7 +222,6 @@ def build_store():
                     "version": str(x_casaos.get('version', '1.0.0'))
                 })
 
-    base_url = "https://kerklangsi.github.io/zimaos-appstore"
     recommend_ids = [e['id'] for e in index_entries]
 
     cat_counts = {}
@@ -234,6 +236,8 @@ def build_store():
             "store_id": store_config.get('store_id', 'custom-appstore'),
             "name": name,
             "description": desc,
+            "maintainer": store_config.get('maintainer', 'kerklangsi'),
+            "url": "https://github.com/kerklangsi/zimaos-appstore",
             "app_count": len(index_entries),
             "base_url": base_url,
             "apps": index_entries,

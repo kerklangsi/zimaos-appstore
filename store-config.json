@@ -6,5 +6,6 @@
   },
   "description": {
     "en_US": "Custom ZimaOS App Store featuring AMP Game Server and GitHub Actions Runner."
-  }
+  },
+  "maintainer": "kerklangsi"
 }
