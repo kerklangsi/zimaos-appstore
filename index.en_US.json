@@ -19,18 +19,18 @@
       "version": "2.0.0"
     },
     {
-      "id": "ampdocker",
+      "id": "amp-docker",
       "title": "AMP Game Server",
-      "tagline": "CubeCoders AMP in a Docker container for game server management",
-      "category": "Others",
+      "tagline": "Powerful Game Server Management Panel in Docker for ZimaOS",
+      "category": "Utilities",
       "author": "kerklangsi",
       "developer": "CubeCoders / kerklangsi",
       "architectures": [
         "amd64"
       ],
-      "icon": "/apps/ampdocker/assets/icon.svg",
-      "compose_url": "/apps/ampdocker/docker-compose.yml",
-      "meta_url": "/apps/ampdocker/meta.json",
+      "icon": "/apps/amp-docker/assets/icon.svg",
+      "compose_url": "/apps/amp-docker/docker-compose.yml",
+      "meta_url": "/apps/amp-docker/meta.json",
       "version": "1.0.0"
     }
   ]

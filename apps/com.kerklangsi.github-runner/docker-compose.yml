@@ -28,7 +28,13 @@ x-casaos:
   author: kerklangsi
   category: Developer
   description:
-    en_US: Manage multiple self-hosted GitHub Actions runners inside a single container with live logs, resource monitoring, and web UI.
+    en_US: |
+      GitHub Runner Manager allows you to easily spawn, configure, and monitor self-hosted GitHub Actions runners directly on ZimaOS.
+
+      ### Features:
+      - **Multi-Runner Support:** Run multiple isolated GitHub runners in parallel.
+      - **Live Monitoring:** View live execution logs, CPU/Memory usage, and job status from the Web UI.
+      - **Persistent Storage:** Workspaces and runner states persist across container restarts.
   developer: kerklangsi
   icon: https://cdn.jsdelivr.net/gh/kerklangsi/zimaos-appstore@gh-pages/apps/github-runner/assets/icon.svg
   id: github-runner
@@ -42,6 +48,17 @@ x-casaos:
   title:
     en_US: GitHub Runner Manager
   version: 2.0.0
+  release_notes:
+    en_US: |
+      ### What's New in v2.0.0
+      - Full ZimaOS V2 App Store integration.
+      - Enhanced web dashboard with real-time log streaming.
+      - Improved persistent bind mount volume support.
+  tips:
+    before_install:
+      en_US: Make sure you have your GitHub repository URL and a Personal Access Token (PAT) or Runner Registration Token from GitHub Settings -> Actions -> Runners.
+    after_install:
+      en_US: Access the Web Dashboard on port 3000 (http://<your-zimaos-ip>:3000) to configure your repository connection and manage active runners.
   volumes:
     - container: /opt/github-runners
       description:
