@@ -76,6 +76,9 @@ def build_store():
                     target_app_ids = [app_id]
                     if '.' not in app_id:
                         target_app_ids.append(f"com.kerklangsi.{app_id}")
+                        clean_id = app_id.replace('-', '').replace('_', '')
+                        if clean_id != app_id:
+                            target_app_ids.append(f"com.kerklangsi.{clean_id}")
 
                     title = x_casaos.get('title', {})
                     tagline = x_casaos.get('tagline', {})
