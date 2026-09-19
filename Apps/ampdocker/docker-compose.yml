@@ -19,7 +19,7 @@ services:
         source: /var/run/docker.sock
         target: /var/run/docker.sock
       - type: bind
-        source: /DATA/AppData/ampdocker/data
+        source: /DATA/AppData/$AppID/data
         target: /home/amp/.local/share/CubeCoders/AMP
 
 x-casaos:
@@ -39,7 +39,6 @@ x-casaos:
   developer: CubeCoders / kerklangsi
   icon: https://cdn.jsdelivr.net/gh/kerklangsi/zimaos-appstore@gh-pages/apps/amp-docker/assets/icon.svg
   id: amp-docker
-  store_app_id: amp-docker
   index: /
   main: amp-docker
   port_map: "8080"

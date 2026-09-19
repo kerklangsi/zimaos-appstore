@@ -17,10 +17,10 @@ services:
     stdin_open: true
     volumes:
       - type: bind
-        source: /DATA/AppData/github-runner/runner
+        source: /DATA/AppData/$AppID/runner
         target: /opt/github-runners
       - type: bind
-        source: /DATA/AppData/github-runner/data
+        source: /DATA/AppData/$AppID/data
         target: /app/data
 
 x-casaos:
@@ -39,7 +39,6 @@ x-casaos:
   developer: kerklangsi
   icon: https://cdn.jsdelivr.net/gh/kerklangsi/zimaos-appstore@gh-pages/apps/github-runner/assets/icon.svg
   id: github-runner
-  store_app_id: githubrunner
   index: /
   main: github-runner
   port_map: "3000"
