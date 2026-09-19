@@ -10,6 +10,9 @@
     "apps/githubrunner/assets/image1.png"
   ],
   "category": "Developer",
+  "categories": [
+    "developer"
+  ],
   "author": "kerklangsi",
   "developer": "kerklangsi",
   "architectures": [
@@ -20,6 +23,9 @@
   "disk": "1.0 GB",
   "estimated_disk": "1.0 GB",
   "min_storage": 1048576000,
+  "min_image_size": {
+    "amd64": 1048576000
+  },
   "version": "2.0.0",
   "index": "/",
   "port_map": "3000",

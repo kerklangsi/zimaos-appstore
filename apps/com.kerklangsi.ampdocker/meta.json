@@ -12,6 +12,9 @@
   "icon": "apps/com.kerklangsi.ampdocker/assets/icon.svg",
   "screenshot_link": [],
   "category": "Others",
+  "categories": [
+    "others"
+  ],
   "author": "kerklangsi",
   "developer": "CubeCoders / kerklangsi",
   "architectures": [
@@ -22,6 +25,9 @@
   "disk": "2.0 GB",
   "estimated_disk": "2.0 GB",
   "min_storage": 2097152000,
+  "min_image_size": {
+    "amd64": 2097152000
+  },
   "version": "1.0.0",
   "index": "/",
   "port_map": "8080",
