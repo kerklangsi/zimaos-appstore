@@ -11,14 +11,14 @@
   },
   "icon": "apps/com.kerklangsi.ampdocker/assets/icon.svg",
   "screenshot_link": [],
-  "category": "Utilities",
+  "category": "Developer",
   "author": "kerklangsi",
   "developer": "CubeCoders / kerklangsi",
   "architectures": [
     "amd64"
   ],
-  "min_memory": 512,
-  "min_disk": 2000,
+  "min_memory": 536870912,
+  "min_disk": 2097152000,
   "version": "1.0.0",
   "index": "/",
   "port_map": "8080",

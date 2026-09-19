@@ -21,8 +21,8 @@
   "architectures": [
     "amd64"
   ],
-  "min_memory": 256,
-  "min_disk": 1000,
+  "min_memory": 268435456,
+  "min_disk": 1048576000,
   "version": "2.0.0",
   "index": "/",
   "port_map": "3000",
