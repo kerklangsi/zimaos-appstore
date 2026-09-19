@@ -24,6 +24,13 @@ def load_json(filepath):
     with open(filepath, 'r', encoding='utf-8') as f:
         return json.load(f)
 
+# Parses memory and disk text values into numeric MB integers.
+def parse_mb_int(val, default):
+    if not val:
+        return default
+    digits = ''.join(c for c in str(val) if c.isdigit())
+    return int(digits) if digits else default
+
 # Safely parses docker-compose.yml manifest using PyYAML.
 def parse_compose_yaml(filepath):
     with open(filepath, 'r', encoding='utf-8') as f:
@@ -117,6 +124,14 @@ def build_store():
                 if not isinstance(screenshot_link, list):
                     screenshot_link = [screenshot_link] if screenshot_link else []
 
+                raw_category = str(x_casaos.get('category', 'Others'))
+                category_name = raw_category.replace('appstore.category.', '')
+
+                compose_yaml = parse_compose_yaml(compose_file)
+                service_mem = next((s.get('deploy', {}).get('resources', {}).get('reservations', {}).get('memory') or s.get('deploy', {}).get('resources', {}).get('limits', {}).get('memory') for s in compose_yaml.get('services', {}).values() if isinstance(s, dict)), None)
+                min_memory = parse_mb_int(x_casaos.get('min_memory') or service_mem, 256)
+                min_disk = parse_mb_int(x_casaos.get('min_disk'), 1000)
+
                 icon_filename = "icon.svg"
                 for target_id in target_app_ids:
                     target_app_dir = apps_dist_dir / target_id
@@ -147,10 +162,12 @@ def build_store():
                         "description": desc_dict,
                         "icon": f"apps/{target_id}/assets/{icon_filename}",
                         "screenshot_link": app_screenshots,
-                        "category": str(x_casaos.get('category', 'Others')),
+                        "category": category_name,
                         "author": str(x_casaos.get('author', '')),
                         "developer": str(x_casaos.get('developer', '')),
                         "architectures": architectures,
+                        "min_memory": min_memory,
+                        "min_disk": min_disk,
                         "version": str(x_casaos.get('version', '1.0.0')),
                         "index": str(x_casaos.get('index', '/')),
                         "port_map": port_map,
@@ -177,7 +194,7 @@ def build_store():
                     "id": app_id,
                     "title": title_dict.get('en_US', ''),
                     "tagline": tagline_dict.get('en_US', ''),
-                    "category": str(x_casaos.get('category', 'Others')),
+                    "category": category_name,
                     "author": str(x_casaos.get('author', '')),
                     "developer": str(x_casaos.get('developer', '')),
                     "architectures": architectures,

@@ -28,6 +28,8 @@ x-casaos:
     - amd64
   author: kerklangsi
   category: Developer
+  min_memory: "256MB"
+  min_disk: "1000MB"
   description:
     en_US: |
       GitHub Runner Manager allows you to easily spawn, configure, and monitor self-hosted GitHub Actions runners directly on ZimaOS.
