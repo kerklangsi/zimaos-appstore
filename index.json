@@ -5,30 +5,10 @@
   "description": "Custom ZimaOS App Store featuring AMP Game Server and GitHub Actions Runner.",
   "maintainer": "kerklangsi",
   "url": "https://github.com/kerklangsi/zimaos-appstore",
-  "updated_at": "2026-09-23T12:12:43Z",
+  "updated_at": "2026-09-23T14:40:48Z",
   "app_count": 2,
   "base_url": "https://kerklangsi.github.io/zimaos-appstore",
   "apps": [
-    {
-      "id": "com.kerklangsi.ampdocker",
-      "title": "AMP Game Server",
-      "tagline": "Powerful Game Server Management Panel in Docker for ZimaOS",
-      "category": "Others",
-      "categories": [
-        "others"
-      ],
-      "author": "kerklangsi",
-      "developer": "CubeCoders / kerklangsi",
-      "architectures": [
-        "amd64"
-      ],
-      "icon": "/apps/com.kerklangsi.ampdocker/assets/icon.svg",
-      "thumbnail": "",
-      "compose_url": "/apps/com.kerklangsi.ampdocker/docker-compose.yml",
-      "meta_url": "/apps/com.kerklangsi.ampdocker/meta.json",
-      "version": "1.0.0",
-      "content_hash": "f3e60f61"
-    },
     {
       "id": "com.kerklangsi.githubrunner",
       "title": "GitHub Runner Manager",
@@ -48,10 +28,30 @@
       "meta_url": "/apps/com.kerklangsi.githubrunner/meta.json",
       "version": "3.1.0",
       "content_hash": "81bc57b0"
+    },
+    {
+      "id": "com.kerklangsi.ampdocker",
+      "title": "AMP Game Server",
+      "tagline": "Powerful Game Server Management Panel in Docker for ZimaOS",
+      "category": "Others",
+      "categories": [
+        "others"
+      ],
+      "author": "kerklangsi",
+      "developer": "CubeCoders / kerklangsi",
+      "architectures": [
+        "amd64"
+      ],
+      "icon": "/apps/com.kerklangsi.ampdocker/assets/icon.svg",
+      "thumbnail": "",
+      "compose_url": "/apps/com.kerklangsi.ampdocker/docker-compose.yml",
+      "meta_url": "/apps/com.kerklangsi.ampdocker/meta.json",
+      "version": "1.0.0",
+      "content_hash": "f3e60f61"
     }
   ],
   "recommend": [
-    "com.kerklangsi.ampdocker",
-    "com.kerklangsi.githubrunner"
+    "com.kerklangsi.githubrunner",
+    "com.kerklangsi.ampdocker"
   ]
 }

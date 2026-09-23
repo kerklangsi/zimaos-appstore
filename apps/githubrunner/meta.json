@@ -12,9 +12,9 @@
   "icon": "/apps/githubrunner/assets/icon.svg",
   "thumbnail": "",
   "screenshot_link": [
-    "/apps/githubrunner/assets/image1.png",
     "/apps/githubrunner/assets/image2.png",
-    "/apps/githubrunner/assets/image3.png"
+    "/apps/githubrunner/assets/image3.png",
+    "/apps/githubrunner/assets/image1.png"
   ],
   "category": "Developer",
   "categories": [

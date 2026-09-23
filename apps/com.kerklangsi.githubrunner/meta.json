@@ -12,9 +12,9 @@
   "icon": "/apps/com.kerklangsi.githubrunner/assets/icon.svg",
   "thumbnail": "",
   "screenshot_link": [
-    "/apps/com.kerklangsi.githubrunner/assets/image1.png",
     "/apps/com.kerklangsi.githubrunner/assets/image2.png",
-    "/apps/com.kerklangsi.githubrunner/assets/image3.png"
+    "/apps/com.kerklangsi.githubrunner/assets/image3.png",
+    "/apps/com.kerklangsi.githubrunner/assets/image1.png"
   ],
   "category": "Developer",
   "categories": [
