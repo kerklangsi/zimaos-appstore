@@ -12,9 +12,9 @@
   "icon": "/apps/githubrunner/assets/icon.svg",
   "thumbnail": "",
   "screenshot_link": [
+    "/apps/githubrunner/assets/image1.png",
     "/apps/githubrunner/assets/image2.png",
-    "/apps/githubrunner/assets/image3.png",
-    "/apps/githubrunner/assets/image1.png"
+    "/apps/githubrunner/assets/image3.png"
   ],
   "category": "Developer",
   "categories": [
@@ -33,12 +33,12 @@
   "min_image_size": {
     "amd64": 1048576000
   },
-  "version": "3.1.0",
+  "version": "3.2.0",
   "index": "/",
   "port_map": "3000",
   "base_url": "https://kerklangsi.github.io/zimaos-appstore",
   "release_notes": {
-    "en_US": "### What's New in v3.1.0\n- Added persistent tool cache support (/opt/hostedtoolcache) for setup-python, setup-node, etc.\n- Added persistent package cache (/home/runner/.cache) for Playwright browsers and pip wheels.\n- Pre-installed Python 3.11 in base runner environment.\n"
+    "en_US": "### What's New in v3.2.0\n- Added dedicated shared data volume (/opt/shared_data) organized by repository.\n- Unified toolcache and package cache into a single persistent cache volume (/home/runner/.cache).\n"
   },
   "tips": {
     "before_install": {
@@ -68,15 +68,15 @@
       }
     },
     {
-      "container": "/opt/hostedtoolcache",
+      "container": "/opt/shared_data",
       "description": {
-        "en_US": "Persistent tool cache for setup-python, setup-node, etc."
+        "en_US": "Shared persistent repository data and authentication tokens"
       }
     },
     {
       "container": "/home/runner/.cache",
       "description": {
-        "en_US": "Persistent cache for Playwright browsers and pip packages"
+        "en_US": "Unified cache for tool installations (Python, Node) and packages (pip, Playwright, npm)"
       }
     }
   ]

@@ -27,8 +27,8 @@ services:
         source: /DATA/AppData/$AppID/data
         target: /app/data
       - type: bind
-        source: /DATA/AppData/$AppID/toolcache
-        target: /opt/hostedtoolcache
+        source: /DATA/AppData/$AppID/shared_data
+        target: /opt/shared_data
       - type: bind
         source: /DATA/AppData/$AppID/cache
         target: /home/runner/.cache
@@ -59,13 +59,12 @@ x-casaos:
     en_US: Multi-runner GitHub Actions manager with Web Dashboard and persistent tool caching for ZimaOS
   title:
     en_US: GitHub Runner Manager
-  version: 3.1.0
+  version: 3.2.0
   release_notes:
     en_US: |
-      ### What's New in v3.1.0
-      - Added persistent tool cache support (/opt/hostedtoolcache) for setup-python, setup-node, etc.
-      - Added persistent package cache (/home/runner/.cache) for Playwright browsers and pip wheels.
-      - Pre-installed Python 3.11 in base runner environment.
+      ### What's New in v3.2.0
+      - Added dedicated shared data volume (/opt/shared_data) organized by repository.
+      - Unified toolcache and package cache into a single persistent cache volume (/home/runner/.cache).
   tips:
     before_install:
       en_US: Obtain your GitHub Personal Access Token (PAT with repo scope) or Runner Registration Token from GitHub Settings -> Actions -> Runners before installing.
@@ -81,12 +80,12 @@ x-casaos:
     - container: /app/data
       description:
         en_US: Application Data
-    - container: /opt/hostedtoolcache
+    - container: /opt/shared_data
       description:
-        en_US: Persistent tool cache for setup-python, setup-node, etc.
+        en_US: Shared persistent repository data and authentication tokens
     - container: /home/runner/.cache
       description:
-        en_US: Persistent cache for Playwright browsers and pip packages
+        en_US: Unified cache for tool installations (Python, Node) and packages (pip, Playwright, npm)
 
 
 

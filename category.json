@@ -1,12 +1,12 @@
 [
   {
-    "id": "Developer",
-    "name": "Developer",
+    "id": "Others",
+    "name": "Others",
     "count": 1
   },
   {
-    "id": "Others",
-    "name": "Others",
+    "id": "Developer",
+    "name": "Developer",
     "count": 1
   }
 ]
