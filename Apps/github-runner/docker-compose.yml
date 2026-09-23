@@ -28,7 +28,7 @@ services:
         target: /app/data
       - type: bind
         source: /DATA/AppData/$AppID/shared_data
-        target: /opt/github-runners/shared_data
+        target: /opt/shared_data
       - type: bind
         source: /DATA/AppData/$AppID/cache
         target: /home/runner/.cache
@@ -80,7 +80,7 @@ x-casaos:
     - container: /app/data
       description:
         en_US: Application Data
-    - container: /opt/github-runners/shared_data
+    - container: /opt/shared_data
       description:
         en_US: Shared persistent repository data and authentication tokens
     - container: /home/runner/.cache
