@@ -12,16 +12,26 @@ services:
       - REPO_URL=https://github.com/kerklangsi/your-repo
       - ACCESS_TOKEN=
       - RUNNER_TOKEN=
+      - RUNNER_TOOL_CACHE=/opt/hostedtoolcache
     restart: unless-stopped
     tty: true
     stdin_open: true
     volumes:
+      - type: bind
+        source: /var/run/docker.sock
+        target: /var/run/docker.sock
       - type: bind
         source: /DATA/AppData/$AppID/runner
         target: /opt/github-runners
       - type: bind
         source: /DATA/AppData/$AppID/data
         target: /app/data
+      - type: bind
+        source: /DATA/AppData/$AppID/toolcache
+        target: /opt/hostedtoolcache
+      - type: bind
+        source: /DATA/AppData/$AppID/cache
+        target: /home/runner/.cache
 
 x-casaos:
   architectures:
@@ -37,7 +47,7 @@ x-casaos:
       ### Features:
       - **Multi-Runner Support:** Run multiple isolated GitHub runners in parallel.
       - **Live Monitoring:** View live execution logs, CPU/Memory usage, and job status from the Web UI.
-      - **Persistent Storage:** Workspaces and runner states persist across container restarts.
+      - **Persistent Storage & Tool Caching:** Workspaces, setup-python tool cache, Playwright browsers, and pip downloads persist across container restarts.
   developer: kerklangsi
   icon: https://kerklangsi.github.io/zimaos-appstore/apps/githubrunner/assets/icon.svg
   id: com.kerklangsi.githubrunner
@@ -46,28 +56,37 @@ x-casaos:
   port_map: "3000"
   scheme: http
   tagline:
-    en_US: Multi-runner GitHub Actions manager with Web Dashboard for ZimaOS
+    en_US: Multi-runner GitHub Actions manager with Web Dashboard and persistent tool caching for ZimaOS
   title:
     en_US: GitHub Runner Manager
-  version: 2.0.0
+  version: 3.1.0
   release_notes:
     en_US: |
-      ### What's New in v2.0.0
-      - Full ZimaOS V2 App Store integration.
-      - Enhanced web dashboard with real-time log streaming.
-      - Improved persistent bind mount volume support.
+      ### What's New in v3.1.0
+      - Added persistent tool cache support (/opt/hostedtoolcache) for setup-python, setup-node, etc.
+      - Added persistent package cache (/home/runner/.cache) for Playwright browsers and pip wheels.
+      - Pre-installed Python 3.11 in base runner environment.
   tips:
     before_install:
       en_US: Obtain your GitHub Personal Access Token (PAT with repo scope) or Runner Registration Token from GitHub Settings -> Actions -> Runners before installing.
     after_install:
       en_US: "Login / Auth Info: Open the Web Dashboard at http://<your-zimaos-ip>:3000. Enter your GitHub Repository URL (https://github.com/owner/repo) and PAT / Runner Token to register and connect runners."
   volumes:
+    - container: /var/run/docker.sock
+      description:
+        en_US: Host Docker socket for running container workflows
     - container: /opt/github-runners
       description:
         en_US: GitHub Runners Storage
     - container: /app/data
       description:
         en_US: Application Data
+    - container: /opt/hostedtoolcache
+      description:
+        en_US: Persistent tool cache for setup-python, setup-node, etc.
+    - container: /home/runner/.cache
+      description:
+        en_US: Persistent cache for Playwright browsers and pip packages
 
 
 
