@@ -63,7 +63,7 @@ x-casaos:
   release_notes:
     en_US: |
       ### What's New in v3.2.0
-      - Added dedicated shared data volume (/opt/github-runners/shared_data) organized by repository.
+      - Added dedicated shared data volume (/opt/shared_data) organized by repository.
       - Unified toolcache and package cache into a single persistent cache volume (/home/runner/.cache).
   tips:
     before_install:
