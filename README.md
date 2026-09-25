@@ -64,7 +64,8 @@ zimaos-appstore/
 ├── scripts/
 │   ├── build_dist.py            # Local zero-dependency v2 build script
 │   ├── sync_upstream.py         # Automated upstream compose sync script
-│   └── import_and_sync_apps.py  # URL crawler, asset downloader & catalog sync
+│   ├── import_and_sync_apps.py  # URL crawler, asset downloader & catalog sync
+│   └── resolve_release_version.py # Context-aware release version resolver
 └── .github/
     └── workflows/
         ├── validate.yml         # PR validation workflow
