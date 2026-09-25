@@ -565,6 +565,7 @@ def process_apps_md_and_sync(repo_root):
 
     from sync_upstream import merge_compose_data, sync_all_apps
 
+    total_changes = 0
     for item in entries:
         is_gh = 'github.com' in item
         print(f"\n[SCAN] Scanning apps.md entry: {item}")
@@ -657,6 +658,9 @@ def process_apps_md_and_sync(repo_root):
         print_app_summary(app_summary_data)
         update_app_log(app_folder, app_summary_data, has_changes=has_changes)
 
+        if has_changes:
+            total_changes += 1
+
         # Ensure registered in upstream-apps.json
         if app_id not in upstream_config and 'raw.githubusercontent.com' in app_res['upstream_url']:
             upstream_config[app_id] = {
@@ -675,6 +679,40 @@ def process_apps_md_and_sync(repo_root):
 
     sync_all_apps(upstream_json_path)
     update_readme_catalog(repo_root)
+
+    if total_changes > 0:
+        bump_store_version(repo_root, bump_type='minor')
+
+# Bumps the store semantic version in store-config.json and returns the updated version string
+def bump_store_version(repo_root, bump_type='minor'):
+    cfg_path = os.path.join(repo_root, 'store-config.json')
+    if not os.path.exists(cfg_path):
+        return '3.0.0'
+    try:
+        with open(cfg_path, 'r', encoding='utf-8') as f:
+            data = json.load(f)
+        cur = data.get('store_version', '3.0.0')
+        parts = [int(p) if p.isdigit() else 0 for p in cur.split('.')]
+        while len(parts) < 3:
+            parts.append(0)
+        if bump_type == 'major':
+            parts[0] += 1
+            parts[1] = 0
+            parts[2] = 0
+        elif bump_type == 'minor':
+            parts[1] += 1
+            parts[2] = 0
+        else:
+            parts[2] += 1
+        new_ver = f"{parts[0]}.{parts[1]}.{parts[2]}"
+        data['store_version'] = new_ver
+        with open(cfg_path, 'w', encoding='utf-8') as f:
+            json.dump(data, f, indent=2, ensure_ascii=False)
+        print(f"[VERSION] Auto-bumped store version from {cur} to {new_ver}")
+        return new_ver
+    except Exception as e:
+        print(f"[VERSION] Failed to bump version: {e}")
+        return '3.0.0'
 
 # Program entry point for importing apps and synchronizing store catalog
 def main():

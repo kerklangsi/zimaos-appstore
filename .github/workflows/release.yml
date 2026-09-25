@@ -73,22 +73,32 @@ jobs:
         id: deployment
         uses: actions/deploy-pages@v5
 
-      - name: Refresh latest release
-        if: ${{ (inputs.tag || (startsWith(github.ref, 'refs/tags/') && github.ref_name) || 'latest') == 'latest' }}
+      - name: Resolve Release Version
+        id: get_version
         run: |
-          gh release delete latest --yes || true
+          if [ -n "${{ inputs.tag }}" ]; then
+            TAG="${{ inputs.tag }}"
+          elif [[ "${{ github.ref }}" == refs/tags/v* ]]; then
+            TAG="${{ github.ref_name }}"
+          else
+            STORE_VER=$(python -c "import json; print(json.load(open('store-config.json')).get('store_version', '3.0.0'))")
+            TAG="v${STORE_VER}"
+          fi
+          echo "tag=${TAG}" >> $GITHUB_OUTPUT
+          echo "title=${{ inputs.title || '' }}" >> $GITHUB_OUTPUT
+
+      - name: Update latest tag pointer
+        run: |
           git tag -f latest ${{ github.sha }}
           git push -f origin latest || true
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Create or Update GitHub Release
+      - name: Publish Versioned GitHub Release
         uses: softprops/action-gh-release@v3
         with:
-          tag_name: ${{ inputs.tag || (startsWith(github.ref, 'refs/tags/') && github.ref_name) || 'latest' }}
-          name: ${{ inputs.title || (startsWith(github.ref, 'refs/tags/') && github.ref_name) || 'ZimaOS App Store Release' }}
-          body: ${{ inputs.description || 'Latest release of custom ZimaOS App Store assets.' }}
-          generate_release_notes: ${{ inputs.description == '' && startsWith(github.ref, 'refs/tags/v') }}
+          tag_name: ${{ steps.get_version.outputs.tag }}
+          name: ${{ steps.get_version.outputs.title || format('ZimaOS App Store {0}', steps.get_version.outputs.tag) }}
+          body: ${{ inputs.description || format('Release {0} of custom ZimaOS App Store assets.', steps.get_version.outputs.tag) }}
+          make_latest: true
           files: |
             dist/appstore.zip
             dist/store.json
