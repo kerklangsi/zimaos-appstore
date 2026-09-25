@@ -76,16 +76,17 @@ jobs:
       - name: Resolve Release Version
         id: get_version
         run: |
-          if [ -n "${{ inputs.tag }}" ]; then
-            TAG="${{ inputs.tag }}"
-          elif [[ "${{ github.ref }}" == refs/tags/v* ]]; then
-            TAG="${{ github.ref_name }}"
-          else
-            STORE_VER=$(python -c "import json; print(json.load(open('store-config.json')).get('store_version', '3.0.0'))")
-            TAG="v${STORE_VER}"
-          fi
-          echo "tag=${TAG}" >> $GITHUB_OUTPUT
+          python scripts/resolve_release_version.py "${{ inputs.tag }}" --ci >> $GITHUB_OUTPUT
           echo "title=${{ inputs.title || '' }}" >> $GITHUB_OUTPUT
+
+      - name: Commit Major Version Bump
+        if: steps.get_version.outputs.bumped == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add store-config.json
+          git commit -m "chore(release): bump store version to ${{ steps.get_version.outputs.tag }} [skip ci]" || true
+          git push origin main || true
 
       - name: Update latest tag pointer
         run: |
