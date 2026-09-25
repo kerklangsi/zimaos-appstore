@@ -1,0 +1,12 @@
+{
+  "github-runner": {
+    "name": "GitHub Runner Manager",
+    "upstream_url": "https://raw.githubusercontent.com/kerklangsi/github-runner-docker/main/Apps/github-runner-docker/docker-compose.yml",
+    "target_compose": "Apps/github-runner/docker-compose.yml"
+  },
+  "ampdocker": {
+    "name": "CubeCoders AMP",
+    "upstream_url": "https://raw.githubusercontent.com/kerklangsi/amp-docker/main/docker-compose.yml",
+    "target_compose": "Apps/ampdocker/docker-compose.yml"
+  }
+}

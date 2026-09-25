@@ -1,0 +1,57 @@
+name: Sync Upstream Compose Files
+
+on:
+  push:
+    paths:
+      - 'apps.md'
+  schedule:
+    - cron: '0 */6 * * *'
+  workflow_dispatch:
+  repository_dispatch:
+    types: [upstream-updated, app-release]
+
+permissions:
+  contents: write
+  actions: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v7
+
+      - name: Setup Python
+        uses: actions/setup-python@v7
+        with:
+          python-version: "3.11"
+
+      - name: Install Dependencies
+        run: |
+          python -m pip install pyyaml
+
+      - name: Run Import & Sync Engine
+        run: |
+          python scripts/import_and_sync_apps.py
+
+      - name: Check for Changes & Commit
+        id: git_status
+        run: |
+          if [ -n "$(git status --porcelain)" ]; then
+            echo "changed=true" >> $GITHUB_OUTPUT
+            git config user.name "github-actions[bot]"
+            git config user.email "github-actions[bot]@users.noreply.github.com"
+            git add .
+            git commit -m "chore(sync): import and sync apps from apps.md and update catalog"
+            git push origin main
+          else
+            echo "changed=false" >> $GITHUB_OUTPUT
+            echo "No upstream changes detected."
+          fi
+
+      - name: Trigger Release Workflow
+        if: steps.git_status.outputs.changed == 'true'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh workflow run release.yml --ref main || true

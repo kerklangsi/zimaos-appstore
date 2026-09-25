@@ -11,8 +11,8 @@
 
 | Application | Category | Description | Source Docker Image |
 | :--- | :--- | :--- | :--- |
-| **AMP Game Server** | `Others` | CubeCoders AMP game server management panel to host dedicated servers on ZimaOS. | `kerklangsi/amp-docker:latest` |
-| **GitHub Actions Runner** | `Developer` | Multi-runner GitHub Actions manager with Web Dashboard for ZimaOS. | `kerklangsi/github-runner-docker:latest` |
+| **Amp Docker** | `Games` | CubeCoders AMP in a Docker Image | `kerklangsi/amp-docker:latest` |
+| **GitHub Runner Manager** | `Developer Tools` | Full-stack Web GUI and Docker container manager for GitHub Actions self-hosted runners | `kerklangsi/github-runner-docker:latest` |
 
 ---
 
@@ -45,21 +45,31 @@ https://cdn.jsdelivr.net/gh/kerklangsi/zimaos-appstore@gh-pages/appstore.zip
 ```text
 zimaos-appstore/
 ├── Apps/
-│   ├── AmpDocker/
+│   ├── ampdocker/
 │   │   ├── docker-compose.yml   # App Compose manifest + x-casaos metadata
-│   │   └── icon.svg             # Custom SVG App Icon
-│   └── GithubRunnerDocker/
+│   │   ├── icon.svg             # Custom SVG App Icon
+│   │   ├── README.md            # Upstream documentation fetched from URL
+│   │   └── log.md               # Timestamped sync history & asset updates
+│   └── github-runner/
 │       ├── docker-compose.yml   # App Compose manifest + x-casaos metadata
-│       └── icon.svg             # Custom SVG App Icon
+│       ├── icon.svg             # Custom SVG App Icon
+│       ├── picture/             # Screenshots directory
+│       ├── README.md            # Upstream documentation fetched from URL
+│       └── log.md               # Timestamped sync history & asset updates
+├── apps.md                      # Source list of GitHub and Docker Hub URLs
 ├── store-config.json            # Store identity & localized store metadata (en_US)
 ├── supported-languages.json     # Locales candidate list ["en_US"]
+├── upstream-apps.json           # Upstream app repositories mapping configuration
 ├── LICENSE                      # MIT License
 ├── scripts/
-│   └── build_dist.py            # Local zero-dependency v2 build script
+│   ├── build_dist.py            # Local zero-dependency v2 build script
+│   ├── sync_upstream.py         # Automated upstream compose sync script
+│   └── import_and_sync_apps.py  # URL crawler, asset downloader & catalog sync
 └── .github/
     └── workflows/
         ├── validate.yml         # PR validation workflow
-        └── release.yml          # GitHub Pages deployment workflow
+        ├── release.yml          # GitHub Pages deployment workflow
+        └── sync-upstream.yml    # Scheduled upstream app sync workflow
 ```
 
 ---

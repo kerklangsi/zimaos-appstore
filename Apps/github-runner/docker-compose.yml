@@ -1,91 +1,91 @@
-name: github-runner
+name: github-runner-docker
 services:
   github-runner:
     image: kerklangsi/github-runner-docker:latest
     container_name: github-runner-docker
     network_mode: bridge
     ports:
-      - target: 3000
-        published: "3000"
-        protocol: tcp
+    - target: 8080
+      published: 8080
+      protocol: tcp
     environment:
-      - REPO_URL=https://github.com/kerklangsi/your-repo
-      - ACCESS_TOKEN=
-      - RUNNER_TOKEN=
-      - RUNNER_TOOL_CACHE=/opt/hostedtoolcache
+    - PORT=8080
+    - DATA_DIR=/app/data
+    - RUNNERS_DIR=/opt/github-runners
+    - RUNNER_TOOL_CACHE=/opt/hostedtoolcache
     restart: unless-stopped
     tty: true
     stdin_open: true
     volumes:
-      - type: bind
-        source: /var/run/docker.sock
-        target: /var/run/docker.sock
-      - type: bind
-        source: /DATA/AppData/$AppID/runner
-        target: /opt/github-runners
-      - type: bind
-        source: /DATA/AppData/$AppID/data
-        target: /app/data
-      - type: bind
-        source: /DATA/AppData/$AppID/shared_data
-        target: /opt/shared_data
-      - type: bind
-        source: /DATA/AppData/$AppID/cache
-        target: /home/runner/.cache
-
+    - type: bind
+      source: /var/run/docker.sock
+      target: /var/run/docker.sock
+    - type: bind
+      source: /DATA/AppData/$AppID/data
+      target: /app/data
+    - type: bind
+      source: /DATA/AppData/$AppID/runner
+      target: /opt/github-runners
+    - type: bind
+      source: /DATA/AppData/$AppID/shared_data
+      target: /opt/shared_data
+    - type: bind
+      source: /DATA/AppData/$AppID/cache
+      target: /home/runner/.cache
 x-casaos:
   architectures:
-    - amd64
-  author: kerklangsi
-  category: Developer
-  min_memory: "256MB"
-  min_disk: "1000MB"
+  - amd64
+  - arm64
+  author: Kerk Langsi
+  category: Developer Tools
+  min_memory: 256MB
+  min_disk: 1000MB
   description:
-    en_US: |
-      GitHub Runner Manager allows you to easily spawn, configure, and monitor self-hosted GitHub Actions runners directly on ZimaOS.
-
-      ### Features:
-      - **Multi-Runner Support:** Run multiple isolated GitHub runners in parallel.
-      - **Live Monitoring:** View live execution logs, CPU/Memory usage, and job status from the Web UI.
-      - **Persistent Storage & Tool Caching:** Workspaces, setup-python tool cache, Playwright browsers, and pip downloads persist across container restarts.
-  developer: kerklangsi
-  icon: https://kerklangsi.github.io/zimaos-appstore/apps/githubrunner/assets/icon.svg
-  id: com.kerklangsi.githubrunner
+    en_us: Full-stack Web GUI and Docker container manager for GitHub Actions self-hosted
+      runners. Easily provision, monitor, control, and update multiple GitHub runner
+      instances from a high-performance web dashboard.
+  developer: Kerk Langsi
+  icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/github.png
+  id: github-runner-docker
   index: /
   main: github-runner
-  port_map: "3000"
+  port_map: '8080'
   scheme: http
   tagline:
-    en_US: Multi-runner GitHub Actions manager with Web Dashboard and persistent tool caching for ZimaOS
+    en_us: Web GUI & Container Supervisor for GitHub Actions Self-Hosted Runners
   title:
-    en_US: GitHub Runner Manager
-  version: 3.2.0
+    en_us: GitHub Runner Manager
+  version: 3.0.0
   release_notes:
-    en_US: |
-      ### What's New in v3.2.0
+    en_US: '### What''s New in v3.2.0
+
       - Added dedicated shared data volume (/opt/shared_data) organized by repository.
-      - Unified toolcache and package cache into a single persistent cache volume (/home/runner/.cache).
+
+      - Unified toolcache and package cache into a single persistent cache volume
+      (/home/runner/.cache).
+
+      '
   tips:
     before_install:
-      en_US: Obtain your GitHub Personal Access Token (PAT with repo scope) or Runner Registration Token from GitHub Settings -> Actions -> Runners before installing.
+      en_US: Ensure port 8080 is not in use before installing.
     after_install:
-      en_US: "Login / Auth Info: Open the Web Dashboard at http://<your-zimaos-ip>:3000. Enter your GitHub Repository URL (https://github.com/owner/repo) and PAT / Runner Token to register and connect runners."
+      en_US: Open the Web Dashboard at http://<your-zimaos-ip>:8080
   volumes:
-    - container: /var/run/docker.sock
-      description:
-        en_US: Host Docker socket for running container workflows
-    - container: /opt/github-runners
-      description:
-        en_US: GitHub Runners Storage
-    - container: /app/data
-      description:
-        en_US: Application Data
-    - container: /opt/shared_data
-      description:
-        en_US: Shared persistent repository data and authentication tokens
-    - container: /home/runner/.cache
-      description:
-        en_US: Unified cache for tool installations (Python, Node) and packages (pip, Playwright, npm)
-
-
-
+  - container: /var/run/docker.sock
+    description:
+      en_US: Persistent storage for /var/run/docker.sock
+  - container: /app/data
+    description:
+      en_US: Persistent storage for /app/data
+  - container: /opt/github-runners
+    description:
+      en_US: Persistent storage for /opt/github-runners
+  - container: /opt/shared_data
+    description:
+      en_US: Persistent storage for /opt/shared_data
+  - container: /home/runner/.cache
+    description:
+      en_US: Persistent storage for /home/runner/.cache
+  is_store: true
+  store_app_id: github-runner-docker
+  thumbnail: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/github.png
