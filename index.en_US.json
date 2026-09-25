@@ -5,8 +5,8 @@
   "description": "Custom ZimaOS App Store featuring AMP Game Server and GitHub Actions Runner.",
   "maintainer": "kerklangsi",
   "url": "https://github.com/kerklangsi/zimaos-appstore",
-  "updated_at": "2026-09-25T15:18:11Z",
-  "app_count": 2,
+  "updated_at": "2026-09-25T15:18:47Z",
+  "app_count": 3,
   "base_url": "https://kerklangsi.github.io/zimaos-appstore",
   "apps": [
     {
@@ -49,10 +49,31 @@
       "meta_url": "/apps/github-runner-docker/meta.json",
       "version": "3.0.0",
       "content_hash": "6258fe3c"
+    },
+    {
+      "id": "com.library.mysql",
+      "title": "Mysql",
+      "tagline": "MySQL is a widely used, open-source relational database management system (RDBMS).",
+      "category": "Developer Tools",
+      "categories": [
+        "developer tools"
+      ],
+      "author": "library",
+      "developer": "library",
+      "architectures": [
+        "amd64"
+      ],
+      "icon": "/apps/com.library.mysql/assets/icon.svg",
+      "thumbnail": "",
+      "compose_url": "/apps/com.library.mysql/docker-compose.yml",
+      "meta_url": "/apps/com.library.mysql/meta.json",
+      "version": "1.0.0",
+      "content_hash": "ecbb2fda"
     }
   ],
   "recommend": [
     "com.kerklangsi.ampdocker",
-    "github-runner-docker"
+    "github-runner-docker",
+    "com.library.mysql"
   ]
 }

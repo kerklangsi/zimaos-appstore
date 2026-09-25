@@ -1,0 +1,46 @@
+{
+  "id": "com.library.mysql",
+  "title": {
+    "en_US": "Mysql"
+  },
+  "tagline": {
+    "en_US": "MySQL is a widely used, open-source relational database management system (RDBMS)."
+  },
+  "description": {
+    "en_US": "MySQL is a widely used, open-source relational database management system (RDBMS).\n\n### Features\n- Simple, one-click deployment for ZimaOS and CasaOS.\n- Persistent data volume storage.\n- High-performance containerized execution."
+  },
+  "icon": "/apps/com.library.mysql/assets/icon.svg",
+  "thumbnail": "",
+  "screenshot_link": [],
+  "category": "Developer Tools",
+  "categories": [
+    "developer tools"
+  ],
+  "author": "library",
+  "developer": "library",
+  "architectures": [
+    "amd64"
+  ],
+  "min_memory": 268435456,
+  "min_disk": "1.0 GB",
+  "disk": "1.0 GB",
+  "estimated_disk": "1.0 GB",
+  "min_storage": 1048576000,
+  "min_image_size": {
+    "amd64": 1048576000
+  },
+  "version": "1.0.0",
+  "index": "/",
+  "port_map": "80",
+  "base_url": "https://kerklangsi.github.io/zimaos-appstore",
+  "release_notes": {},
+  "tips": {
+    "before_install": {
+      "en_US": "Ensure port 80 is not in use before installing."
+    },
+    "after_install": {
+      "en_US": "Open the Web Dashboard at http://<your-zimaos-ip>:80"
+    }
+  },
+  "volumes": []
+}
