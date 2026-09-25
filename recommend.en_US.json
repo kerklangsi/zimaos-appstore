@@ -1,4 +1,4 @@
 [
   "com.kerklangsi.ampdocker",
-  "com.kerklangsi.githubrunner"
+  "github-runner-docker"
 ]

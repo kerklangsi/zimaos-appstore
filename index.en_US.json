@@ -5,20 +5,20 @@
   "description": "Custom ZimaOS App Store featuring AMP Game Server and GitHub Actions Runner.",
   "maintainer": "kerklangsi",
   "url": "https://github.com/kerklangsi/zimaos-appstore",
-  "updated_at": "2026-09-23T15:31:34Z",
+  "updated_at": "2026-09-25T14:52:09Z",
   "app_count": 2,
   "base_url": "https://kerklangsi.github.io/zimaos-appstore",
   "apps": [
     {
       "id": "com.kerklangsi.ampdocker",
-      "title": "AMP Game Server",
-      "tagline": "Powerful Game Server Management Panel in Docker for ZimaOS",
-      "category": "Others",
+      "title": "Amp Docker",
+      "tagline": "CubeCoders AMP in a Docker Image",
+      "category": "Games",
       "categories": [
-        "others"
+        "games"
       ],
       "author": "kerklangsi",
-      "developer": "CubeCoders / kerklangsi",
+      "developer": "kerklangsi",
       "architectures": [
         "amd64"
       ],
@@ -27,31 +27,32 @@
       "compose_url": "/apps/com.kerklangsi.ampdocker/docker-compose.yml",
       "meta_url": "/apps/com.kerklangsi.ampdocker/meta.json",
       "version": "1.0.0",
-      "content_hash": "f3e60f61"
+      "content_hash": "dac4c914"
     },
     {
-      "id": "com.kerklangsi.githubrunner",
-      "title": "GitHub Runner Manager",
-      "tagline": "Multi-runner GitHub Actions manager with Web Dashboard and persistent tool caching for ZimaOS",
-      "category": "Developer",
+      "id": "github-runner-docker",
+      "title": "",
+      "tagline": "",
+      "category": "Developer Tools",
       "categories": [
-        "developer"
+        "developer tools"
       ],
-      "author": "kerklangsi",
-      "developer": "kerklangsi",
+      "author": "Kerk Langsi",
+      "developer": "Kerk Langsi",
       "architectures": [
-        "amd64"
+        "amd64",
+        "arm64"
       ],
-      "icon": "/apps/com.kerklangsi.githubrunner/assets/icon.svg",
+      "icon": "/apps/github-runner-docker/assets/icon.svg",
       "thumbnail": "",
-      "compose_url": "/apps/com.kerklangsi.githubrunner/docker-compose.yml",
-      "meta_url": "/apps/com.kerklangsi.githubrunner/meta.json",
-      "version": "3.2.0",
-      "content_hash": "31a1a04f"
+      "compose_url": "/apps/github-runner-docker/docker-compose.yml",
+      "meta_url": "/apps/github-runner-docker/meta.json",
+      "version": "3.0.0",
+      "content_hash": "6258fe3c"
     }
   ],
   "recommend": [
     "com.kerklangsi.ampdocker",
-    "com.kerklangsi.githubrunner"
+    "github-runner-docker"
   ]
 }
