@@ -1,5 +1,5 @@
 {
-  "id": "github-runner-docker",
+  "id": "com.kerklangsi.github-runner",
   "title": {
     "en_US": "GitHub Runner Manager"
   },
@@ -9,12 +9,12 @@
   "description": {
     "en_US": "Full-stack Web GUI and Docker container manager for GitHub Actions self-hosted runners. Easily provision, monitor, control, and update multiple GitHub runner instances from a high-performance web dashboard."
   },
-  "icon": "/apps/github-runner-docker/assets/icon.svg",
+  "icon": "/apps/com.kerklangsi.github-runner/assets/icon.svg",
   "thumbnail": "",
   "screenshot_link": [
-    "/apps/github-runner-docker/assets/image1.png",
-    "/apps/github-runner-docker/assets/image2.png",
-    "/apps/github-runner-docker/assets/image3.png"
+    "/apps/com.kerklangsi.github-runner/assets/image1.png",
+    "/apps/com.kerklangsi.github-runner/assets/image2.png",
+    "/apps/com.kerklangsi.github-runner/assets/image3.png"
   ],
   "category": "Developer",
   "categories": [
@@ -35,7 +35,7 @@
     "amd64": 1048576000,
     "arm64": 1048576000
   },
-  "version": "3.0.0",
+  "version": "3.2.0",
   "index": "/",
   "port_map": "8080",
   "base_url": "https://kerklangsi.github.io/zimaos-appstore",

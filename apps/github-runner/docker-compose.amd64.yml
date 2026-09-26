@@ -1,18 +1,18 @@
-name: github-runner-docker
+name: github-runner
 services:
   github-runner:
-    image: kerklangsi/github-runner-docker:latest
-    container_name: github-runner-docker
+    image: kerklangsi/github-runner:latest
+    container_name: github-runner
     network_mode: bridge
     ports:
     - target: 8080
       published: 8080
       protocol: tcp
     environment:
-    - PORT=8080
-    - DATA_DIR=/app/data
-    - RUNNERS_DIR=/opt/github-runners
-    - RUNNER_TOOL_CACHE=/opt/hostedtoolcache
+      PORT: '8080'
+      DATA_DIR: /app/data
+      RUNNERS_DIR: /opt/github-runners
+      RUNNER_TOOL_CACHE: /opt/hostedtoolcache
     restart: unless-stopped
     tty: true
     stdin_open: true
@@ -45,8 +45,9 @@ x-casaos:
       runners. Easily provision, monitor, control, and update multiple GitHub runner
       instances from a high-performance web dashboard.
   developer: Kerk Langsi
-  icon: https://kerklangsi.github.io/zimaos-appstore/apps/github-runner-docker/assets/icon.svg
-  id: github-runner-docker
+  icon: https://kerklangsi.github.io/zimaos-appstore/apps/github-runner/assets/icon.svg
+  thumbnail: https://kerklangsi.github.io/zimaos-appstore/apps/github-runner/assets/icon.svg
+  id: github-runner
   index: /
   main: github-runner
   port_map: '8080'
@@ -55,7 +56,7 @@ x-casaos:
     en_US: Web GUI & Container Supervisor for GitHub Actions Self-Hosted Runners
   title:
     en_US: GitHub Runner Manager
-  version: 3.0.0
+  version: 3.2.0
   release_notes:
     en_US: '### What''s New in v3.2.0
 
@@ -84,5 +85,4 @@ x-casaos:
     description:
       en_US: Persistent storage for /home/runner/.cache
   is_store: true
-  store_app_id: github-runner-docker
-  thumbnail: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/github.png
+  store_app_id: github-runner

@@ -1,5 +1,4 @@
 [
   "com.kerklangsi.ampdocker",
-  "github-runner-docker",
-  "com.library.mysql"
+  "github-runner"
 ]

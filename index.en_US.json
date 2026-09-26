@@ -5,8 +5,8 @@
   "description": "Community App Store for ZimaOS and CasaOS, offering a curated collection of high-performance containerized applications with easy discovery and one-click deployment.",
   "maintainer": "kerklangsi",
   "url": "https://github.com/kerklangsi/zimaos-appstore",
-  "updated_at": "2026-09-26T11:36:42Z",
-  "app_count": 3,
+  "updated_at": "2026-09-26T14:44:58Z",
+  "app_count": 2,
   "base_url": "https://kerklangsi.github.io/zimaos-appstore",
   "apps": [
     {
@@ -30,7 +30,7 @@
       "content_hash": "6e359ca9"
     },
     {
-      "id": "github-runner-docker",
+      "id": "github-runner",
       "title": "GitHub Runner Manager",
       "tagline": "Web GUI & Container Supervisor for GitHub Actions Self-Hosted Runners",
       "category": "Developer",
@@ -43,37 +43,16 @@
         "amd64",
         "arm64"
       ],
-      "icon": "/apps/github-runner-docker/assets/icon.svg",
+      "icon": "/apps/github-runner/assets/icon.svg",
       "thumbnail": "",
-      "compose_url": "/apps/github-runner-docker/docker-compose.yml",
-      "meta_url": "/apps/github-runner-docker/meta.json",
-      "version": "3.0.0",
-      "content_hash": "5806180b"
-    },
-    {
-      "id": "com.library.mysql",
-      "title": "Mysql",
-      "tagline": "MySQL is a widely used, open-source relational database management system (RDBMS).",
-      "category": "Developer",
-      "categories": [
-        "developer"
-      ],
-      "author": "mysql",
-      "developer": "mysql",
-      "architectures": [
-        "amd64"
-      ],
-      "icon": "/apps/com.library.mysql/assets/icon.svg",
-      "thumbnail": "",
-      "compose_url": "/apps/com.library.mysql/docker-compose.yml",
-      "meta_url": "/apps/com.library.mysql/meta.json",
-      "version": "9.7.2",
-      "content_hash": "79a2b1c5"
+      "compose_url": "/apps/github-runner/docker-compose.yml",
+      "meta_url": "/apps/github-runner/meta.json",
+      "version": "3.2.0",
+      "content_hash": "e38a8145"
     }
   ],
   "recommend": [
     "com.kerklangsi.ampdocker",
-    "github-runner-docker",
-    "com.library.mysql"
+    "github-runner"
   ]
 }
