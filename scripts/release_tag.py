@@ -15,10 +15,15 @@ def release_tag(repo_root, override_tag=None):
         last_msg = subprocess.check_output(['git', 'log', '-1', '--pretty=%B'], cwd=repo_root).decode('utf-8', errors='ignore').strip()
     except Exception:
         last_msg = ''
-    if any(k in last_msg for k in ('chore(sync):', 'chore(release):')):
+    if 'chore(release):' in last_msg or '[skip ci]' in last_msg.lower():
         return f"v{cur_ver}", False
     p = ([int(x) if x.isdigit() else 0 for x in cur_ver.split('.')] + [0, 0])[:3]
-    new_ver = f"{p[0]}.{p[1]}.{p[2]+1}" if '[patch]' in last_msg.lower() else (f"{p[0]}.{p[1]+1}.0" if '[minor]' in last_msg.lower() else f"{p[0]+1}.0.0")
+    if '[major]' in last_msg.lower():
+        new_ver = f"{p[0]+1}.0.0"
+    elif '[minor]' in last_msg.lower():
+        new_ver = f"{p[0]}.{p[1]+1}.0"
+    else:
+        new_ver = f"{p[0]}.{p[1]}.{p[2]+1}"
     data['store_version'] = new_ver
     save_json(cfg_path, data)
     update_readme(repo_root, new_ver)

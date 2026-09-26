@@ -51,7 +51,7 @@ jobs:
           fi
 
       - name: Trigger Release Workflow
-        if: steps.git_status.outputs.changed == 'true'
+        if: steps.git_status.outputs.changed == 'true' || github.event_name == 'push'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
