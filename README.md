@@ -15,6 +15,3 @@
 | **Amp Docker** | `Media` | CubeCoders AMP in a Docker Image | `kerklangsi/amp-docker:latest` |
 | **Github Runner** | `Developer` | Application container | `kerklangsi/github-runner-docker:latest` |
 | **Mysql** | `Developer` | MySQL is a widely used, open-source relational database management system (RDBMS). | `mysql:latest` |
-## 📄 License
-
-MIT License © [kerklangsi](https://github.com/kerklangsi)
