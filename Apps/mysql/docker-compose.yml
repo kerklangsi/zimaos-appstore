@@ -37,17 +37,16 @@ x-casaos:
       - Persistent data volume storage.
 
       - High-performance containerized execution.'
+  version: 9.7.2
   category: Developer
   developer: mysql
   author: mysql
+  icon: https://kerklangsi.github.io/zimaos-appstore/apps/mysql/assets/icon.svg
   port_map: '80'
   scheme: ''
   index: ''
   tips:
-    before_install:
-      en_US: Ensure port 80 is not in use before installing.
-    after_install:
-      en_US: Connect to database at <your-zimaos-ip>:80
+    en_US: Connect to database service at port 80.
   id: com.library.mysql
   main: mysql
   volumes:

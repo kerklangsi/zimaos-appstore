@@ -41,7 +41,7 @@ x-casaos:
   min_memory: 256MB
   min_disk: 1000MB
   description:
-    en_us: Full-stack Web GUI and Docker container manager for GitHub Actions self-hosted
+    en_US: Full-stack Web GUI and Docker container manager for GitHub Actions self-hosted
       runners. Easily provision, monitor, control, and update multiple GitHub runner
       instances from a high-performance web dashboard.
   developer: Kerk Langsi
@@ -52,9 +52,9 @@ x-casaos:
   port_map: '8080'
   scheme: http
   tagline:
-    en_us: Web GUI & Container Supervisor for GitHub Actions Self-Hosted Runners
+    en_US: Web GUI & Container Supervisor for GitHub Actions Self-Hosted Runners
   title:
-    en_us: GitHub Runner Manager
+    en_US: GitHub Runner Manager
   version: 3.0.0
   release_notes:
     en_US: '### What''s New in v3.2.0
@@ -66,10 +66,7 @@ x-casaos:
 
       '
   tips:
-    before_install:
-      en_US: Ensure port 8080 is not in use before installing.
-    after_install:
-      en_US: Open Web Dashboard at http://<your-zimaos-ip>:8080
+    en_US: Ensure port 8080 is not in use before installing.
   volumes:
   - container: /var/run/docker.sock
     description:

@@ -118,7 +118,14 @@ def merge_compose(local_data, upstream_data):
     lo_c = merged.setdefault('x-casaos', {})
     if upstream_data.get('x-casaos'):
         for k, v in upstream_data['x-casaos'].items():
-            if v is not None: lo_c[k] = normalize_category(v) if k == 'category' else v
+            if v is not None:
+                if k == 'category': lo_c[k] = normalize_category(v)
+                elif k in ('title', 'tagline', 'description', 'release_notes'): lo_c[k] = localize_dict(v)
+                elif k == 'icon' and ('walkxcode' in str(v).lower() or not v): pass
+                elif k == 'tips' and isinstance(v, dict):
+                    tip = v.get('en_US') or v.get('en_us') or (v.get('before_install', {}).get('en_US') or v.get('before_install', {}).get('en_us'))
+                    lo_c['tips'] = {'en_US': tip} if tip else v
+                else: lo_c[k] = v
     else:
         tags = [s.get('image', '').split(':')[-1].lstrip('v') for s in up_svcs.values() if ':' in s.get('image', '')]
         if tags and any(c.isdigit() for c in tags[0]): lo_c['version'] = tags[0]
@@ -131,7 +138,10 @@ def _remove_readonly(func, path, _):
 
 # Normalizes strings or dicts into localized {'en_US': ...} dictionaries
 def localize_dict(val):
-    return {'en_US': val} if isinstance(val, str) else (val if isinstance(val, dict) else {})
+    if isinstance(val, str): return {'en_US': val}
+    if isinstance(val, dict): return {('en_US' if k.lower() == 'en_us' else k): v for k, v in val.items()}
+    return {}
+
 
 # Parses numeric MB from a value string with a default fallback
 def parse_mb(val, default):
@@ -169,8 +179,9 @@ def update_catalog(repo_root):
         except Exception: pass
     table = '\n'.join(["| Application | Category | Description | Docker Image |", "| :--- | :--- | :--- | :--- |"] + [f"| **{e['title']}** | `{e['category']}` | {e['desc']} | `{e['img']}` |" for e in entries])
     content = readme_path.read_text(encoding='utf-8')
-    m = re.search(r'(\| Application \| Category \|[\s\S]*?\n)(?=\n###|\n##|\Z)', content)
-    if m: readme_path.write_text(content[:m.start()] + table + content[m.end():], encoding='utf-8')
+    m = re.search(r'(\| Application \| Category \|[\s\S]*?)(?=\n###|\n##|\Z)', content)
+    if m: readme_path.write_text(content[:m.start()] + table + '\n' + content[m.end():], encoding='utf-8')
+
 
 # Appends or creates structured version changelog in app directory, retaining latest 5 entries
 def update_log(app_folder, app_info, has_changes=True, max_entries=5):
@@ -216,3 +227,25 @@ def sync_readme(readme_path, content):
         p.write_text(content, encoding='utf-8')
         return True, f"Updated {p.name} ({len(content)} chars)"
     return False, f"Up-to-date ({len(content)} chars)"
+
+# Fetches latest version tag from GitHub repository releases or Docker Hub tags
+def fetch_version(owner, repo, image=""):
+    if owner and repo:
+        try:
+            d = fetch_json(f'https://api.github.com/repos/{owner}/{repo}/releases/latest')
+            if d.get('tag_name'): return d['tag_name'].lstrip('v')
+        except Exception: pass
+        try:
+            tags = fetch_json(f'https://api.github.com/repos/{owner}/{repo}/tags')
+            if tags and isinstance(tags, list): return tags[0]['name'].lstrip('v')
+        except Exception: pass
+    if image:
+        parts = image.split(':')[0].split('/')
+        ns, name = ('library', parts[0]) if len(parts) == 1 else (parts[0], parts[1])
+        try:
+            tags = fetch_json(f'https://hub.docker.com/v2/repositories/{ns}/{name}/tags?page_size=20').get('results', [])
+            sem = [t['name'] for t in tags if re.match(r'^\d+(\.\d+)+$', t.get('name', ''))]
+            if sem: return sem[0]
+        except Exception: pass
+    return 'latest'
+

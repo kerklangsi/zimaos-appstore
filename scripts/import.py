@@ -4,7 +4,7 @@ from store_utils import (
     fetch_text, fetch_json, download_file, load_json, save_json,
     load_yaml, normalize_category, detect_category, bump_version,
     format_title, update_catalog, update_log, print_summary,
-    sync_compose, sync_readme
+    sync_compose, sync_readme, fetch_version
 )
 from compose_harvester import harvest_compose
 
@@ -98,14 +98,15 @@ def finalize_app(compose_data, app_id, title, desc, owner, repo, upstream_url, r
     desc_md = desc if '### Features' in desc else f"{desc}\n\n### Features\n- Simple, one-click deployment for ZimaOS and CasaOS.\n- Persistent data volume storage.\n- High-performance containerized execution."
     is_db = any(x in title.lower() or x in str(casaos.get('id', '')).lower() for x in ('mysql', 'mariadb', 'postgres', 'redis', 'mongo'))
     cat = detect_category(title, desc, f"{owner}/{repo}" if owner else repo)
+    app_ver = fetch_version(owner, repo, svc.get('image', ''))
     for k, v in (('title', {'en_US': title}), ('tagline', {'en_US': tagline}), ('description', {'en_US': desc_md}),
                  ('category', normalize_category(casaos.get('category') or cat)), ('developer', owner or repo),
                  ('author', owner or repo), ('port_map', str(pmap)), ('id', f'com.{owner.lower() if owner else "library"}.{app_id.replace("-", "")}'),
-                 ('main', sname), ('scheme', '' if is_db else 'http'), ('index', '' if is_db else '/')):
+                 ('main', sname), ('scheme', '' if is_db else 'http'), ('index', '' if is_db else '/'),
+                 ('version', app_ver), ('icon', f'https://kerklangsi.github.io/zimaos-appstore/apps/{app_id}/assets/icon.svg')):
         casaos.setdefault(k, v)
-    tips = casaos.setdefault('tips', {})
-    tips.setdefault('before_install', {'en_US': f'Ensure port {pmap} is not in use before installing.'})
-    tips.setdefault('after_install', {'en_US': f'Connect to database at <your-zimaos-ip>:{pmap}' if is_db else f'Open Web Dashboard at http://<your-zimaos-ip>:{pmap}'})
+    tip_msg = f'Ensure port {pmap} is not in use before installing.' if not is_db else f'Connect to database service at port {pmap}.'
+    casaos.setdefault('tips', {'en_US': tip_msg})
     vols = svc.get('volumes', [])
     if vols and isinstance(vols, list) and 'volumes' not in casaos:
         v_descs = [{'container': v['target'], 'description': {'en_US': f'Persistent storage for {v["target"]}'}} for v in vols if isinstance(v, dict) and 'target' in v]
@@ -113,6 +114,7 @@ def finalize_app(compose_data, app_id, title, desc, owner, repo, upstream_url, r
             casaos['volumes'] = v_descs
     compose_data['x-casaos'] = casaos
     return {'owner': owner, 'repo': repo, 'app_id': app_id, 'title': title, 'compose_data': compose_data, 'upstream_url': upstream_url, 'readme_content': readme}
+
 
 # Resolves repository compose manifest and metadata from a GitHub repository link
 def resolve_github(url):

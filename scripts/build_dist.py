@@ -1,4 +1,4 @@
-import os, sys, shutil, hashlib
+import os, sys, copy, shutil, hashlib, yaml
 from datetime import datetime, timezone
 from pathlib import Path
 from store_utils import (
@@ -52,14 +52,23 @@ def build_store():
             elif '.' not in app_id:
                 target_app_ids.append(f"com.kerklangsi.{app_id}")
 
+            def loc_val(d, lang='en_US'):
+                if not isinstance(d, dict): return str(d or '')
+                return d.get(lang) or d.get(lang.lower()) or d.get('en_US') or d.get('en_us') or (next(iter(d.values())) if d else '')
+
             title_d, tag_d, desc_d, rel_d = [localize_dict(x_casaos.get(k, {})) for k in ('title', 'tagline', 'description', 'release_notes')]
+            if not desc_d or not any(desc_d.values()):
+                desc_d = tag_d
             archs = x_casaos.get('architectures', ['amd64'])
             if not isinstance(archs, list):
                 archs = ['amd64']
             port_map = str(x_casaos.get('port_map', '')) if x_casaos.get('port_map') is not None else ''
 
             raw_tips = x_casaos.get('tips', {})
-            tips_d = {k: localize_dict(v) if isinstance(v, (str, dict)) else str(v) for k, v in (raw_tips.items() if isinstance(raw_tips, dict) else [('info', raw_tips)])}
+            if isinstance(raw_tips, dict) and any(k.lower() == 'en_us' for k in raw_tips.keys()):
+                tips_d = {'info': raw_tips}
+            else:
+                tips_d = {k: localize_dict(v) if isinstance(v, (str, dict)) else str(v) for k, v in (raw_tips.items() if isinstance(raw_tips, dict) else [('info', raw_tips)])}
             raw_screen = x_casaos.get('screenshot_link', [])
             screen_links = [raw_screen] if isinstance(raw_screen, str) else (raw_screen if isinstance(raw_screen, list) else [])
             cat_name = normalize_category(x_casaos.get('category', 'Others'))
@@ -76,8 +85,6 @@ def build_store():
                 t_app_dir = apps_dist / target_id
                 t_assets = t_app_dir / 'assets'
                 t_assets.mkdir(parents=True, exist_ok=True)
-                shutil.copy2(compose_file, t_app_dir / 'docker-compose.yml')
-                shutil.copy2(compose_file, t_app_dir / 'docker-compose.amd64.yml')
 
                 local_screens = []
                 for f in app_folder.rglob('*'):
@@ -87,6 +94,14 @@ def build_store():
                             icon_filename = f.name
                         else:
                             local_screens.append(f"/apps/{target_id}/assets/{f.name}")
+
+                full_icon_url = f"{base_url}/apps/{target_id}/assets/{icon_filename}"
+                dist_compose = copy.deepcopy(compose_data)
+                dist_casaos = dist_compose.setdefault('x-casaos', {})
+                dist_casaos['icon'] = full_icon_url
+                t_app_dir.mkdir(parents=True, exist_ok=True)
+                (t_app_dir / 'docker-compose.yml').write_text(yaml.dump(dist_compose, sort_keys=False, allow_unicode=True, indent=2), encoding='utf-8')
+                (t_app_dir / 'docker-compose.amd64.yml').write_text(yaml.dump(dist_compose, sort_keys=False, allow_unicode=True, indent=2), encoding='utf-8')
 
                 meta = {
                     "id": target_id, "title": title_d, "tagline": tag_d, "description": desc_d,
@@ -100,18 +115,19 @@ def build_store():
                 }
                 save_json(t_app_dir / 'meta.json', meta)
                 for lang in languages:
-                    loc = dict(meta, title=title_d.get(lang, title_d.get('en_US', '')), tagline=tag_d.get(lang, tag_d.get('en_US', '')),
-                               description=desc_d.get(lang, desc_d.get('en_US', '')), release_notes=rel_d.get(lang, rel_d.get('en_US', '')),
-                               tips={tk: tv.get(lang, tv.get('en_US', '')) if isinstance(tv, dict) else tv for tk, tv in tips_d.items()})
+                    loc = dict(meta, title=loc_val(title_d, lang), tagline=loc_val(tag_d, lang),
+                               description=loc_val(desc_d, lang), release_notes=loc_val(rel_d, lang),
+                               tips={tk: loc_val(tv, lang) if isinstance(tv, dict) else tv for tk, tv in tips_d.items()})
                     save_json(t_app_dir / f'meta.{lang}.json', loc)
 
             index_entries.append({
-                "id": app_id, "title": title_d.get('en_US', ''), "tagline": tag_d.get('en_US', ''),
+                "id": app_id, "title": loc_val(title_d, 'en_US'), "tagline": loc_val(tag_d, 'en_US'),
                 "category": cat_name, "categories": [cat_name.lower()], "author": str(x_casaos.get('author', '')),
                 "developer": str(x_casaos.get('developer', '')), "architectures": archs, "icon": f"/apps/{app_id}/assets/{icon_filename}",
                 "thumbnail": "", "compose_url": f"/apps/{app_id}/docker-compose.yml", "meta_url": f"/apps/{app_id}/meta.json",
                 "version": str(x_casaos.get('version', '1.0.0')), "content_hash": content_hash
             })
+
 
     recs = [e['id'] for e in index_entries]
     cat_counts = {}

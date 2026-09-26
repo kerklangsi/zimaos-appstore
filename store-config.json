@@ -1,12 +1,12 @@
 {
   "version": 2,
-  "store_version": "3.1.5",
+  "store_version": "3.1.7",
   "store_id": "com.kerklangsi.appstore",
   "name": {
     "en_US": "KerkLangsi Apps"
   },
   "description": {
-    "en_US": "Custom ZimaOS App Store featuring AMP Game Server and GitHub Actions Runner."
+    "en_US": "Community App Store for ZimaOS and CasaOS, offering a curated collection of high-performance containerized applications with easy discovery and one-click deployment."
   },
   "maintainer": "kerklangsi"
 }
