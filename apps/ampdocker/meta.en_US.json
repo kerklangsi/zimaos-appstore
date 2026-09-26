@@ -6,9 +6,9 @@
   "icon": "/apps/ampdocker/assets/icon.svg",
   "thumbnail": "",
   "screenshot_link": [],
-  "category": "Games",
+  "category": "Media",
   "categories": [
-    "games"
+    "media"
   ],
   "author": "kerklangsi",
   "developer": "kerklangsi",
@@ -30,19 +30,13 @@
   "release_notes": "### What's New in v1.0.0\n- Initial release of CubeCoders AMP container for ZimaOS App Store.\n- Preconfigured Docker socket binding and persistent storage for server data.\n",
   "tips": {
     "before_install": "Ensure port 80 is not in use before installing.",
-    "after_install": "Open the Web Dashboard at http://<your-zimaos-ip>:80"
+    "after_install": "Open Web Dashboard at http://<your-zimaos-ip>:80"
   },
   "volumes": [
     {
       "container": "/var/run/docker.sock",
       "description": {
-        "en_US": "Docker Socket Access"
-      }
-    },
-    {
-      "container": "/home/amp/.local/share/CubeCoders/AMP",
-      "description": {
-        "en_US": "AMP Game Server Data Storage"
+        "en_US": "Persistent storage for /var/run/docker.sock"
       }
     }
   ]

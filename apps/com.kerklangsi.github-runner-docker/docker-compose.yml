@@ -37,7 +37,7 @@ x-casaos:
   - amd64
   - arm64
   author: Kerk Langsi
-  category: Developer Tools
+  category: Developer
   min_memory: 256MB
   min_disk: 1000MB
   description:
@@ -69,7 +69,7 @@ x-casaos:
     before_install:
       en_US: Ensure port 8080 is not in use before installing.
     after_install:
-      en_US: Open the Web Dashboard at http://<your-zimaos-ip>:8080
+      en_US: Open Web Dashboard at http://<your-zimaos-ip>:8080
   volumes:
   - container: /var/run/docker.sock
     description:

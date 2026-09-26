@@ -10,9 +10,9 @@
     "/apps/github-runner-docker/assets/image2.png",
     "/apps/github-runner-docker/assets/image3.png"
   ],
-  "category": "Developer Tools",
+  "category": "Developer",
   "categories": [
-    "developer tools"
+    "developer"
   ],
   "author": "Kerk Langsi",
   "developer": "Kerk Langsi",
@@ -36,7 +36,7 @@
   "release_notes": "### What's New in v3.2.0\n- Added dedicated shared data volume (/opt/shared_data) organized by repository.\n- Unified toolcache and package cache into a single persistent cache volume (/home/runner/.cache).\n",
   "tips": {
     "before_install": "Ensure port 8080 is not in use before installing.",
-    "after_install": "Open the Web Dashboard at http://<your-zimaos-ip>:8080"
+    "after_install": "Open Web Dashboard at http://<your-zimaos-ip>:8080"
   },
   "volumes": [
     {

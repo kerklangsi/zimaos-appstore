@@ -16,16 +16,13 @@ services:
     restart: unless-stopped
     volumes:
     - type: bind
-      source: /var/run/docker.sock
+      source: /DATA/AppData/$AppID/docker.sock
       target: /var/run/docker.sock
-    - type: bind
-      source: /DATA/AppData/$AppID/data
-      target: /home/amp/.local/share/CubeCoders/AMP
 x-casaos:
   architectures:
   - amd64
   author: kerklangsi
-  category: Games
+  category: Media
   min_memory: 512MB
   min_disk: 2000MB
   description:
@@ -63,11 +60,8 @@ x-casaos:
     before_install:
       en_US: Ensure port 80 is not in use before installing.
     after_install:
-      en_US: Open the Web Dashboard at http://<your-zimaos-ip>:80
+      en_US: Open Web Dashboard at http://<your-zimaos-ip>:80
   volumes:
   - container: /var/run/docker.sock
     description:
-      en_US: Docker Socket Access
-  - container: /home/amp/.local/share/CubeCoders/AMP
-    description:
-      en_US: AMP Game Server Data Storage
+      en_US: Persistent storage for /var/run/docker.sock

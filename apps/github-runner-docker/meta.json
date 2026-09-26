@@ -16,9 +16,9 @@
     "/apps/github-runner-docker/assets/image2.png",
     "/apps/github-runner-docker/assets/image3.png"
   ],
-  "category": "Developer Tools",
+  "category": "Developer",
   "categories": [
-    "developer tools"
+    "developer"
   ],
   "author": "Kerk Langsi",
   "developer": "Kerk Langsi",
@@ -47,7 +47,7 @@
       "en_US": "Ensure port 8080 is not in use before installing."
     },
     "after_install": {
-      "en_US": "Open the Web Dashboard at http://<your-zimaos-ip>:8080"
+      "en_US": "Open Web Dashboard at http://<your-zimaos-ip>:8080"
     }
   },
   "volumes": [

@@ -12,9 +12,9 @@
   "icon": "/apps/com.kerklangsi.ampdocker/assets/icon.svg",
   "thumbnail": "",
   "screenshot_link": [],
-  "category": "Games",
+  "category": "Media",
   "categories": [
-    "games"
+    "media"
   ],
   "author": "kerklangsi",
   "developer": "kerklangsi",
@@ -41,20 +41,14 @@
       "en_US": "Ensure port 80 is not in use before installing."
     },
     "after_install": {
-      "en_US": "Open the Web Dashboard at http://<your-zimaos-ip>:80"
+      "en_US": "Open Web Dashboard at http://<your-zimaos-ip>:80"
     }
   },
   "volumes": [
     {
       "container": "/var/run/docker.sock",
       "description": {
-        "en_US": "Docker Socket Access"
-      }
-    },
-    {
-      "container": "/home/amp/.local/share/CubeCoders/AMP",
-      "description": {
-        "en_US": "AMP Game Server Data Storage"
+        "en_US": "Persistent storage for /var/run/docker.sock"
       }
     }
   ]

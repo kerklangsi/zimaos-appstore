@@ -6,12 +6,12 @@
   "icon": "/apps/com.library.mysql/assets/icon.svg",
   "thumbnail": "",
   "screenshot_link": [],
-  "category": "Developer Tools",
+  "category": "Developer",
   "categories": [
-    "developer tools"
+    "developer"
   ],
-  "author": "library",
-  "developer": "library",
+  "author": "mysql",
+  "developer": "mysql",
   "architectures": [
     "amd64"
   ],
@@ -24,13 +24,26 @@
     "amd64": 1048576000
   },
   "version": "1.0.0",
-  "index": "/",
+  "index": "",
   "port_map": "80",
   "base_url": "https://kerklangsi.github.io/zimaos-appstore",
   "release_notes": "",
   "tips": {
     "before_install": "Ensure port 80 is not in use before installing.",
-    "after_install": "Open the Web Dashboard at http://<your-zimaos-ip>:80"
+    "after_install": "Connect to database at <your-zimaos-ip>:80"
   },
-  "volumes": []
+  "volumes": [
+    {
+      "container": "/etc/mysql/conf.d",
+      "description": {
+        "en_US": "Persistent storage for /etc/mysql/conf.d"
+      }
+    },
+    {
+      "container": "/var/lib/mysql",
+      "description": {
+        "en_US": "Persistent storage for /var/lib/mysql"
+      }
+    }
+  ]
 }

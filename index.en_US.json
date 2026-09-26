@@ -5,7 +5,7 @@
   "description": "Custom ZimaOS App Store featuring AMP Game Server and GitHub Actions Runner.",
   "maintainer": "kerklangsi",
   "url": "https://github.com/kerklangsi/zimaos-appstore",
-  "updated_at": "2026-09-25T15:18:47Z",
+  "updated_at": "2026-09-26T07:48:21Z",
   "app_count": 3,
   "base_url": "https://kerklangsi.github.io/zimaos-appstore",
   "apps": [
@@ -13,9 +13,9 @@
       "id": "com.kerklangsi.ampdocker",
       "title": "Amp Docker",
       "tagline": "CubeCoders AMP in a Docker Image",
-      "category": "Games",
+      "category": "Media",
       "categories": [
-        "games"
+        "media"
       ],
       "author": "kerklangsi",
       "developer": "kerklangsi",
@@ -27,15 +27,15 @@
       "compose_url": "/apps/com.kerklangsi.ampdocker/docker-compose.yml",
       "meta_url": "/apps/com.kerklangsi.ampdocker/meta.json",
       "version": "1.0.0",
-      "content_hash": "dac4c914"
+      "content_hash": "c4085031"
     },
     {
       "id": "github-runner-docker",
       "title": "",
       "tagline": "",
-      "category": "Developer Tools",
+      "category": "Developer",
       "categories": [
-        "developer tools"
+        "developer"
       ],
       "author": "Kerk Langsi",
       "developer": "Kerk Langsi",
@@ -48,18 +48,18 @@
       "compose_url": "/apps/github-runner-docker/docker-compose.yml",
       "meta_url": "/apps/github-runner-docker/meta.json",
       "version": "3.0.0",
-      "content_hash": "6258fe3c"
+      "content_hash": "5899993d"
     },
     {
       "id": "com.library.mysql",
       "title": "Mysql",
       "tagline": "MySQL is a widely used, open-source relational database management system (RDBMS).",
-      "category": "Developer Tools",
+      "category": "Developer",
       "categories": [
-        "developer tools"
+        "developer"
       ],
-      "author": "library",
-      "developer": "library",
+      "author": "mysql",
+      "developer": "mysql",
       "architectures": [
         "amd64"
       ],
@@ -68,7 +68,7 @@
       "compose_url": "/apps/com.library.mysql/docker-compose.yml",
       "meta_url": "/apps/com.library.mysql/meta.json",
       "version": "1.0.0",
-      "content_hash": "ecbb2fda"
+      "content_hash": "00b955c3"
     }
   ],
   "recommend": [

@@ -1,12 +1,12 @@
 [
   {
-    "id": "Games",
-    "name": "Games",
+    "id": "Media",
+    "name": "Media",
     "count": 1
   },
   {
-    "id": "Developer Tools",
-    "name": "Developer Tools",
+    "id": "Developer",
+    "name": "Developer",
     "count": 2
   }
 ]
