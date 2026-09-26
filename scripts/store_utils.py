@@ -179,8 +179,8 @@ def update_catalog(repo_root):
         except Exception: pass
     table = '\n'.join(["| Application | Category | Description | Docker Image |", "| :--- | :--- | :--- | :--- |"] + [f"| **{e['title']}** | `{e['category']}` | {e['desc']} | `{e['img']}` |" for e in entries])
     content = readme_path.read_text(encoding='utf-8')
-    m = re.search(r'(\| Application \| Category \|[\s\S]*?)(?=\n###|\n##|\Z)', content)
-    if m: readme_path.write_text(content[:m.start()] + table + '\n' + content[m.end():], encoding='utf-8')
+    m = re.search(r'\| Application \| Category \|[^\n]*(?:\n\|[^\n]*)+', content)
+    if m: readme_path.write_text(content[:m.start()] + table + content[m.end():], encoding='utf-8')
 
 
 # Appends or creates structured version changelog in app directory, retaining latest 5 entries
