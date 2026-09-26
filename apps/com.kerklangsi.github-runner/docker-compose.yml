@@ -9,10 +9,10 @@ services:
       published: 8080
       protocol: tcp
     environment:
-      PORT: '8080'
-      DATA_DIR: /app/data
-      RUNNERS_DIR: /opt/github-runners
-      RUNNER_TOOL_CACHE: /opt/hostedtoolcache
+    - PORT=8080
+    - DATA_DIR=/app/data
+    - RUNNERS_DIR=/opt/github-runners
+    - RUNNER_TOOL_CACHE=/opt/hostedtoolcache
     restart: unless-stopped
     tty: true
     stdin_open: true
