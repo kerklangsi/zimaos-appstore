@@ -40,43 +40,6 @@ https://cdn.jsdelivr.net/gh/kerklangsi/zimaos-appstore@gh-pages/appstore.zip
 
 ---
 
-## 🛠️ Repository Structure
-
-```text
-zimaos-appstore/
-├── Apps/
-│   ├── ampdocker/
-        ├── docker-compose.yml   # App Compose manifest + x-casaos metadata
-        ├── icon.svg             # Custom SVG App Icon
-        ├── README.md            # Upstream documentation fetched from URL
-        └── log.md               # Timestamped sync history & asset updates
-│   └── github-runner/
-        ├── docker-compose.yml   # App Compose manifest + x-casaos metadata
-        ├── icon.svg             # Custom SVG App Icon
-        ├── picture/             # Screenshots directory
-        ├── README.md            # Upstream documentation fetched from URL
-        └── log.md               # Timestamped sync history & asset updates
-├── apps.md                      # Source list of GitHub and Docker Hub URLs
-├── store-config.json            # Store identity & localized store metadata (en_US)
-├── supported-languages.json     # Locales candidate list ["en_US"]
-├── upstream-apps.json           # Upstream app repositories mapping configuration
-├── LICENSE                      # MIT License
-├── scripts/
-│   ├── build_dist.py            # Local zero-dependency v2 build script
-│   ├── import.py                # URL crawler, asset downloader & catalog sync
-│   ├── release_notes.py         # Release notes generator
-│   ├── release_tag.py           # Release tag resolver
-│   ├── store_utils.py           # Shared utilities (YAML, network, logging, catalog)
-│   └── sync.py                  # Automated upstream compose sync script
-└── .github/
-    └── workflows/
-        ├── validate.yml         # PR validation workflow
-        ├── release.yml          # GitHub Pages deployment workflow
-        └── sync-upstream.yml    # Scheduled upstream app sync workflow
-```
-
----
-
 ## 💻 Local Development & Build
 
 You can build the store locally using Python and PyYAML:

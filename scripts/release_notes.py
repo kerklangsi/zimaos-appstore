@@ -2,18 +2,7 @@ import os, sys
 from pathlib import Path
 from store_utils import load_json, load_yaml
 
-# Extracts the latest entry block from an application's log.md file
-def extract_log(app_dir):
-    log_file = Path(app_dir) / 'log.md'
-    if not log_file.exists():
-        return None
-    try:
-        entries = log_file.read_text(encoding='utf-8').split('## [')
-        return ('## [' + entries[1].split('## [')[0].strip()) if len(entries) > 1 else None
-    except Exception:
-        return None
-
-# Scans Apps directory and gathers application details, ports, and sync history
+# Scans Apps directory and gathers application details, ports, and image info
 def gather_apps(repo_root):
     apps_dir = Path(repo_root) / 'Apps'
     if not apps_dir.exists():
@@ -41,14 +30,13 @@ def gather_apps(repo_root):
                 'id': entry, 'title': title, 'category': casaos.get('category', 'Others'),
                 'tagline': (tagline[:97] + '...') if len(tagline) > 100 else tagline,
                 'image': first_svc.get('image', '-'), 'ports': p_str,
-                'author': casaos.get('author') or casaos.get('developer') or 'Community',
-                'latest_log': extract_log(app_folder)
+                'author': casaos.get('author') or casaos.get('developer') or 'Community'
             })
         except Exception:
             pass
     return apps
 
-# Constructs rich markdown release notes from gathered store and application data
+# Constructs markdown release notes with catalog table and installation instructions
 def build_notes(store_cfg, apps, tag):
     version = tag.lstrip('v')
     name = store_cfg.get('name', {}).get('en_US', 'Custom ZimaOS App Store')
@@ -56,11 +44,6 @@ def build_notes(store_cfg, apps, tag):
     md = [f"# 🏪 {name} — `{tag}`\n\n> **Version {version}** • {desc}\n\n---\n\n### 🚀 Available Applications Catalog\n| Application | Category | Container Image | Port | Description |\n| :--- | :--- | :--- | :--- | :--- |"]
     for a in apps:
         md.append(f"| **{a['title']}** | `{a['category']}` | `{a['image']}` | `{a['ports']}` | {a['tagline']} |")
-    md.append("\n---\n\n### 📝 Recent Highlights & Sync History\n")
-    for a in apps:
-        md.append(f"#### 📦 {a['title']} (`{a['id']}`)\n")
-        log_lines = [l for l in a['latest_log'].split('\n')[1:] if l.strip().startswith('-')] if a.get('latest_log') else []
-        md.append(('\n'.join(log_lines) if log_lines else f"- **Current Image**: `{a['image']}`\n- **Port Configuration**: `{a['ports']}`") + "\n")
     md.extend(["---\n### ⚡ How to Install in ZimaOS / CasaOS\n1. Open your **ZimaOS** or **CasaOS** Web Dashboard.\n2. Navigate to **App Store** -> Click **Settings** (or Source Manager).\n3. Click **Add Source** and paste the official store repository link:\n   ```text\n   https://kerklangsi.github.io/zimaos-appstore/store.json\n   ```\n4. All applications will immediately appear with 1-click deployment, pre-configured persistent volumes, and auto-mapped ports!\n\n---\n### 📦 Release Assets\n- `appstore.zip`: Complete bundle archive of all application compose manifests and icons.\n- `store.json`: Store index and repository metadata for ZimaOS.\n- `index.json`: Full app metadata catalog and category index."])
     return '\n'.join(md)
 
