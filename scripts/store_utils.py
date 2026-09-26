@@ -121,7 +121,7 @@ def merge_compose(local_data, upstream_data):
             if v is not None:
                 if k == 'category': lo_c[k] = normalize_category(v)
                 elif k in ('title', 'tagline', 'description', 'release_notes'): lo_c[k] = localize_dict(v)
-                elif k == 'icon' and ('walkxcode' in str(v).lower() or not v): pass
+                elif k in ('icon', 'thumbnail') and ('kerklangsi.github.io' in str(lo_c.get(k, '')) or 'walkxcode' in str(v).lower() or not v): pass
                 elif k == 'tips' and isinstance(v, dict):
                     tip = v.get('en_US') or v.get('en_us') or (v.get('before_install', {}).get('en_US') or v.get('before_install', {}).get('en_us'))
                     lo_c['tips'] = {'en_US': tip} if tip else v
