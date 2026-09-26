@@ -6,3 +6,4 @@ The automated workflow will scan this file, fetch the compose files / images, ge
 ## Applications
 - https://github.com/kerklangsi/github-runner
 - https://hub.docker.com/r/kerklangsi/amp-docker
+- https://hub.docker.com/_/mysql
