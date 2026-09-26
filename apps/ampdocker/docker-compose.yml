@@ -37,7 +37,7 @@ x-casaos:
 
       - High-performance containerized execution.'
   developer: kerklangsi
-  icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/amp-docker.png
+  icon: https://kerklangsi.github.io/zimaos-appstore/apps/ampdocker/assets/icon.svg
   id: com.kerklangsi.ampdocker
   index: /
   main: amp-docker
@@ -47,7 +47,7 @@ x-casaos:
     en_US: CubeCoders AMP in a Docker Image
   title:
     en_US: Amp Docker
-  version: 1.0.0
+  version: latest
   release_notes:
     en_US: '### What''s New in v1.0.0
 
@@ -57,10 +57,7 @@ x-casaos:
 
       '
   tips:
-    before_install:
-      en_US: Ensure port 80 is not in use before installing.
-    after_install:
-      en_US: Open Web Dashboard at http://<your-zimaos-ip>:80
+    en_US: Ensure port 80 is not in use before installing.
   volumes:
   - container: /var/run/docker.sock
     description:

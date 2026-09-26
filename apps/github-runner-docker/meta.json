@@ -1,13 +1,13 @@
 {
   "id": "github-runner-docker",
   "title": {
-    "en_us": "GitHub Runner Manager"
+    "en_US": "GitHub Runner Manager"
   },
   "tagline": {
-    "en_us": "Web GUI & Container Supervisor for GitHub Actions Self-Hosted Runners"
+    "en_US": "Web GUI & Container Supervisor for GitHub Actions Self-Hosted Runners"
   },
   "description": {
-    "en_us": "Full-stack Web GUI and Docker container manager for GitHub Actions self-hosted runners. Easily provision, monitor, control, and update multiple GitHub runner instances from a high-performance web dashboard."
+    "en_US": "Full-stack Web GUI and Docker container manager for GitHub Actions self-hosted runners. Easily provision, monitor, control, and update multiple GitHub runner instances from a high-performance web dashboard."
   },
   "icon": "/apps/github-runner-docker/assets/icon.svg",
   "thumbnail": "",
@@ -43,11 +43,8 @@
     "en_US": "### What's New in v3.2.0\n- Added dedicated shared data volume (/opt/shared_data) organized by repository.\n- Unified toolcache and package cache into a single persistent cache volume (/home/runner/.cache).\n"
   },
   "tips": {
-    "before_install": {
+    "info": {
       "en_US": "Ensure port 8080 is not in use before installing."
-    },
-    "after_install": {
-      "en_US": "Open Web Dashboard at http://<your-zimaos-ip>:8080"
     }
   },
   "volumes": [

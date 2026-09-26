@@ -29,17 +29,14 @@
   "min_image_size": {
     "amd64": 1048576000
   },
-  "version": "1.0.0",
+  "version": "9.7.2",
   "index": "",
   "port_map": "80",
   "base_url": "https://kerklangsi.github.io/zimaos-appstore",
   "release_notes": {},
   "tips": {
-    "before_install": {
-      "en_US": "Ensure port 80 is not in use before installing."
-    },
-    "after_install": {
-      "en_US": "Connect to database at <your-zimaos-ip>:80"
+    "info": {
+      "en_US": "Connect to database service at port 80."
     }
   },
   "volumes": [

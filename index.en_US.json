@@ -2,10 +2,10 @@
   "version": 2,
   "store_id": "com.kerklangsi.appstore",
   "name": "KerkLangsi Apps",
-  "description": "Custom ZimaOS App Store featuring AMP Game Server and GitHub Actions Runner.",
+  "description": "Community App Store for ZimaOS and CasaOS, offering a curated collection of high-performance containerized applications with easy discovery and one-click deployment.",
   "maintainer": "kerklangsi",
   "url": "https://github.com/kerklangsi/zimaos-appstore",
-  "updated_at": "2026-09-26T10:36:37Z",
+  "updated_at": "2026-09-26T10:50:32Z",
   "app_count": 3,
   "base_url": "https://kerklangsi.github.io/zimaos-appstore",
   "apps": [
@@ -26,13 +26,13 @@
       "thumbnail": "",
       "compose_url": "/apps/com.kerklangsi.ampdocker/docker-compose.yml",
       "meta_url": "/apps/com.kerklangsi.ampdocker/meta.json",
-      "version": "1.0.0",
-      "content_hash": "c4085031"
+      "version": "latest",
+      "content_hash": "6e359ca9"
     },
     {
       "id": "github-runner-docker",
-      "title": "",
-      "tagline": "",
+      "title": "GitHub Runner Manager",
+      "tagline": "Web GUI & Container Supervisor for GitHub Actions Self-Hosted Runners",
       "category": "Developer",
       "categories": [
         "developer"
@@ -48,7 +48,7 @@
       "compose_url": "/apps/github-runner-docker/docker-compose.yml",
       "meta_url": "/apps/github-runner-docker/meta.json",
       "version": "3.0.0",
-      "content_hash": "5899993d"
+      "content_hash": "5806180b"
     },
     {
       "id": "com.library.mysql",
@@ -67,8 +67,8 @@
       "thumbnail": "",
       "compose_url": "/apps/com.library.mysql/docker-compose.yml",
       "meta_url": "/apps/com.library.mysql/meta.json",
-      "version": "1.0.0",
-      "content_hash": "00b955c3"
+      "version": "9.7.2",
+      "content_hash": "e776a4e0"
     }
   ],
   "recommend": [

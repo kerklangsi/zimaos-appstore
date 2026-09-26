@@ -23,14 +23,13 @@
   "min_image_size": {
     "amd64": 2097152000
   },
-  "version": "1.0.0",
+  "version": "latest",
   "index": "/",
   "port_map": "80",
   "base_url": "https://kerklangsi.github.io/zimaos-appstore",
   "release_notes": "### What's New in v1.0.0\n- Initial release of CubeCoders AMP container for ZimaOS App Store.\n- Preconfigured Docker socket binding and persistent storage for server data.\n",
   "tips": {
-    "before_install": "Ensure port 80 is not in use before installing.",
-    "after_install": "Open Web Dashboard at http://<your-zimaos-ip>:80"
+    "info": "Ensure port 80 is not in use before installing."
   },
   "volumes": [
     {

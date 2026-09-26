@@ -1,8 +1,8 @@
 {
   "id": "com.kerklangsi.github-runner-docker",
-  "title": "",
-  "tagline": "",
-  "description": "",
+  "title": "GitHub Runner Manager",
+  "tagline": "Web GUI & Container Supervisor for GitHub Actions Self-Hosted Runners",
+  "description": "Full-stack Web GUI and Docker container manager for GitHub Actions self-hosted runners. Easily provision, monitor, control, and update multiple GitHub runner instances from a high-performance web dashboard.",
   "icon": "/apps/com.kerklangsi.github-runner-docker/assets/icon.svg",
   "thumbnail": "",
   "screenshot_link": [
@@ -35,8 +35,7 @@
   "base_url": "https://kerklangsi.github.io/zimaos-appstore",
   "release_notes": "### What's New in v3.2.0\n- Added dedicated shared data volume (/opt/shared_data) organized by repository.\n- Unified toolcache and package cache into a single persistent cache volume (/home/runner/.cache).\n",
   "tips": {
-    "before_install": "Ensure port 8080 is not in use before installing.",
-    "after_install": "Open Web Dashboard at http://<your-zimaos-ip>:8080"
+    "info": "Ensure port 8080 is not in use before installing."
   },
   "volumes": [
     {
