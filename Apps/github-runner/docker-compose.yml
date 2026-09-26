@@ -45,9 +45,9 @@ x-casaos:
       runners. Easily provision, monitor, control, and update multiple GitHub runner
       instances from a high-performance web dashboard.
   developer: Kerk Langsi
-  icon: https://kerklangsi.github.io/zimaos-appstore/apps/github-runner/assets/icon.svg
-  thumbnail: https://kerklangsi.github.io/zimaos-appstore/apps/github-runner/assets/icon.svg
-  id: github-runner
+  icon: https://kerklangsi.github.io/zimaos-appstore/apps/com.kerklangsi.github-runner/assets/icon.svg
+  thumbnail: https://kerklangsi.github.io/zimaos-appstore/apps/com.kerklangsi.github-runner/assets/icon.svg
+  id: com.kerklangsi.github-runner
   index: /
   main: github-runner
   port_map: '8080'
@@ -85,4 +85,4 @@ x-casaos:
     description:
       en_US: Persistent storage for /home/runner/.cache
   is_store: true
-  store_app_id: github-runner
+  store_app_id: com.kerklangsi.github-runner

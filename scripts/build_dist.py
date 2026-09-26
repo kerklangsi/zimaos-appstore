@@ -46,11 +46,12 @@ def build_store():
             compose_data = load_yaml(compose_file)
             x_casaos = compose_data.get('x-casaos', {})
             app_id = x_casaos.get('id', app_folder.name.lower())
+            if '.' not in app_id:
+                app_id = f"com.kerklangsi.{app_id}"
             target_app_ids = [app_id]
             if app_id.startswith("com.kerklangsi."):
                 target_app_ids.append(app_id.replace("com.kerklangsi.", ""))
-            elif '.' not in app_id:
-                target_app_ids.append(f"com.kerklangsi.{app_id}")
+            target_app_ids = list(dict.fromkeys(target_app_ids))
 
             def loc_val(d, lang='en_US'):
                 if not isinstance(d, dict): return str(d or '')
