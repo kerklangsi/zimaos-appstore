@@ -119,7 +119,9 @@ def merge_compose(local_data, upstream_data):
     if upstream_data.get('x-casaos'):
         for k, v in upstream_data['x-casaos'].items():
             if v is not None:
-                if k == 'category': lo_c[k] = normalize_category(v)
+                if k in ('id', 'store_app_id', 'author', 'developer', 'title', 'tagline') and lo_c.get(k): pass
+                elif k == 'category': lo_c[k] = lo_c.get(k) or normalize_category(v)
+                elif k in ('title', 'tagline', 'description') and lo_c.get(k) and 'container application for ZimaOS' in str(v): pass
                 elif k in ('title', 'tagline', 'description', 'release_notes'): lo_c[k] = localize_dict(v)
                 elif k in ('icon', 'thumbnail') and ('kerklangsi.github.io' in str(lo_c.get(k, '')) or 'walkxcode' in str(v).lower() or not v): pass
                 elif k == 'tips' and isinstance(v, dict):

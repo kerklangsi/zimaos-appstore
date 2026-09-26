@@ -26,7 +26,7 @@ A modern, full-stack Web GUI and Docker container manager for GitHub Actions sel
 - **💾 Config Backup & Restore**: Export and import system configurations as JSON.
 - **🎨 Dark / Light Themes & Custom Avatars**: Customize profile avatar image URLs or base64 uploads.
 - **🚀 Automatic Update Checker**: Notifies users in-app when new releases are pushed to GitHub or Docker Hub.
-- **🖥️ ZimaOS & CasaOS App Store Ready**: Fully supports `x-casaos` native app store manifests.
+- **🖥️ Universal Docker Compose**: Compatible with standard Docker, Docker Compose, Portainer, CasaOS, and ZimaOS.
 
 ---
 
