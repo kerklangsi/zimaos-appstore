@@ -10,7 +10,7 @@ A modern, full-stack Web GUI and Docker container manager for GitHub Actions sel
 
 ## ✨ Features
 
-- **🌐 Modern Web Dashboard**: React + Express UI running on port 3000 for managing all runner instances in real-time.
+- **🌐 Modern Web Dashboard**: React + Express UI running on port 8080 for managing all runner instances in real-time.
 - **⚡ Rapid Runner Provisioning**: Provision repository or organization runners using Personal Access Tokens (PAT) or one-time registration tokens.
 - **📦 Unified Persistent Tool Cache**: Automatically caches toolchains (Node.js, Python via `setup-python`/`setup-node`) and packages (pip wheels, Playwright browsers, npm) into a single persistent cache volume (`/home/runner/.cache` ➔ `/opt/hostedtoolcache`), eliminating duplicate downloads across workflows.
 - **📁 Decoupled Shared Repository Data**: Dedicated persistent storage (`/opt/shared_data`) organized by repository, with automatic workspace pre-linking for authentication tokens and credentials.
@@ -32,39 +32,28 @@ A modern, full-stack Web GUI and Docker container manager for GitHub Actions sel
 
 ## ⚡ Quickstart
 
-### Option 1: Docker Hub Image (Recommended)
+### Option 1: Docker Compose (Recommended)
 
-Run the pre-built image directly from Docker Hub:
-
-```bash
-docker run -d \
-  --name github-runner-manager \
-  --restart unless-stopped \
-  -p 3000:3000 \
-  -v /var/run/docker.sock:/var/run/docker.sock \
-  -v /DATA/AppData/github-runner/data:/app/data \
-  -v /DATA/AppData/github-runner/runners:/opt/github-runners \
-  -v /DATA/AppData/github-runner/shared_data:/opt/shared_data \
-  -v /DATA/AppData/github-runner/cache:/home/runner/.cache \
-  kerklangsi/github-runner:latest
-```
-
-Access the Web Dashboard at **`http://localhost:3000`** (or `http://<your-server-ip>:3000`).
-
----
-
-### Option 2: Docker Compose
+Run with Docker Compose using [`docker-compose.yml`](docker-compose.yml):
 
 ```yaml
-version: '3.8'
+name: github-runner
 
 services:
-  github-runner-manager:
+  github-runner:
     image: kerklangsi/github-runner:latest
     container_name: github-runner-manager
     restart: unless-stopped
+    network_mode: bridge
     ports:
-      - "3000:3000"
+      - target: 8080
+        published: 8080
+        protocol: tcp
+    environment:
+      - PORT=8080
+      - DATA_DIR=/app/data
+      - RUNNERS_DIR=/opt/github-runners
+      - RUNNER_TOOL_CACHE=/opt/hostedtoolcache
     volumes:
       - type: bind
         source: /var/run/docker.sock
@@ -88,16 +77,38 @@ Launch with:
 docker compose up -d
 ```
 
+Access the Web Dashboard at **`http://localhost:8080`** (or `http://<your-server-ip>:8080`).
+
 ---
 
-### Option 3: ZimaOS / CasaOS App Store
-
-This repository includes a native `x-casaos` manifest for **ZimaOS** and **CasaOS** App Stores.
+### Option 2: ZimaOS / CasaOS Manual Install
 
 1. Open **ZimaOS App Store** or **CasaOS App Store**.
-2. Click **Manual Install** or **Custom Install** (or install directly from the community App Store).
-3. Load [`docker-compose.yml`](docker-compose.yml).
-4. Click **Install**. ZimaOS will configure ports, persistent storage binds, icons, and shortcuts automatically!
+2. Click **Manual Install** or **Custom Install**.
+3. Import or paste [`docker-compose.yml`](docker-compose.yml).
+4. Click **Install**.
+
+---
+
+### Option 3: Docker Run
+
+Run directly via `docker run`:
+
+```bash
+docker run -d \
+  --name github-runner-manager \
+  --restart unless-stopped \
+  -p 8080:8080 \
+  -e PORT=8080 \
+  -v /var/run/docker.sock:/var/run/docker.sock \
+  -v /DATA/AppData/github-runner/data:/app/data \
+  -v /DATA/AppData/github-runner/runners:/opt/github-runners \
+  -v /DATA/AppData/github-runner/shared_data:/opt/shared_data \
+  -v /DATA/AppData/github-runner/cache:/home/runner/.cache \
+  kerklangsi/github-runner:latest
+```
+
+Access the Web Dashboard at **`http://localhost:8080`** (or `http://<your-server-ip>:8080`).
 
 ---
 
@@ -105,7 +116,7 @@ This repository includes a native `x-casaos` manifest for **ZimaOS** and **CasaO
 
 | Variable | Description | Default |
 | :--- | :--- | :--- |
-| `PORT` | Web GUI and API server port | `3000` |
+| `PORT` | Web GUI and API server port | `8080` |
 | `DATA_DIR` | Persistent database and settings storage | `/app/data` |
 | `RUNNERS_DIR` | Working directory for provisioned runners | `/opt/github-runners` |
 | `SHARED_DATA_DIR` | Persistent shared repository storage | `/opt/shared_data` |
