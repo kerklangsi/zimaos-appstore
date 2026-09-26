@@ -45,7 +45,8 @@ x-casaos:
       runners. Easily provision, monitor, control, and update multiple GitHub runner
       instances from a high-performance web dashboard.
   developer: Kerk Langsi
-  icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/github.png
+  icon: https://kerklangsi.github.io/zimaos-appstore/apps/github-runner/assets/icon.svg
+  thumbnail: https://kerklangsi.github.io/zimaos-appstore/apps/github-runner/assets/icon.svg
   id: github-runner-docker
   index: /
   main: github-runner
@@ -55,7 +56,7 @@ x-casaos:
     en_US: Web GUI & Container Supervisor for GitHub Actions Self-Hosted Runners
   title:
     en_US: GitHub Runner Manager
-  version: 3.0.0
+  version: 3.2.0
   release_notes:
     en_US: '### What''s New in v3.2.0
 
@@ -85,4 +86,3 @@ x-casaos:
       en_US: Persistent storage for /home/runner/.cache
   is_store: true
   store_app_id: github-runner-docker
-  thumbnail: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/github.png
