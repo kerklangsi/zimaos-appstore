@@ -96,7 +96,7 @@ This repository includes a native `x-casaos` manifest for **ZimaOS** and **CasaO
 
 1. Open **ZimaOS App Store** or **CasaOS App Store**.
 2. Click **Manual Install** or **Custom Install** (or install directly from the community App Store).
-3. Load [`Apps/github-runner/docker-compose.yml`](Apps/github-runner/docker-compose.yml).
+3. Load [`docker-compose.yml`](docker-compose.yml).
 4. Click **Install**. ZimaOS will configure ports, persistent storage binds, icons, and shortcuts automatically!
 
 ---
