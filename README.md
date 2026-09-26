@@ -2,7 +2,7 @@
 
 > A custom, community-ready **ZimaOS App Store v2 Repository** featuring Docker applications from user `kerklangsi`.
 
-[![Store Version](https://img.shields.io/badge/Store%20Version-v3.1.8-blue?style=flat-square)](https://github.com/kerklangsi/zimaos-appstore/releases)
+[![Store Version](https://img.shields.io/badge/Store%20Version-v4.0.0-blue?style=flat-square)](https://github.com/kerklangsi/zimaos-appstore/releases)
 [![ZimaOS Compatible](https://img.shields.io/badge/ZimaOS-v2%20App%20Store-blue?style=flat-square)](https://www.zimaspace.com/docs/developer/app-store-create-from-scratch)
 [![License](https://img.shields.io/badge/License-MIT-green.svg?style=flat-square)](LICENSE)
 
