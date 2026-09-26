@@ -2,8 +2,8 @@
 
 A modern, full-stack Web GUI and Docker container manager for GitHub Actions self-hosted runners. Easily provision, monitor, control, and update multiple GitHub runner instances from a high-performance web dashboard.
 
-[![Docker Image](https://img.shields.io/docker/v/kerklangsi/github-runner-docker?label=Docker%20Hub&color=0969da)](https://hub.docker.com/r/kerklangsi/github-runner-docker)
-[![GitHub Release](https://img.shields.io/github/v/release/kerklangsi/github-runner-docker?color=238636)](https://github.com/kerklangsi/github-runner-docker/releases)
+[![Docker Image](https://img.shields.io/docker/v/kerklangsi/github-runner?label=Docker%20Hub&color=0969da)](https://hub.docker.com/r/kerklangsi/github-runner)
+[![GitHub Release](https://img.shields.io/github/v/release/kerklangsi/github-runner?color=238636)](https://github.com/kerklangsi/github-runner/releases)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
 ---
@@ -42,11 +42,11 @@ docker run -d \
   --restart unless-stopped \
   -p 3000:3000 \
   -v /var/run/docker.sock:/var/run/docker.sock \
-  -v /DATA/AppData/github-runner-docker/data:/app/data \
-  -v /DATA/AppData/github-runner-docker/runners:/opt/github-runners \
-  -v /DATA/AppData/github-runner-docker/shared_data:/opt/shared_data \
-  -v /DATA/AppData/github-runner-docker/cache:/home/runner/.cache \
-  kerklangsi/github-runner-docker:latest
+  -v /DATA/AppData/github-runner/data:/app/data \
+  -v /DATA/AppData/github-runner/runners:/opt/github-runners \
+  -v /DATA/AppData/github-runner/shared_data:/opt/shared_data \
+  -v /DATA/AppData/github-runner/cache:/home/runner/.cache \
+  kerklangsi/github-runner:latest
 ```
 
 Access the Web Dashboard at **`http://localhost:3000`** (or `http://<your-server-ip>:3000`).
@@ -60,7 +60,7 @@ version: '3.8'
 
 services:
   github-runner-manager:
-    image: kerklangsi/github-runner-docker:latest
+    image: kerklangsi/github-runner:latest
     container_name: github-runner-manager
     restart: unless-stopped
     ports:
@@ -70,16 +70,16 @@ services:
         source: /var/run/docker.sock
         target: /var/run/docker.sock
       - type: bind
-        source: /DATA/AppData/github-runner-docker/data
+        source: /DATA/AppData/github-runner/data
         target: /app/data
       - type: bind
-        source: /DATA/AppData/github-runner-docker/runners
+        source: /DATA/AppData/github-runner/runners
         target: /opt/github-runners
       - type: bind
-        source: /DATA/AppData/github-runner-docker/shared_data
+        source: /DATA/AppData/github-runner/shared_data
         target: /opt/shared_data
       - type: bind
-        source: /DATA/AppData/github-runner-docker/cache
+        source: /DATA/AppData/github-runner/cache
         target: /home/runner/.cache
 ```
 
@@ -96,7 +96,7 @@ This repository includes a native `x-casaos` manifest for **ZimaOS** and **CasaO
 
 1. Open **ZimaOS App Store** or **CasaOS App Store**.
 2. Click **Manual Install** or **Custom Install** (or install directly from the community App Store).
-3. Load [`Apps/github-runner-docker/docker-compose.yml`](Apps/github-runner-docker/docker-compose.yml).
+3. Load [`Apps/github-runner/docker-compose.yml`](Apps/github-runner/docker-compose.yml).
 4. Click **Install**. ZimaOS will configure ports, persistent storage binds, icons, and shortcuts automatically!
 
 ---

@@ -1,6 +1,6 @@
-# Sync History: Github Runner Docker (`github-runner`)
+# Sync History: GitHub Runner Manager (`github-runner`)
 
-> Upstream Source: https://github.com/kerklangsi/github-runner-docker
+> Upstream Source: https://github.com/kerklangsi/github-runner
 
 ## [3.0.0] - 2026-09-26 14:06:02 UTC
 ### Action: Created / Updated

@@ -13,7 +13,7 @@
 | Application | Category | Description | Docker Image |
 | :--- | :--- | :--- | :--- |
 | **Amp Docker** | `Media` | CubeCoders AMP in a Docker Image | `kerklangsi/amp-docker:latest` |
-| **GitHub Runner Manager** | `Developer` | Full-stack Web GUI and Docker container manager for GitHub Actions self-hosted runners | `kerklangsi/github-runner-docker:latest` |
+| **GitHub Runner Manager** | `Developer` | Full-stack Web GUI and Docker container manager for GitHub Actions self-hosted runners | `kerklangsi/github-runner:latest` |
 
 ---
 

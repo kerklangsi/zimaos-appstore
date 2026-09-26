@@ -1,8 +1,8 @@
-name: github-runner-docker
+name: github-runner
 services:
   github-runner:
-    image: kerklangsi/github-runner-docker:latest
-    container_name: github-runner-docker
+    image: kerklangsi/github-runner:latest
+    container_name: github-runner
     network_mode: bridge
     ports:
     - target: 8080
@@ -47,7 +47,7 @@ x-casaos:
   developer: Kerk Langsi
   icon: https://kerklangsi.github.io/zimaos-appstore/apps/github-runner/assets/icon.svg
   thumbnail: https://kerklangsi.github.io/zimaos-appstore/apps/github-runner/assets/icon.svg
-  id: github-runner-docker
+  id: github-runner
   index: /
   main: github-runner
   port_map: '8080'
@@ -85,4 +85,4 @@ x-casaos:
     description:
       en_US: Persistent storage for /home/runner/.cache
   is_store: true
-  store_app_id: github-runner-docker
+  store_app_id: github-runner
