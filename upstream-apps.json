@@ -4,9 +4,9 @@
     "upstream_url": "https://raw.githubusercontent.com/kerklangsi/github-runner/main/docker-compose.yml",
     "target_compose": "Apps/github-runner/docker-compose.yml"
   },
-  "ampdocker": {
+  "amp-docker": {
     "name": "CubeCoders AMP",
     "upstream_url": "https://raw.githubusercontent.com/kerklangsi/amp-docker/main/docker-compose.yml",
-    "target_compose": "Apps/ampdocker/docker-compose.yml"
+    "target_compose": "Apps/amp-docker/docker-compose.yml"
   }
 }

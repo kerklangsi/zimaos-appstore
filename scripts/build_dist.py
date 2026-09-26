@@ -50,7 +50,10 @@ def build_store():
                 app_id = f"com.kerklangsi.{app_id}"
             target_app_ids = [app_id]
             if app_id.startswith("com.kerklangsi."):
-                target_app_ids.append(app_id.replace("com.kerklangsi.", ""))
+                short_id = app_id.replace("com.kerklangsi.", "")
+                target_app_ids.append(short_id)
+                if '-' in short_id:
+                    target_app_ids.extend([short_id.replace('-', ''), f"com.kerklangsi.{short_id.replace('-', '')}"])
             target_app_ids = list(dict.fromkeys(target_app_ids))
 
             def loc_val(d, lang='en_US'):

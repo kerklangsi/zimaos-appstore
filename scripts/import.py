@@ -101,7 +101,7 @@ def finalize_app(compose_data, app_id, title, desc, owner, repo, upstream_url, r
     app_ver = fetch_version(owner, repo, svc.get('image', ''))
     for k, v in (('title', {'en_US': title}), ('tagline', {'en_US': tagline}), ('description', {'en_US': desc_md}),
                  ('category', normalize_category(casaos.get('category') or cat)), ('developer', owner or repo),
-                 ('author', owner or repo), ('port_map', str(pmap)), ('id', f'com.{owner.lower() if owner else "library"}.{app_id.replace("-", "")}'),
+                 ('author', owner or repo), ('port_map', str(pmap)), ('id', f'com.{owner.lower() if owner else "library"}.{app_id}'),
                  ('main', sname), ('scheme', '' if is_db else 'http'), ('index', '' if is_db else '/'),
                  ('version', app_ver), ('icon', f'https://kerklangsi.github.io/zimaos-appstore/apps/{app_id}/assets/icon.svg')):
         casaos.setdefault(k, v)
