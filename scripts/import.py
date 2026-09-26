@@ -1,4 +1,4 @@
-import os, sys, re, yaml
+import os, sys, re, yaml, shutil
 from pathlib import Path
 from store_utils import (
     fetch_text, fetch_json, download_file, load_json, save_json,
@@ -188,14 +188,18 @@ def import_apps(repo_root):
         return 0
     entries, changes = parse_apps(apps_md), 0
     up_cfg = load_json(up_json) if up_json.exists() else {}
+    active_folders = set()
 
     for item in entries:
         is_gh = 'github.com' in item
+        slug = item.rstrip('/').split('/')[-1].split(':')[0]
+        active_folders.add(find_folder(apps_dir, slug))
         print(f"\n[SCAN] Scanning apps.md entry: {item}")
         app_res = resolve_github(item) if is_gh else resolve_docker(item)
         if not app_res:
             continue
         app_id = find_folder(apps_dir, app_res['app_id'])
+        active_folders.add(app_id)
         app_folder, comp_file = apps_dir / app_id, apps_dir / app_id / 'docker-compose.yml'
 
         has_comp, comp_status = sync_compose(comp_file, app_res['compose_data'])
@@ -217,6 +221,13 @@ def import_apps(repo_root):
         changes += int(has_changes)
         if app_id not in up_cfg and 'raw.githubusercontent.com' in app_res['upstream_url']:
             up_cfg[app_id] = {'name': app_res['title'], 'upstream_url': app_res['upstream_url'], 'target_compose': f'Apps/{app_id}/docker-compose.yml'}
+
+    if apps_dir.exists():
+        for d in (d for d in apps_dir.iterdir() if d.is_dir()):
+            if d.name not in active_folders:
+                print(f"[PRUNE] Removing application not listed in apps.md: {d.name}")
+                shutil.rmtree(d, ignore_errors=True)
+                changes += 1
 
     clean_up = {k: v for k, v in up_cfg.items() if (Path(repo_root) / v.get('target_compose', '')).exists()}
     save_json(up_json, clean_up)

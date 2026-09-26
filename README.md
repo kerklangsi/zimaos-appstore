@@ -2,7 +2,7 @@
 
 > A custom, community-ready **ZimaOS App Store v2 Repository** featuring Docker applications from user `kerklangsi`.
 
-[![Store Version](https://img.shields.io/badge/Store%20Version-v4.0.1-blue?style=flat-square)](https://github.com/kerklangsi/zimaos-appstore/releases)
+[![Store Version](https://img.shields.io/badge/Store%20Version-v4.0.2-blue?style=flat-square)](https://github.com/kerklangsi/zimaos-appstore/releases)
 [![ZimaOS Compatible](https://img.shields.io/badge/ZimaOS-v2%20App%20Store-blue?style=flat-square)](https://www.zimaspace.com/docs/developer/app-store-create-from-scratch)
 [![License](https://img.shields.io/badge/License-MIT-green.svg?style=flat-square)](LICENSE)
 
@@ -14,7 +14,6 @@
 | :--- | :--- | :--- | :--- |
 | **Amp Docker** | `Media` | CubeCoders AMP in a Docker Image | `kerklangsi/amp-docker:latest` |
 | **GitHub Runner Manager** | `Developer` | Full-stack Web GUI and Docker container manager for GitHub Actions self-hosted runners | `kerklangsi/github-runner-docker:latest` |
-| **Mysql** | `Developer` | MySQL is a widely used, open-source relational database management system (RDBMS). | `mysql:latest` |
 
 ---
 
@@ -47,21 +46,16 @@ https://cdn.jsdelivr.net/gh/kerklangsi/zimaos-appstore@gh-pages/appstore.zip
 zimaos-appstore/
 ├── Apps/
 │   ├── ampdocker/
-│   │   ├── docker-compose.yml   # App Compose manifest + x-casaos metadata
-│   │   ├── icon.svg             # Custom SVG App Icon
-│   │   ├── README.md            # Upstream documentation fetched from URL
-│   │   └── log.md               # Timestamped sync history & asset updates
-│   ├── github-runner/
-│   │   ├── docker-compose.yml   # App Compose manifest + x-casaos metadata
-│   │   ├── icon.svg             # Custom SVG App Icon
-│   │   ├── picture/             # Screenshots directory
-│   │   ├── README.md            # Upstream documentation fetched from URL
-│   │   └── log.md               # Timestamped sync history & asset updates
-│   └── mysql/
-│       ├── docker-compose.yml   # App Compose manifest + x-casaos metadata
-│       ├── icon.svg             # Custom SVG App Icon
-│       ├── README.md            # Upstream documentation fetched from URL
-│       └── log.md               # Timestamped sync history & asset updates
+        ├── docker-compose.yml   # App Compose manifest + x-casaos metadata
+        ├── icon.svg             # Custom SVG App Icon
+        ├── README.md            # Upstream documentation fetched from URL
+        └── log.md               # Timestamped sync history & asset updates
+│   └── github-runner/
+        ├── docker-compose.yml   # App Compose manifest + x-casaos metadata
+        ├── icon.svg             # Custom SVG App Icon
+        ├── picture/             # Screenshots directory
+        ├── README.md            # Upstream documentation fetched from URL
+        └── log.md               # Timestamped sync history & asset updates
 ├── apps.md                      # Source list of GitHub and Docker Hub URLs
 ├── store-config.json            # Store identity & localized store metadata (en_US)
 ├── supported-languages.json     # Locales candidate list ["en_US"]

@@ -9,9 +9,9 @@ on:
   workflow_dispatch:
     inputs:
       tag:
-        description: 'Release tag (default: latest)'
+        description: 'Release tag override (optional, e.g. v4.1.0)'
         required: false
-        default: 'latest'
+        default: ''
         type: string
       title:
         description: 'Release title'

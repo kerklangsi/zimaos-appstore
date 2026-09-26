@@ -9,7 +9,7 @@ def release_tag(repo_root, override_tag=None):
         return override_tag or 'v3.0.0', False
     data = load_json(cfg_path)
     cur_ver = data.get('store_version', '3.0.0')
-    if override_tag:
+    if override_tag and override_tag.lower() not in ('latest', 'none', ''):
         return override_tag, False
     try:
         last_msg = subprocess.check_output(['git', 'log', '-1', '--pretty=%B'], cwd=repo_root).decode('utf-8', errors='ignore').strip()
