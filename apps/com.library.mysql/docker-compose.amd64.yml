@@ -8,10 +8,6 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: my-secret-pw
       MYSQL_ROOT_PASSWORD_FILE: /run/secrets/mysql-root
-    ports:
-    - target: 3306
-      published: 3306
-      protocol: tcp
     volumes:
     - type: bind
       source: /DATA/AppData/$AppID/conf.d
@@ -37,18 +33,18 @@ x-casaos:
       - Persistent data volume storage.
 
       - High-performance containerized execution.'
-  version: 9.7.2
   category: Developer
   developer: mysql
   author: mysql
-  icon: https://kerklangsi.github.io/zimaos-appstore/apps/com.library.mysql/assets/icon.svg
   port_map: '80'
-  scheme: ''
-  index: ''
-  tips:
-    en_US: Connect to database service at port 80.
   id: com.library.mysql
   main: mysql
+  scheme: ''
+  index: ''
+  version: 9.7.2
+  icon: https://kerklangsi.github.io/zimaos-appstore/apps/com.library.mysql/assets/icon.svg
+  tips:
+    en_US: Connect to database service at port 80.
   volumes:
   - container: /etc/mysql/conf.d
     description:
