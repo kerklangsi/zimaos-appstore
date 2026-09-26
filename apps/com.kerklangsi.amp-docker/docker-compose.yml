@@ -37,7 +37,7 @@ x-casaos:
 
       - High-performance containerized execution.'
   developer: kerklangsi
-  icon: https://kerklangsi.github.io/zimaos-appstore/apps/com.kerklangsi.ampdocker/assets/icon.svg
+  icon: https://kerklangsi.github.io/zimaos-appstore/apps/com.kerklangsi.amp-docker/assets/icon.svg
   thumbnail: https://kerklangsi.github.io/zimaos-appstore/apps/com.kerklangsi.amp-docker/assets/icon.svg
   id: com.kerklangsi.amp-docker
   index: /

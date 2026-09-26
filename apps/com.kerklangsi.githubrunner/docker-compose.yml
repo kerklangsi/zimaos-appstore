@@ -45,7 +45,7 @@ x-casaos:
       runners. Easily provision, monitor, control, and update multiple GitHub runner
       instances from a high-performance web dashboard.
   developer: Kerk Langsi
-  icon: https://kerklangsi.github.io/zimaos-appstore/apps/github-runner/assets/icon.svg
+  icon: https://kerklangsi.github.io/zimaos-appstore/apps/com.kerklangsi.githubrunner/assets/icon.svg
   thumbnail: https://kerklangsi.github.io/zimaos-appstore/apps/com.kerklangsi.github-runner/assets/icon.svg
   id: com.kerklangsi.github-runner
   index: /

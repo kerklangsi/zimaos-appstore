@@ -1,0 +1,82 @@
+{
+  "id": "githubrunner",
+  "title": {
+    "en_US": "GitHub Runner Manager"
+  },
+  "tagline": {
+    "en_US": "Web GUI & Container Supervisor for GitHub Actions Self-Hosted Runners"
+  },
+  "description": {
+    "en_US": "Full-stack Web GUI and Docker container manager for GitHub Actions self-hosted runners. Easily provision, monitor, control, and update multiple GitHub runner instances from a high-performance web dashboard."
+  },
+  "icon": "/apps/githubrunner/assets/icon.svg",
+  "thumbnail": "",
+  "screenshot_link": [
+    "/apps/githubrunner/assets/image1.png",
+    "/apps/githubrunner/assets/image2.png",
+    "/apps/githubrunner/assets/image3.png"
+  ],
+  "category": "Developer",
+  "categories": [
+    "developer"
+  ],
+  "author": "Kerk Langsi",
+  "developer": "Kerk Langsi",
+  "architectures": [
+    "amd64",
+    "arm64"
+  ],
+  "min_memory": 268435456,
+  "min_disk": "1.0 GB",
+  "disk": "1.0 GB",
+  "estimated_disk": "1.0 GB",
+  "min_storage": 1048576000,
+  "min_image_size": {
+    "amd64": 1048576000,
+    "arm64": 1048576000
+  },
+  "version": "3.2.0",
+  "index": "/",
+  "port_map": "8080",
+  "base_url": "https://kerklangsi.github.io/zimaos-appstore",
+  "release_notes": {
+    "en_US": "### What's New in v3.2.0\n- Added dedicated shared data volume (/opt/shared_data) organized by repository.\n- Unified toolcache and package cache into a single persistent cache volume (/home/runner/.cache).\n"
+  },
+  "tips": {
+    "info": {
+      "en_US": "Ensure port 8080 is not in use before installing."
+    }
+  },
+  "volumes": [
+    {
+      "container": "/var/run/docker.sock",
+      "description": {
+        "en_US": "Persistent storage for /var/run/docker.sock"
+      }
+    },
+    {
+      "container": "/app/data",
+      "description": {
+        "en_US": "Persistent storage for /app/data"
+      }
+    },
+    {
+      "container": "/opt/github-runners",
+      "description": {
+        "en_US": "Persistent storage for /opt/github-runners"
+      }
+    },
+    {
+      "container": "/opt/shared_data",
+      "description": {
+        "en_US": "Persistent storage for /opt/shared_data"
+      }
+    },
+    {
+      "container": "/home/runner/.cache",
+      "description": {
+        "en_US": "Persistent storage for /home/runner/.cache"
+      }
+    }
+  ]
+}

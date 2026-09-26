@@ -1,0 +1,52 @@
+{
+  "id": "amp-docker",
+  "title": {
+    "en_US": "Amp Docker"
+  },
+  "tagline": {
+    "en_US": "CubeCoders AMP in a Docker Image"
+  },
+  "description": {
+    "en_US": "CubeCoders AMP in a Docker Image. Easily create game servers for games\n\n### Features\n- Simple, one-click deployment for ZimaOS and CasaOS.\n- Persistent data volume storage.\n- High-performance containerized execution."
+  },
+  "icon": "/apps/amp-docker/assets/icon.svg",
+  "thumbnail": "",
+  "screenshot_link": [],
+  "category": "Media",
+  "categories": [
+    "media"
+  ],
+  "author": "kerklangsi",
+  "developer": "kerklangsi",
+  "architectures": [
+    "amd64"
+  ],
+  "min_memory": 536870912,
+  "min_disk": "2.0 GB",
+  "disk": "2.0 GB",
+  "estimated_disk": "2.0 GB",
+  "min_storage": 2097152000,
+  "min_image_size": {
+    "amd64": 2097152000
+  },
+  "version": "latest",
+  "index": "/",
+  "port_map": "80",
+  "base_url": "https://kerklangsi.github.io/zimaos-appstore",
+  "release_notes": {
+    "en_US": "### What's New in v1.0.0\n- Initial release of CubeCoders AMP container for ZimaOS App Store.\n- Preconfigured Docker socket binding and persistent storage for server data.\n"
+  },
+  "tips": {
+    "info": {
+      "en_US": "Ensure port 80 is not in use before installing."
+    }
+  },
+  "volumes": [
+    {
+      "container": "/var/run/docker.sock",
+      "description": {
+        "en_US": "Persistent storage for /var/run/docker.sock"
+      }
+    }
+  ]
+}

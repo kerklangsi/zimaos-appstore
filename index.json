@@ -5,12 +5,12 @@
   "description": "Community App Store for ZimaOS and CasaOS, offering a curated collection of high-performance containerized applications with easy discovery and one-click deployment.",
   "maintainer": "kerklangsi",
   "url": "https://github.com/kerklangsi/zimaos-appstore",
-  "updated_at": "2026-09-26T14:45:28Z",
+  "updated_at": "2026-09-26T15:05:35Z",
   "app_count": 2,
   "base_url": "https://kerklangsi.github.io/zimaos-appstore",
   "apps": [
     {
-      "id": "com.kerklangsi.ampdocker",
+      "id": "com.kerklangsi.amp-docker",
       "title": "Amp Docker",
       "tagline": "CubeCoders AMP in a Docker Image",
       "category": "Media",
@@ -22,15 +22,15 @@
       "architectures": [
         "amd64"
       ],
-      "icon": "/apps/com.kerklangsi.ampdocker/assets/icon.svg",
+      "icon": "/apps/com.kerklangsi.amp-docker/assets/icon.svg",
       "thumbnail": "",
-      "compose_url": "/apps/com.kerklangsi.ampdocker/docker-compose.yml",
-      "meta_url": "/apps/com.kerklangsi.ampdocker/meta.json",
+      "compose_url": "/apps/com.kerklangsi.amp-docker/docker-compose.yml",
+      "meta_url": "/apps/com.kerklangsi.amp-docker/meta.json",
       "version": "latest",
-      "content_hash": "6e359ca9"
+      "content_hash": "bd4e02cd"
     },
     {
-      "id": "github-runner",
+      "id": "com.kerklangsi.github-runner",
       "title": "GitHub Runner Manager",
       "tagline": "Web GUI & Container Supervisor for GitHub Actions Self-Hosted Runners",
       "category": "Developer",
@@ -43,16 +43,16 @@
         "amd64",
         "arm64"
       ],
-      "icon": "/apps/github-runner/assets/icon.svg",
+      "icon": "/apps/com.kerklangsi.github-runner/assets/icon.svg",
       "thumbnail": "",
-      "compose_url": "/apps/github-runner/docker-compose.yml",
-      "meta_url": "/apps/github-runner/meta.json",
+      "compose_url": "/apps/com.kerklangsi.github-runner/docker-compose.yml",
+      "meta_url": "/apps/com.kerklangsi.github-runner/meta.json",
       "version": "3.2.0",
-      "content_hash": "9517867d"
+      "content_hash": "33ea100a"
     }
   ],
   "recommend": [
-    "com.kerklangsi.ampdocker",
-    "github-runner"
+    "com.kerklangsi.amp-docker",
+    "com.kerklangsi.github-runner"
   ]
 }

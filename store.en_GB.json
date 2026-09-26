@@ -1,0 +1,8 @@
+{
+  "version": 2,
+  "store_id": "com.kerklangsi.appstore",
+  "name": "KerkLangsi Apps",
+  "description": "Community App Store for ZimaOS and CasaOS, offering a curated collection of high-performance containerized applications with easy discovery and one-click deployment.",
+  "maintainer": "kerklangsi",
+  "url": "https://github.com/kerklangsi/zimaos-appstore"
+}

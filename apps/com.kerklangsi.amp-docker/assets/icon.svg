@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1e293b"/>
+      <stop offset="100%" stop-color="#0f172a"/>
+    </linearGradient>
+    <linearGradient id="iconGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#38bdf8"/>
+      <stop offset="100%" stop-color="#818cf8"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#000000" flood-opacity="0.4"/>
+    </filter>
+  </defs>
+  <rect width="128" height="128" rx="28" fill="url(#bgGrad)"/>
+  <g filter="url(#shadow)">
+    <!-- Controller / Game Server Icon -->
+    <path fill="url(#iconGrad)" d="M88 44H40C30 44 22 52 22 62C22 74 30 84 38 84C42 84 45 81 48 77L53 70H75L80 77C83 81 86 84 90 84C98 84 106 74 106 62C106 52 98 44 88 44ZM42 66H38V70H34V66H30V62H34V58H38V62H42V66ZM84 66C82.34 66 81 64.66 81 63C81 61.34 82.34 60 84 60C85.66 60 87 61.34 87 63C87 64.66 85.66 66 84 66ZM94 58C92.34 58 91 56.66 91 55C91 53.34 92.34 52 94 52C95.66 52 97 53.34 97 55C97 56.66 95.66 58 94 58Z"/>
+    <circle cx="64" cy="54" r="4" fill="#38bdf8"/>
+  </g>
+</svg>
