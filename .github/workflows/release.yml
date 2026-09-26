@@ -3,6 +3,8 @@ name: Release Store
 on:
   push:
     branches: [ main ]
+    paths-ignore:
+      - 'apps.md'
     tags: [ 'v*.*.*' ]
   workflow_dispatch:
     inputs:
@@ -76,7 +78,7 @@ jobs:
       - name: Resolve Release Version
         id: get_version
         run: |
-          python scripts/resolve_release_version.py "${{ inputs.tag }}" --ci >> $GITHUB_OUTPUT
+          python scripts/release_tag.py "${{ inputs.tag }}" --ci >> $GITHUB_OUTPUT
           echo "title=${{ inputs.title || '' }}" >> $GITHUB_OUTPUT
 
       - name: Commit Major Version Bump
@@ -84,7 +86,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add store-config.json
+          git add store-config.json README.md
           git commit -m "chore(release): bump store version to ${{ steps.get_version.outputs.tag }} [skip ci]" || true
           git push origin main || true
 
@@ -93,12 +95,16 @@ jobs:
           git tag -f latest ${{ github.sha }}
           git push -f origin latest || true
 
+      - name: Generate Dynamic Release Notes
+        run: |
+          python scripts/release_notes.py --tag "${{ steps.get_version.outputs.tag }}" --out dist/release_notes.md
+
       - name: Publish Versioned GitHub Release
         uses: softprops/action-gh-release@v3
         with:
           tag_name: ${{ steps.get_version.outputs.tag }}
           name: ${{ steps.get_version.outputs.title || format('ZimaOS App Store {0}', steps.get_version.outputs.tag) }}
-          body: ${{ inputs.description || format('Release {0} of custom ZimaOS App Store assets.', steps.get_version.outputs.tag) }}
+          body_path: dist/release_notes.md
           make_latest: true
           files: |
             dist/appstore.zip

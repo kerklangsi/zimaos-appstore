@@ -5,6 +5,20 @@ services:
     container_name: mysql
     restart: unless-stopped
     network_mode: bridge
+    environment:
+      MYSQL_ROOT_PASSWORD: my-secret-pw
+      MYSQL_ROOT_PASSWORD_FILE: /run/secrets/mysql-root
+    ports:
+    - target: 3306
+      published: 3306
+      protocol: tcp
+    volumes:
+    - type: bind
+      source: /DATA/AppData/$AppID/conf.d
+      target: /etc/mysql/conf.d
+    - type: bind
+      source: /DATA/AppData/$AppID/mysql
+      target: /var/lib/mysql
 x-casaos:
   title:
     en_US: Mysql
@@ -23,16 +37,23 @@ x-casaos:
       - Persistent data volume storage.
 
       - High-performance containerized execution.'
-  category: Developer Tools
-  developer: library
-  author: library
+  category: Developer
+  developer: mysql
+  author: mysql
   port_map: '80'
-  scheme: http
-  index: /
+  scheme: ''
+  index: ''
   tips:
     before_install:
       en_US: Ensure port 80 is not in use before installing.
     after_install:
-      en_US: Open the Web Dashboard at http://<your-zimaos-ip>:80
+      en_US: Connect to database at <your-zimaos-ip>:80
   id: com.library.mysql
   main: mysql
+  volumes:
+  - container: /etc/mysql/conf.d
+    description:
+      en_US: Persistent storage for /etc/mysql/conf.d
+  - container: /var/lib/mysql
+    description:
+      en_US: Persistent storage for /var/lib/mysql
