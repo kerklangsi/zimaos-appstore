@@ -46,14 +46,9 @@ services:
     restart: unless-stopped
     network_mode: bridge
     ports:
-      - target: 8080
-        published: 8080
+      - target: 3000
+        published: 3000
         protocol: tcp
-    environment:
-      - PORT=8080
-      - DATA_DIR=/app/data
-      - RUNNERS_DIR=/opt/github-runners
-      - RUNNER_TOOL_CACHE=/opt/hostedtoolcache
     volumes:
       - type: bind
         source: /var/run/docker.sock
@@ -62,8 +57,8 @@ services:
         source: /DATA/AppData/github-runner/data
         target: /app/data
       - type: bind
-        source: /DATA/AppData/github-runner/runners
-        target: /opt/github-runners
+        source: /DATA/AppData/github-runner/runner
+        target: /opt/github-runner
       - type: bind
         source: /DATA/AppData/github-runner/shared_data
         target: /opt/shared_data
@@ -77,7 +72,7 @@ Launch with:
 docker compose up -d
 ```
 
-Access the Web Dashboard at **`http://localhost:8080`** (or `http://<your-server-ip>:8080`).
+Access the Web Dashboard at **`http://localhost:3000`** (or `http://<your-server-ip>:3000`).
 
 ---
 
@@ -98,17 +93,16 @@ Run directly via `docker run`:
 docker run -d \
   --name github-runner-manager \
   --restart unless-stopped \
-  -p 8080:8080 \
-  -e PORT=8080 \
+  -p 3000:3000 \
   -v /var/run/docker.sock:/var/run/docker.sock \
   -v /DATA/AppData/github-runner/data:/app/data \
-  -v /DATA/AppData/github-runner/runners:/opt/github-runners \
+  -v /DATA/AppData/github-runner/runner:/opt/github-runner \
   -v /DATA/AppData/github-runner/shared_data:/opt/shared_data \
   -v /DATA/AppData/github-runner/cache:/home/runner/.cache \
   kerklangsi/github-runner:latest
 ```
 
-Access the Web Dashboard at **`http://localhost:8080`** (or `http://<your-server-ip>:8080`).
+Access the Web Dashboard at **`http://localhost:3000`** (or `http://<your-server-ip>:3000`).
 
 ---
 
@@ -116,9 +110,9 @@ Access the Web Dashboard at **`http://localhost:8080`** (or `http://<your-server
 
 | Variable | Description | Default |
 | :--- | :--- | :--- |
-| `PORT` | Web GUI and API server port | `8080` |
+| `PORT` | Web GUI and API server port | `3000` |
 | `DATA_DIR` | Persistent database and settings storage | `/app/data` |
-| `RUNNERS_DIR` | Working directory for provisioned runners | `/opt/github-runners` |
+| `RUNNER_DIR` | Working directory for provisioned runners | `/opt/github-runner` |
 | `SHARED_DATA_DIR` | Persistent shared repository storage | `/opt/shared_data` |
 | `RUNNER_TOOL_CACHE` | Unified tool cache location | `/opt/hostedtoolcache` |
 
