@@ -5,8 +5,8 @@ services:
     container_name: github-runner
     network_mode: bridge
     ports:
-    - target: 8080
-      published: 8080
+    - target: 3000
+      published: 3000
       protocol: tcp
     environment:
     - PORT=8080
@@ -24,8 +24,8 @@ services:
       source: /DATA/AppData/$AppID/data
       target: /app/data
     - type: bind
-      source: /DATA/AppData/$AppID/runner
-      target: /opt/github-runners
+      source: /DATA/AppData/github-runner/runner
+      target: /opt/github-runner
     - type: bind
       source: /DATA/AppData/$AppID/shared_data
       target: /opt/shared_data
@@ -50,7 +50,7 @@ x-casaos:
   id: com.kerklangsi.github-runner
   index: /
   main: github-runner
-  port_map: '8080'
+  port_map: '3000'
   scheme: http
   tagline:
     en_US: Web GUI & Container Supervisor for GitHub Actions Self-Hosted Runners
@@ -67,7 +67,7 @@ x-casaos:
 
       '
   tips:
-    en_US: Ensure port 8080 is not in use before installing.
+    en_US: Ensure port 3000 is not in use before installing.
   volumes:
   - container: /var/run/docker.sock
     description:
@@ -75,9 +75,9 @@ x-casaos:
   - container: /app/data
     description:
       en_US: Persistent storage for /app/data
-  - container: /opt/github-runners
+  - container: /opt/github-runner
     description:
-      en_US: Persistent storage for /opt/github-runners
+      en_US: Persistent storage for /opt/github-runner
   - container: /opt/shared_data
     description:
       en_US: Persistent storage for /opt/shared_data

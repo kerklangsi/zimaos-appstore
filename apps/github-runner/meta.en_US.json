@@ -31,11 +31,11 @@
   },
   "version": "3.2.0",
   "index": "/",
-  "port_map": "8080",
+  "port_map": "3000",
   "base_url": "https://kerklangsi.github.io/zimaos-appstore",
   "release_notes": "### What's New in v3.2.0\n- Added dedicated shared data volume (/opt/shared_data) organized by repository.\n- Unified toolcache and package cache into a single persistent cache volume (/home/runner/.cache).\n",
   "tips": {
-    "info": "Ensure port 8080 is not in use before installing."
+    "info": "Ensure port 3000 is not in use before installing."
   },
   "volumes": [
     {
@@ -51,9 +51,9 @@
       }
     },
     {
-      "container": "/opt/github-runners",
+      "container": "/opt/github-runner",
       "description": {
-        "en_US": "Persistent storage for /opt/github-runners"
+        "en_US": "Persistent storage for /opt/github-runner"
       }
     },
     {
