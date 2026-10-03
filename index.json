@@ -5,7 +5,7 @@
   "description": "Community App Store for ZimaOS and CasaOS, offering a curated collection of high-performance containerized applications with easy discovery and one-click deployment.",
   "maintainer": "kerklangsi",
   "url": "https://github.com/kerklangsi/zimaos-appstore",
-  "updated_at": "2026-10-02T17:11:57Z",
+  "updated_at": "2026-10-03T15:04:26Z",
   "app_count": 2,
   "base_url": "https://kerklangsi.github.io/zimaos-appstore",
   "apps": [
@@ -48,7 +48,7 @@
       "compose_url": "/apps/com.kerklangsi.github-runner/docker-compose.yml",
       "meta_url": "/apps/com.kerklangsi.github-runner/meta.json",
       "version": "3.2.0",
-      "content_hash": "bd6cf060"
+      "content_hash": "6223128f"
     }
   ],
   "recommend": [
