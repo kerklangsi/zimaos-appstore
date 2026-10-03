@@ -8,11 +8,6 @@ services:
     - target: 3000
       published: 3000
       protocol: tcp
-    environment:
-    - PORT=8080
-    - DATA_DIR=/app/data
-    - RUNNERS_DIR=/opt/github-runners
-    - RUNNER_TOOL_CACHE=/opt/hostedtoolcache
     restart: unless-stopped
     tty: true
     stdin_open: true
@@ -24,7 +19,7 @@ services:
       source: /DATA/AppData/$AppID/data
       target: /app/data
     - type: bind
-      source: /DATA/AppData/github-runner/runner
+      source: /DATA/AppData/$AppID/runner
       target: /opt/github-runner
     - type: bind
       source: /DATA/AppData/$AppID/shared_data
