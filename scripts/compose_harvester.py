@@ -55,11 +55,16 @@ def parse_run(md_text, app_id, default_image):
     return res
 
 # Loads and populates base Docker Compose template for newly added applications
-def load_template(template_path, app_id, default_image):
+def load_template(template_path, app_id, default_image, port="80"):
+    port_str = str(port or "80")
     if template_path and os.path.exists(template_path):
         try:
-            raw = Path(template_path).read_text(encoding='utf-8')
+            with open(template_path, 'r', encoding='utf-8') as f:
+                raw = f.read()
+            title = app_id.replace('-', ' ').replace('_', ' ').title()
             raw = raw.replace('${APP_ID}', app_id).replace('${IMAGE}', default_image)
+            raw = raw.replace('${PORT}', port_str).replace('${port}', port_str)
+            raw = raw.replace('${TITLE}', title).replace('${title}', title)
             data = yaml.safe_load(raw)
             if isinstance(data, dict) and 'services' in data:
                 return data
@@ -69,7 +74,12 @@ def load_template(template_path, app_id, default_image):
 
 # Harvests docker-compose YAML and docker run commands from markdown documentation
 def harvest_compose(md_text, app_id, default_image, template_path=None):
-    compose_data = extract_compose(md_text) or load_template(template_path, app_id, default_image)
+    run_data = parse_run(md_text, app_id, default_image)
+    detected_port = "80"
+    if run_data.get('ports'):
+        p0 = run_data['ports'][0]
+        detected_port = str(p0.get('published', p0.get('target', 80)))
+    compose_data = extract_compose(md_text) or load_template(template_path, app_id, default_image, port=detected_port)
     services = compose_data.setdefault('services', {})
     if not services:
         services[app_id] = {'image': default_image, 'container_name': app_id, 'restart': 'unless-stopped', 'network_mode': 'bridge'}

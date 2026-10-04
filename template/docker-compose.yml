@@ -6,8 +6,8 @@ services:
     restart: unless-stopped
     network_mode: bridge
     ports:
-      - target: 80
-        published: "80"
+      - target: ${port}
+        published: "${port}"
         protocol: tcp
     volumes:
       - type: bind
@@ -18,7 +18,7 @@ x-casaos:
     - amd64
     - arm64
   main: ${APP_ID}
-  port_map: "80"
+  port_map: "${port}"
   scheme: http
   index: /
   category: Utilities
@@ -37,7 +37,7 @@ x-casaos:
       - Persistent data volume storage.
       - High-performance containerized execution.
   tips:
-    en_US: Ensure port is not in use before installing.
+    en_US: Ensure port ${port} is not in use before installing.
   volumes:
     - container: /data
       description:
