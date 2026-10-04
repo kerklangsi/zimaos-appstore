@@ -12,9 +12,18 @@ def release_tag(repo_root, override_tag=None):
     if override_tag and override_tag.lower() not in ('latest', 'none', ''):
         return override_tag, False
     try:
+        tag_proc = subprocess.run(['git', 'rev-parse', '-q', '--verify', f'refs/tags/v{cur_ver}'], cwd=repo_root, capture_output=True)
+        tag_exists = (tag_proc.returncode == 0)
+    except Exception:
+        tag_exists = False
+    try:
         last_msg = subprocess.check_output(['git', 'log', '-1', '--pretty=%B'], cwd=repo_root).decode('utf-8', errors='ignore').strip()
     except Exception:
         last_msg = ''
+    if not tag_exists and cur_ver not in ('0.0.0', '3.0.0', ''):
+        update_readme(repo_root, cur_ver)
+        print(f"[VERSION] Untagged manifest version detected: {cur_ver}", file=sys.stderr)
+        return f"v{cur_ver}", True
     if 'chore(release):' in last_msg or '[skip ci]' in last_msg.lower():
         return f"v{cur_ver}", False
     p = ([int(x) if x.isdigit() else 0 for x in cur_ver.split('.')] + [0, 0])[:3]
