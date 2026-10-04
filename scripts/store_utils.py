@@ -69,7 +69,10 @@ def load_json(path):
 
 # Saves a Python object as pretty-printed UTF-8 JSON
 def save_json(path, data):
-    Path(path).write_text(json.dumps(data, indent=2, ensure_ascii=False), encoding='utf-8')
+    p = Path(path)
+    new_text = json.dumps(data, indent=2, ensure_ascii=False) + '\n'
+    if not p.exists() or p.read_text(encoding='utf-8') != new_text:
+        p.write_text(new_text, encoding='utf-8')
 
 # Safely parses a YAML file, returning an empty dict on failure
 def load_yaml(path):
@@ -182,18 +185,22 @@ def update_catalog(repo_root):
     table = '\n'.join(["| Application | Category | Description | Docker Image |", "| :--- | :--- | :--- | :--- |"] + [f"| **{e['title']}** | `{e['category']}` | {e['desc']} | `{e['img']}` |" for e in entries])
     content = readme_path.read_text(encoding='utf-8')
     m = re.search(r'\| Application \| Category \|[^\n]*(?:\n\|[^\n]*)+', content)
-    if m: readme_path.write_text(content[:m.start()] + table + content[m.end():], encoding='utf-8')
-
+    if m:
+        new_content = content[:m.start()] + table + content[m.end():]
+        if new_content != content:
+            readme_path.write_text(new_content, encoding='utf-8')
 
 # Appends or creates structured version changelog in app directory, retaining latest 5 entries
 def update_log(app_folder, app_info, has_changes=True, max_entries=5):
+    if not has_changes:
+        return
     log_file = Path(app_folder) / 'log.md'
     date_str = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S UTC")
-    action = "Created / Updated" if has_changes else "Scanned (Up-to-date)"
+    action = "Created / Updated"
     new_entry = f"## [{app_info['version']}] - {date_str}\n### Action: {action}\n- **Image**: `{app_info['image']}`\n- **Category**: `{app_info['category']}`\n- **Compose**: {app_info['compose_status']}\n- **Icon**: {app_info['icon_status']}\n- **Screenshots**: {app_info['screenshots_status']}\n- **README**: {app_info['readme_status']}\n- **Source**: {app_info['source_url']}"
     if not log_file.exists():
         log_file.write_text(f"# Sync History: {app_info['title']} (`{Path(app_folder).name}`)\n\n> Upstream Source: {app_info['source_url']}\n\n{new_entry}\n", encoding='utf-8')
-    elif has_changes:
+    else:
         old = log_file.read_text(encoding='utf-8')
         header = re.split(r'\n(?=## \[)', old)[0].strip()
         entries = [new_entry] + [e.strip() for e in re.findall(r'(## \[[\s\S]*?)(?=\n## \[|\Z)', old)]

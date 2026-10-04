@@ -10,14 +10,17 @@ A modern, full-stack Web GUI and Docker container manager for GitHub Actions sel
 
 ## ✨ Features
 
-- **🌐 Modern Web Dashboard**: React + Express UI running on port 8080 for managing all runner instances in real-time.
+- **🌐 Modern Web Dashboard**: React + Express UI running on port 3000 for managing all runner instances in real-time.
 - **⚡ Rapid Runner Provisioning**: Provision repository or organization runners using Personal Access Tokens (PAT) or one-time registration tokens.
+- **🛑 Automatic Workflow Run Cancellation**: Gracefully sends `SIGINT` signals to the runner listener on Stop/Restart to inform GitHub Actions of cancellation, and dispatches cancellation requests via GitHub REST API on Start/Restart.
+- **📜 Live Workflow Execution Logging (`job-logs.txt`)**: Real-time harvester captures verbatim Azure blob step output from `_diag/pages` before runner purging, complete with microsecond timestamps, ANSI colors, and `##[group]` markers.
+- **🔄 Dual Log Inspection**: Toggle instantly between Live Workflow Step Output (`job-logs.txt`) and Runner Daemon Lifecycle logs (`runner.log`) with search and one-click file download.
 - **📦 Unified Persistent Tool Cache**: Automatically caches toolchains (Node.js, Python via `setup-python`/`setup-node`) and packages (pip wheels, Playwright browsers, npm) into a single persistent cache volume (`/home/runner/.cache` ➔ `/opt/hostedtoolcache`), eliminating duplicate downloads across workflows.
 - **📁 Decoupled Shared Repository Data**: Dedicated persistent storage (`/opt/shared_data`) organized by repository, with automatic workspace pre-linking for authentication tokens and credentials.
 - **🖥️ Built-in Interactive Web Terminal**: Execute diagnostics directly from the web shell.
 - **📊 Real-time Hardware Telemetry**: Monitor CPU, RAM, Disk space, and network bandwidth cgroup metrics.
 - **📜 Live Log Streaming**: Inspect isolated runner logs and global container buffers with real-time level filtering (INFO, DEBUG, WARN, ERROR).
-- **📋 Workflow Execution Tracking**: Track recent GitHub Actions workflow runs and completion states.
+- **📋 Workflow Execution Tracking**: Track recent GitHub Actions workflow runs and completion states with direct "View Log" navigation.
 - **📁 Files & Storage Explorer**: Built-in web explorer with interactive breadcrumbs to browse, preview, and download files across `/opt/shared_data`, runner workspaces, and `/app/data`.
 - **🔄 Session-Clean Log Archiving**: Clean logs on container startup and runner restarts, automatically archiving previous session logs into `/app/data/archive/` and `<runnerDir>/logs/archive/`.
 - **⚡ Two-Tier Watchdog & Auto-Start**: Global master switch with per-runner watchdog recovery and optional automatic runner startup on container boot.

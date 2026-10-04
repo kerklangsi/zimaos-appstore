@@ -5,7 +5,7 @@ on:
     paths:
       - 'apps.md'
   schedule:
-    - cron: '0 */6 * * *'
+    - cron: '0 0 * * *'
   workflow_dispatch:
   repository_dispatch:
     types: [upstream-updated, app-release]
@@ -47,12 +47,13 @@ jobs:
             git push origin main
           else
             echo "changed=false" >> $GITHUB_OUTPUT
-            echo "No upstream changes detected."
+            echo "No upstream changes detected. All apps are up to date."
           fi
 
-      - name: Trigger Release Workflow
-        if: steps.git_status.outputs.changed == 'true' || github.event_name == 'push'
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Store Release Status
         run: |
-          gh workflow run release.yml --ref main || true
+          if [ "${{ steps.git_status.outputs.changed }}" = "true" ]; then
+            echo "Changes detected in apps! Triggering automatic store release build via push."
+          else
+            echo "Finished. No changes detected in any app sources. Skipping store release."
+          fi

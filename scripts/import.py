@@ -206,7 +206,7 @@ def import_apps(repo_root):
         icon_f, icon_s = fetch_icon(app_res.get('owner', ''), app_res.get('repo', ''), app_id, app_folder, is_gh=is_gh)
         screens_s = fetch_screens(app_res.get('owner', ''), app_res.get('repo', ''), app_folder, app_res['compose_data'].get('x-casaos', {}), is_gh=is_gh)
         has_readme, r_status = sync_readme(app_folder / 'README.md', app_res.get('readme_content'))
-        has_changes = has_comp or has_readme or ('Downloaded' in icon_s or 'Downloaded' in screens_s)
+        has_changes = has_comp or ('Downloaded' in icon_s or 'Downloaded' in screens_s)
 
         first_s = next(iter(app_res['compose_data'].get('services', {}).values()), {})
         c_data = app_res['compose_data'].get('x-casaos', {})
