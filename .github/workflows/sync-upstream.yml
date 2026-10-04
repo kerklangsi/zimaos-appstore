@@ -4,11 +4,9 @@ on:
   push:
     paths:
       - 'apps.md'
-  schedule:
-    - cron: '0 0 * * *'
-  workflow_dispatch:
   repository_dispatch:
-    types: [upstream-updated, app-release]
+    types: [sync-store, upstream-updated, app-release, refresh-token] # Trigger via webhook from cron-job.org or upstream repos
+  workflow_dispatch: # Trigger manually from GitHub Actions tab
 
 permissions:
   contents: write
