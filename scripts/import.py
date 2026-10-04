@@ -146,7 +146,7 @@ def resolve_github(url):
     return finalize_app(compose_data, app_id, format_title(repo), desc, owner, repo, raw_url or f'https://raw.githubusercontent.com/{owner}/{repo}/main/docker-compose.yml', readme)
 
 # Resolves image description, compose snippet, and metadata from Docker Hub API
-def resolve_docker(identifier):
+def resolve_docker(identifier, repo_root=None):
     cid = identifier.replace('https://hub.docker.com/r/', '').replace('https://hub.docker.com/_/', '').strip('/').split(':')[0]
     parts = cid.split('/')
     ns, name = ('library', parts[0]) if len(parts) == 1 else (parts[0], parts[1])
@@ -156,7 +156,17 @@ def resolve_docker(identifier):
         desc, full_desc = d.get('description') or desc, d.get('full_description') or ""
     except Exception as e:
         print(f"       [WARN] Docker Hub API error for {ns}/{name}: {e}")
-    compose_data = harvest_compose(full_desc, app_id, f"{name}:latest" if ns == 'library' else f"{ns}/{name}:latest")
+
+    apps_dir = Path(repo_root) / 'Apps' if repo_root else Path('Apps')
+    matched_id = find_folder(apps_dir, app_id)
+    comp_path = apps_dir / matched_id / 'docker-compose.yml'
+    tmpl_path = Path(repo_root) / 'template' / 'docker-compose.yml' if repo_root else Path('template/docker-compose.yml')
+
+    if comp_path.exists():
+        compose_data = load_yaml(comp_path)
+    else:
+        compose_data = harvest_compose(full_desc, app_id, f"{name}:latest" if ns == 'library' else f"{ns}/{name}:latest", template_path=tmpl_path)
+
     return finalize_app(compose_data, app_id, format_title(name), desc, '' if ns == 'library' else ns, name, f'https://hub.docker.com/r/{ns}/{name}', full_desc)
 
 # Matches existing app directory taking into account slug conventions
@@ -183,11 +193,10 @@ def find_folder(apps_dir, slug):
 
 # Synchronizes applications listed in apps.md with local store repository
 def import_apps(repo_root):
-    apps_md, up_json, apps_dir = Path(repo_root) / 'apps.md', Path(repo_root) / 'upstream-apps.json', Path(repo_root) / 'Apps'
+    apps_md, apps_dir = Path(repo_root) / 'apps.md', Path(repo_root) / 'Apps'
     if not apps_md.exists():
         return 0
     entries, changes = parse_apps(apps_md), 0
-    up_cfg = load_json(up_json) if up_json.exists() else {}
     active_folders = set()
 
     for item in entries:
@@ -195,7 +204,7 @@ def import_apps(repo_root):
         slug = item.rstrip('/').split('/')[-1].split(':')[0]
         active_folders.add(find_folder(apps_dir, slug))
         print(f"\n[SCAN] Scanning apps.md entry: {item}")
-        app_res = resolve_github(item) if is_gh else resolve_docker(item)
+        app_res = resolve_github(item) if is_gh else resolve_docker(item, repo_root=repo_root)
         if not app_res:
             continue
         app_id = find_folder(apps_dir, app_res['app_id'])
@@ -219,8 +228,6 @@ def import_apps(repo_root):
         print_summary(summary)
         update_log(app_folder, summary, has_changes=has_changes)
         changes += int(has_changes)
-        if app_id not in up_cfg and 'raw.githubusercontent.com' in app_res['upstream_url']:
-            up_cfg[app_id] = {'name': app_res['title'], 'upstream_url': app_res['upstream_url'], 'target_compose': f'Apps/{app_id}/docker-compose.yml'}
 
     if apps_dir.exists():
         for d in (d for d in apps_dir.iterdir() if d.is_dir()):
@@ -229,8 +236,6 @@ def import_apps(repo_root):
                 shutil.rmtree(d, ignore_errors=True)
                 changes += 1
 
-    clean_up = {k: v for k, v in up_cfg.items() if (Path(repo_root) / v.get('target_compose', '')).exists()}
-    save_json(up_json, clean_up)
     update_catalog(repo_root)
     if changes > 0:
         bump_version(repo_root, bump_type='patch')

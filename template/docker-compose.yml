@@ -1,0 +1,44 @@
+name: ${APP_ID}
+services:
+  ${APP_ID}:
+    image: ${IMAGE}
+    container_name: ${APP_ID}
+    restart: unless-stopped
+    network_mode: bridge
+    ports:
+      - target: 80
+        published: "80"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/data
+        target: /data
+x-casaos:
+  architectures:
+    - amd64
+    - arm64
+  main: ${APP_ID}
+  port_map: "80"
+  scheme: http
+  index: /
+  category: Utilities
+  author: kerklangsi
+  developer: kerklangsi
+  title:
+    en_US: ${TITLE}
+  tagline:
+    en_US: ${TITLE} container for ZimaOS
+  description:
+    en_US: |
+      ${TITLE} container application for ZimaOS and CasaOS.
+
+      ### Features
+      - Simple, one-click deployment for ZimaOS and CasaOS.
+      - Persistent data volume storage.
+      - High-performance containerized execution.
+  tips:
+    en_US: Ensure port is not in use before installing.
+  volumes:
+    - container: /data
+      description:
+        en_US: Persistent storage for application data

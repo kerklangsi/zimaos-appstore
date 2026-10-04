@@ -31,7 +31,6 @@ jobs:
       - name: Run Import & Sync Engine
         run: |
           python scripts/import.py
-          python scripts/sync.py
 
       - name: Check for Changes & Commit
         id: git_status

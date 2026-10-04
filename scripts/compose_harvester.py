@@ -54,11 +54,22 @@ def parse_run(md_text, app_id, default_image):
         res['network_mode'] = network_val
     return res
 
+# Loads and populates base Docker Compose template for newly added applications
+def load_template(template_path, app_id, default_image):
+    if template_path and os.path.exists(template_path):
+        try:
+            raw = Path(template_path).read_text(encoding='utf-8')
+            raw = raw.replace('${APP_ID}', app_id).replace('${IMAGE}', default_image)
+            data = yaml.safe_load(raw)
+            if isinstance(data, dict) and 'services' in data:
+                return data
+        except Exception:
+            pass
+    return {'name': app_id, 'services': {app_id: {'image': default_image, 'container_name': app_id, 'restart': 'unless-stopped', 'network_mode': 'bridge'}}}
+
 # Harvests docker-compose YAML and docker run commands from markdown documentation
-def harvest_compose(md_text, app_id, default_image):
-    compose_data = extract_compose(md_text) or {
-        'name': app_id, 'services': {app_id: {'image': default_image, 'container_name': app_id, 'restart': 'unless-stopped', 'network_mode': 'bridge'}}
-    }
+def harvest_compose(md_text, app_id, default_image, template_path=None):
+    compose_data = extract_compose(md_text) or load_template(template_path, app_id, default_image)
     services = compose_data.setdefault('services', {})
     if not services:
         services[app_id] = {'image': default_image, 'container_name': app_id, 'restart': 'unless-stopped', 'network_mode': 'bridge'}
