@@ -1,0 +1,130 @@
+[
+  {
+    "name": "environment",
+    "compose_key": "environment",
+    "flags": ["-e", "--env"],
+    "type": "key_value",
+    "regex": "(?:-e|--env)\\s+[\"']?([A-Za-z0-9_]+)=([^\"'\\s\\\\]+)[\"']?",
+    "description": "Environment variables passed into container"
+  },
+  {
+    "name": "volumes",
+    "compose_key": "volumes",
+    "flags": ["-v", "--volume"],
+    "type": "volume",
+    "regex": "(?:-v|--volume)\\s+[\"']?([^\"'\\s]+):([^\"'\\s:]+)[\"']?",
+    "description": "Persistent storage volumes mapped to /DATA/AppData/$AppID"
+  },
+  {
+    "name": "ports",
+    "compose_key": "ports",
+    "flags": ["-p", "--publish"],
+    "type": "port",
+    "regex": "(?:-p|--publish)\\s+[\"']?([0-9]+(?::[0-9]+)?)[\"']?",
+    "description": "Container port mappings"
+  },
+  {
+    "name": "restart",
+    "compose_key": "restart",
+    "flags": ["--restart"],
+    "type": "string",
+    "regex": "--restart\\s+[\"']?(always|unless-stopped|on-failure|no)[\"']?",
+    "description": "Container restart policy"
+  },
+  {
+    "name": "user",
+    "compose_key": "user",
+    "flags": ["-u", "--user"],
+    "type": "string",
+    "regex": "(?:--user|-u)\\s+[\"']?([0-9]+:[0-9]+|[a-zA-Z0-9_\\-]+)[\"']?",
+    "description": "User and group UID:GID"
+  },
+  {
+    "name": "network_mode",
+    "compose_key": "network_mode",
+    "flags": ["--network", "--net"],
+    "type": "string",
+    "regex": "(?:--network|--net)\\s+[\"']?([a-zA-Z0-9_\\-]+)[\"']?",
+    "description": "Container network mode (bridge, host, none)"
+  },
+  {
+    "name": "privileged",
+    "compose_key": "privileged",
+    "flags": ["--privileged"],
+    "type": "boolean",
+    "regex": "--privileged(?:=true)?",
+    "description": "Extended container privileges"
+  },
+  {
+    "name": "devices",
+    "compose_key": "devices",
+    "flags": ["--device"],
+    "type": "list",
+    "regex": "--device\\s+[\"']?([^\"'\\s]+)[\"']?",
+    "description": "Host device mappings (e.g. /dev/dri:/dev/dri)"
+  },
+  {
+    "name": "cap_add",
+    "compose_key": "cap_add",
+    "flags": ["--cap-add"],
+    "type": "list",
+    "regex": "--cap-add\\s+[\"']?([A-Za-z0-9_]+)[\"']?",
+    "description": "Linux capabilities to add to container"
+  },
+  {
+    "name": "cap_drop",
+    "compose_key": "cap_drop",
+    "flags": ["--cap-drop"],
+    "type": "list",
+    "regex": "--cap-drop\\s+[\"']?([A-Za-z0-9_]+)[\"']?",
+    "description": "Linux capabilities to drop from container"
+  },
+  {
+    "name": "shm_size",
+    "compose_key": "shm_size",
+    "flags": ["--shm-size"],
+    "type": "string",
+    "regex": "--shm-size\\s+[\"']?([0-9]+[kmgKMG]?)[\"']?",
+    "description": "Shared memory size limit"
+  },
+  {
+    "name": "hostname",
+    "compose_key": "hostname",
+    "flags": ["-h", "--hostname"],
+    "type": "string",
+    "regex": "(?:-h|--hostname)\\s+[\"']?([a-zA-Z0-9_\\-]+)[\"']?",
+    "description": "Container hostname"
+  },
+  {
+    "name": "dns",
+    "compose_key": "dns",
+    "flags": ["--dns"],
+    "type": "list",
+    "regex": "--dns\\s+[\"']?([0-9.]+)[\"']?",
+    "description": "Custom DNS server IP address"
+  },
+  {
+    "name": "working_dir",
+    "compose_key": "working_dir",
+    "flags": ["-w", "--workdir"],
+    "type": "string",
+    "regex": "(?:-w|--workdir)\\s+[\"']?([^\"'\\s]+)[\"']?",
+    "description": "Working directory inside container"
+  },
+  {
+    "name": "labels",
+    "compose_key": "labels",
+    "flags": ["-l", "--label"],
+    "type": "key_value",
+    "regex": "(?:-l|--label)\\s+[\"']?([A-Za-z0-9_.-]+)=([^\"'\\s\\\\]+)[\"']?",
+    "description": "Container metadata labels"
+  },
+  {
+    "name": "sysctls",
+    "compose_key": "sysctls",
+    "flags": ["--sysctl"],
+    "type": "key_value",
+    "regex": "--sysctl\\s+[\"']?([A-Za-z0-9_.-]+)=([^\"'\\s\\\\]+)[\"']?",
+    "description": "Kernel parameters configuration"
+  }
+]
