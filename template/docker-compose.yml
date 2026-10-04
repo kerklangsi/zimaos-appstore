@@ -3,6 +3,10 @@ services:
   ${APP_ID}:
     image: ${IMAGE}
     container_name: ${APP_ID}
+    deploy:
+      resources:
+        reservations:
+          memory: 64M
     restart: unless-stopped
     network_mode: bridge
     ports:
@@ -13,10 +17,22 @@ services:
       - type: bind
         source: /DATA/AppData/$AppID/data
         target: /data
+    x-casaos:
+      ports:
+        - container: "${port}"
+          description:
+            en_US: "${TITLE} Web UI port"
+      volumes:
+        - container: /data
+          description:
+            en_US: "Persistent storage for ${TITLE} data"
 x-casaos:
+  id: com.kerklangsi.${APP_ID}
   architectures:
     - amd64
+    - arm
     - arm64
+    - "386"
   main: ${APP_ID}
   port_map: "${port}"
   scheme: http
@@ -27,18 +43,23 @@ x-casaos:
   title:
     en_US: ${TITLE}
   tagline:
-    en_US: ${TITLE} container for ZimaOS
+    en_US: ${TITLE} container for ZimaOS and CasaOS
   description:
     en_US: |
-      ${TITLE} container application for ZimaOS and CasaOS.
+      ${TITLE} application container for ZimaOS and CasaOS.
 
       ### Features
       - Simple, one-click deployment for ZimaOS and CasaOS.
       - Persistent data volume storage.
       - High-performance containerized execution.
   tips:
-    en_US: Ensure port ${port} is not in use before installing.
-  volumes:
-    - container: /data
-      description:
-        en_US: Persistent storage for application data
+    before_install:
+      en_US: Ensure port ${port} is not in use before installing.
+  icon: https://kerklangsi.github.io/zimaos-appstore/apps/${APP_ID}/assets/icon.svg
+  thumbnail: ""
+  screenshot_link: []
+  version: "latest"
+  website: ""
+  repo: ""
+  support: ""
+  docs: ""
