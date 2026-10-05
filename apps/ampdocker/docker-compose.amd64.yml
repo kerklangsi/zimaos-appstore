@@ -3,6 +3,11 @@ services:
   amp-docker:
     image: kerklangsi/amp-docker:latest
     container_name: amp-docker
+    deploy:
+      resources:
+        reservations:
+          memory: 512M
+    restart: unless-stopped
     network_mode: bridge
     environment:
     - TZ=UTC
@@ -13,20 +18,39 @@ services:
     - target: 7777
       published: '7777'
       protocol: udp
-    restart: unless-stopped
     volumes:
     - type: bind
       source: /DATA/AppData/$AppID/docker.sock
       target: /var/run/docker.sock
+    x-casaos:
+      ports:
+      - container: '8080'
+        description:
+          en_US: CubeCoders AMP Web Management Portal
+      - container: '7777'
+        description:
+          en_US: CubeCoders AMP Game Port
+      volumes:
+      - container: /var/run/docker.sock
+        description:
+          en_US: Docker socket for managing game server containers
 x-casaos:
+  id: com.kerklangsi.amp-docker
   architectures:
   - amd64
-  author: kerklangsi
+  main: amp-docker
+  port_map: '8080'
+  scheme: http
+  index: /
   category: Media
-  min_memory: 512MB
-  min_disk: 2000MB
+  author: kerklangsi
+  developer: kerklangsi
+  title:
+    en_US: CubeCoders AMP
+  tagline:
+    en_US: CubeCoders AMP Game Server Manager in a Docker Container
   description:
-    en_US: 'CubeCoders AMP in a Docker Image. Easily create game servers for games
+    en_US: 'CubeCoders AMP in a Docker Image. Easily create game servers for games.
 
 
       ### Features
@@ -35,19 +59,14 @@ x-casaos:
 
       - Persistent data volume storage.
 
-      - High-performance containerized execution.'
-  developer: kerklangsi
+      - High-performance containerized execution.
+
+      '
+  tips:
+    en_US: Ensure ports 8080 and 7777 are not in use before installing.
   icon: https://kerklangsi.github.io/zimaos-appstore/apps/ampdocker/assets/icon.svg
   thumbnail: https://kerklangsi.github.io/zimaos-appstore/apps/com.kerklangsi.amp-docker/assets/icon.svg
-  id: com.kerklangsi.amp-docker
-  index: /
-  main: amp-docker
-  port_map: '80'
-  scheme: http
-  tagline:
-    en_US: CubeCoders AMP in a Docker Image
-  title:
-    en_US: Amp Docker
+  screenshot_link: []
   version: latest
   release_notes:
     en_US: '### What''s New in v1.0.0
@@ -57,8 +76,10 @@ x-casaos:
       - Preconfigured Docker socket binding and persistent storage for server data.
 
       '
-  tips:
-    en_US: Ensure port 80 is not in use before installing.
+  website: https://cubecoders.com/AMP
+  repo: https://github.com/kerklangsi/amp-docker
+  support: https://discourse.cubecoders.com/
+  docs: https://docs.cubecoders.com/books/amp
   volumes:
   - container: /var/run/docker.sock
     description:

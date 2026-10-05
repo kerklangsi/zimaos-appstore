@@ -5,14 +5,14 @@
   "description": "Community App Store for ZimaOS and CasaOS, offering a curated collection of high-performance containerized applications with easy discovery and one-click deployment.",
   "maintainer": "kerklangsi",
   "url": "https://github.com/kerklangsi/zimaos-appstore",
-  "updated_at": "2026-10-04T16:32:01Z",
+  "updated_at": "2026-10-05T13:37:20Z",
   "app_count": 2,
   "base_url": "https://kerklangsi.github.io/zimaos-appstore",
   "apps": [
     {
       "id": "com.kerklangsi.amp-docker",
-      "title": "Amp Docker",
-      "tagline": "CubeCoders AMP in a Docker Image",
+      "title": "CubeCoders AMP",
+      "tagline": "CubeCoders AMP Game Server Manager in a Docker Container",
       "category": "Media",
       "categories": [
         "media"
@@ -27,7 +27,7 @@
       "compose_url": "/apps/com.kerklangsi.amp-docker/docker-compose.yml",
       "meta_url": "/apps/com.kerklangsi.amp-docker/meta.json",
       "version": "latest",
-      "content_hash": "bd4e02cd"
+      "content_hash": "386ddcda"
     },
     {
       "id": "com.kerklangsi.github-runner",
@@ -37,8 +37,8 @@
       "categories": [
         "developer"
       ],
-      "author": "Kerk Langsi",
-      "developer": "Kerk Langsi",
+      "author": "kerklangsi",
+      "developer": "kerklangsi",
       "architectures": [
         "amd64",
         "arm64"
@@ -48,7 +48,7 @@
       "compose_url": "/apps/com.kerklangsi.github-runner/docker-compose.yml",
       "meta_url": "/apps/com.kerklangsi.github-runner/meta.json",
       "version": "4.0.0",
-      "content_hash": "2c791e15"
+      "content_hash": "2dab86ca"
     }
   ],
   "recommend": [

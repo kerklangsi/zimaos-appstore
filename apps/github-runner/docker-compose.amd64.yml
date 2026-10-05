@@ -3,14 +3,18 @@ services:
   github-runner:
     image: kerklangsi/github-runner:latest
     container_name: github-runner
-    network_mode: bridge
-    ports:
-    - target: 3000
-      published: 3000
-      protocol: tcp
+    deploy:
+      resources:
+        reservations:
+          memory: 256M
     restart: unless-stopped
+    network_mode: bridge
     tty: true
     stdin_open: true
+    ports:
+    - target: 3000
+      published: '3000'
+      protocol: tcp
     volumes:
     - type: bind
       source: /var/run/docker.sock
@@ -27,42 +31,79 @@ services:
     - type: bind
       source: /DATA/AppData/$AppID/cache
       target: /home/runner/.cache
+    x-casaos:
+      ports:
+      - container: '3000'
+        description:
+          en_US: GitHub Runner Manager Web Dashboard & API Port
+      volumes:
+      - container: /var/run/docker.sock
+        description:
+          en_US: Docker daemon socket for runner container operations
+      - container: /app/data
+        description:
+          en_US: Persistent SQLite database and manager settings
+      - container: /opt/github-runner
+        description:
+          en_US: GitHub Runner binaries and workspace directories
+      - container: /opt/shared_data
+        description:
+          en_US: Dedicated shared data volume for repository artifacts
+      - container: /home/runner/.cache
+        description:
+          en_US: Unified persistent package and hosted tool cache
 x-casaos:
+  id: com.kerklangsi.github-runner
   architectures:
   - amd64
   - arm64
-  author: Kerk Langsi
-  category: Developer
-  min_memory: 256MB
-  min_disk: 1000MB
-  description:
-    en_US: Full-stack Web GUI and Docker container manager for GitHub Actions self-hosted
-      runners. Easily provision, monitor, control, and update multiple GitHub runner
-      instances from a high-performance web dashboard.
-  developer: Kerk Langsi
-  icon: https://kerklangsi.github.io/zimaos-appstore/apps/github-runner/assets/icon.svg
-  thumbnail: https://kerklangsi.github.io/zimaos-appstore/apps/com.kerklangsi.github-runner/assets/icon.svg
-  id: com.kerklangsi.github-runner
-  index: /
   main: github-runner
   port_map: '3000'
   scheme: http
-  tagline:
-    en_US: Web GUI & Container Supervisor for GitHub Actions Self-Hosted Runners
+  index: /
+  category: Developer
+  author: kerklangsi
+  developer: kerklangsi
   title:
     en_US: GitHub Runner Manager
-  version: 4.0.0
-  release_notes:
-    en_US: '### What''s New in v3.2.0
+  tagline:
+    en_US: Web GUI & Container Supervisor for GitHub Actions Self-Hosted Runners
+  description:
+    en_US: 'Full-stack Web GUI and Docker container manager for GitHub Actions self-hosted
+      runners. Easily provision, monitor, control, and update multiple GitHub runner
+      instances from a high-performance web dashboard.
 
-      - Added dedicated shared data volume (/opt/shared_data) organized by repository.
 
-      - Unified toolcache and package cache into a single persistent cache volume
-      (/home/runner/.cache).
+      ### Features
+
+      - Multi-runner lifecycle management with live telemetry.
+
+      - Docker-in-Docker workflow execution with dedicated storage mounts.
+
+      - Persistent runner diagnostics, workflow log tracking, and token locking.
 
       '
   tips:
     en_US: Ensure port 3000 is not in use before installing.
+  icon: https://kerklangsi.github.io/zimaos-appstore/apps/github-runner/assets/icon.svg
+  thumbnail: https://kerklangsi.github.io/zimaos-appstore/apps/com.kerklangsi.github-runner/assets/icon.svg
+  screenshot_link: []
+  version: 4.0.0
+  release_notes:
+    en_US: '### What''s New in v4.0.0
+
+      - Major release upgrade with decomposed CI/CD pipelines (Validate, Release,
+      Docker Publish).
+
+      - Multi-arch Docker Hub automated publishing (linux/amd64, linux/arm64).
+
+      - Unified single cache volume and dedicated shared data storage.
+
+      '
+  website: https://github.com/kerklangsi/github-runner
+  repo: https://github.com/kerklangsi/github-runner
+  support: https://github.com/kerklangsi/github-runner/issues
+  docs: https://github.com/kerklangsi/github-runner#readme
   volumes:
   - container: /var/run/docker.sock
     description:
