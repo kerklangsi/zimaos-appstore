@@ -22,7 +22,7 @@ A modern, full-stack Web GUI and Docker container manager for GitHub Actions sel
 - **📜 Live Log Streaming**: Inspect isolated runner logs and global container buffers with real-time level filtering (INFO, DEBUG, WARN, ERROR).
 - **📋 Workflow Execution Tracking**: Track recent GitHub Actions workflow runs and completion states with direct "View Log" navigation.
 - **📁 Files & Storage Explorer**: Built-in web explorer with interactive breadcrumbs to browse, preview, and download files across `/opt/shared_data`, runner workspaces, and `/app/data`.
-- **🔄 Session-Clean Log Archiving**: Clean logs on container startup and runner restarts, automatically archiving previous session logs into `/app/data/archive/` and `<runnerDir>/logs/archive/`.
+- **🔄 Isolated Session Logs & Automated Archive Retention**: Clean fresh logs on container startup and runner restarts, automatically archiving previous sessions into `/app/data/archive/` and `<runnerDir>/logs/archive/`, with configurable pruning schedules (never, daily, weekly, monthly, custom days) and unfiltered workflow step outputs in DEBUG mode.
 - **⚡ Two-Tier Watchdog & Auto-Start**: Global master switch with per-runner watchdog recovery and optional automatic runner startup on container boot.
 - **🛡️ Alert Webhooks**: Discord/Slack webhook notifications on runner crashes, offline events, or watchdog recoveries.
 - **📋 Universal Clipboard Compatibility**: Robust clipboard copy fallback supporting plain HTTP LAN IP access.
