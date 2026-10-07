@@ -35,12 +35,12 @@
     "amd64": 1048576000,
     "arm64": 1048576000
   },
-  "version": "4.0.0",
+  "version": "4.0.2",
   "index": "/",
   "port_map": "3000",
   "base_url": "https://kerklangsi.github.io/zimaos-appstore",
   "release_notes": {
-    "en_US": "### What's New in v4.0.0\n- Major release upgrade with decomposed CI/CD pipelines (Validate, Release, Docker Publish).\n- Multi-arch Docker Hub automated publishing (linux/amd64, linux/arm64).\n- Unified single cache volume and dedicated shared data storage.\n"
+    "en_US": "Update to version 4.0.2"
   },
   "tips": {
     "info": {

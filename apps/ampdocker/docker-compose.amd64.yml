@@ -65,7 +65,7 @@ x-casaos:
   tips:
     en_US: Ensure ports 8080 and 7777 are not in use before installing.
   icon: https://kerklangsi.github.io/zimaos-appstore/apps/ampdocker/assets/icon.svg
-  thumbnail: https://kerklangsi.github.io/zimaos-appstore/apps/com.kerklangsi.amp-docker/assets/icon.svg
+  thumbnail: https://kerklangsi.github.io/zimaos-appstore/apps/ampdocker/assets/icon.svg
   screenshot_link: []
   version: latest
   release_notes:

@@ -86,20 +86,11 @@ x-casaos:
   tips:
     en_US: Ensure port 3000 is not in use before installing.
   icon: https://kerklangsi.github.io/zimaos-appstore/apps/github-runner/assets/icon.svg
-  thumbnail: https://kerklangsi.github.io/zimaos-appstore/apps/com.kerklangsi.github-runner/assets/icon.svg
+  thumbnail: https://kerklangsi.github.io/zimaos-appstore/apps/github-runner/assets/icon.svg
   screenshot_link: []
-  version: 4.0.0
+  version: 4.0.2
   release_notes:
-    en_US: '### What''s New in v4.0.0
-
-      - Major release upgrade with decomposed CI/CD pipelines (Validate, Release,
-      Docker Publish).
-
-      - Multi-arch Docker Hub automated publishing (linux/amd64, linux/arm64).
-
-      - Unified single cache volume and dedicated shared data storage.
-
-      '
+    en_US: Update to version 4.0.2
   website: https://github.com/kerklangsi/github-runner
   repo: https://github.com/kerklangsi/github-runner
   support: https://github.com/kerklangsi/github-runner/issues
