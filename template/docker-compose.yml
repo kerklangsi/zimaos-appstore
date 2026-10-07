@@ -55,8 +55,8 @@ x-casaos:
   tips:
     before_install:
       en_US: Ensure port ${port} is not in use before installing.
-  icon: https://kerklangsi.github.io/zimaos-appstore/apps/${APP_ID}/assets/icon.svg
-  thumbnail: ""
+  icon: https://kerklangsi.github.io/zimaos-appstore/apps/com.kerklangsi.${APP_ID}/assets/icon.svg
+  thumbnail: https://kerklangsi.github.io/zimaos-appstore/apps/com.kerklangsi.${APP_ID}/assets/icon.svg
   screenshot_link: []
   version: "latest"
   website: ""

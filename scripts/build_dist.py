@@ -1,6 +1,7 @@
 import os, sys, copy, shutil, hashlib, yaml
 from datetime import datetime, timezone
 from pathlib import Path
+from store_urls import pages_url, raw_url, github_url
 from store_utils import (
     save_json, load_json, load_yaml, _remove_readonly,
     localize_dict, normalize_category, parse_mb, parse_bytes, clean_dirs
@@ -29,7 +30,7 @@ def build_store():
     apps_dist = dist_dir / 'apps'
     apps_dist.mkdir(parents=True, exist_ok=True)
 
-    base_url = "https://kerklangsi.github.io/zimaos-appstore"
+    base_url = pages_url()
     updated_at = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
     def_name = store_cfg.get('name', {}).get('en_US', 'Custom AppStore')
     def_desc = store_cfg.get('description', {}).get('en_US', '')
@@ -99,10 +100,11 @@ def build_store():
                         else:
                             local_screens.append(f"/apps/{target_id}/assets/{f.name}")
 
-                full_icon_url = f"{base_url}/apps/{target_id}/assets/{icon_filename}"
+                dist_icon = pages_url(f"apps/{target_id}/assets/{icon_filename}")
                 dist_compose = copy.deepcopy(compose_data)
                 dist_casaos = dist_compose.setdefault('x-casaos', {})
-                dist_casaos['icon'] = full_icon_url
+                dist_casaos['icon'] = dist_icon
+                dist_casaos['thumbnail'] = dist_icon
                 t_app_dir.mkdir(parents=True, exist_ok=True)
                 (t_app_dir / 'docker-compose.yml').write_text(yaml.dump(dist_compose, sort_keys=False, allow_unicode=True, indent=2), encoding='utf-8')
                 (t_app_dir / 'docker-compose.amd64.yml').write_text(yaml.dump(dist_compose, sort_keys=False, allow_unicode=True, indent=2), encoding='utf-8')
@@ -132,7 +134,6 @@ def build_store():
                 "version": str(x_casaos.get('version', '1.0.0')), "content_hash": content_hash
             })
 
-
     recs = [e['id'] for e in index_entries]
     cat_counts = {}
     for e in index_entries:
@@ -140,7 +141,7 @@ def build_store():
     categories = [{"id": k, "name": k, "count": v} for k, v in cat_counts.items()]
 
     def make_bundle(name, desc):
-        info = {"version": store_cfg.get('version', 2), "store_id": store_cfg.get('store_id', 'custom-appstore'), "name": name, "description": desc, "maintainer": store_cfg.get('maintainer', 'kerklangsi'), "url": "https://github.com/kerklangsi/zimaos-appstore"}
+        info = {"version": store_cfg.get('version', 2), "store_id": store_cfg.get('store_id', 'custom-appstore'), "name": name, "description": desc, "maintainer": store_cfg.get('maintainer', 'kerklangsi'), "url": github_url()}
         idx = dict(info, updated_at=updated_at, app_count=len(index_entries), base_url=base_url, apps=index_entries, recommend=recs)
         return info, idx
 

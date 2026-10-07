@@ -2,7 +2,7 @@
 
 This document details the command-line flags recognized by the crawler and harvester, mapped directly to their equivalent service directives in `docker-compose.yml`.
 
-The machine-readable definitions are maintained in [`template/commands.json`](file:///e:/GoogleDrive/Github/zimaos-appstore/template/commands.json) and dynamically loaded by [`scripts/compose_harvester.py`](file:///e:/GoogleDrive/Github/zimaos-appstore/scripts/compose_harvester.py).
+The machine-readable definitions are maintained in [`template/commands.json`](https://github.com/kerklangsi/zimaos-appstore/blob/main/template/commands.json) and dynamically loaded by [`scripts/compose_harvester.py`](https://github.com/kerklangsi/zimaos-appstore/blob/main/scripts/compose_harvester.py).
 
 ---
 

@@ -1,11 +1,16 @@
-import os, sys, re, json, copy, stat, shutil, hashlib, subprocess, urllib.request, urllib.error, yaml
+import os, sys, re, json, copy, stat, shutil, hashlib, subprocess, yaml
 from datetime import datetime, timezone
 from pathlib import Path
+from store_urls import (
+    RAW_URL, PAGES_URL, GITHUB_URL, STORE_REPO, DOCKER_API, DOCKER_WEB, CATEGORIES_URL,
+    raw_url, pages_url, github_url, docker_tags, docker_repo, docker_web,
+    fetch_text, fetch_json, fetch_file, fetch_version, fetch_readme
+)
 
 if hasattr(sys.stdout, 'reconfigure'):
     sys.stdout.reconfigure(encoding='utf-8')
 
-OFFICIAL_CATEGORIES_URL = 'https://raw.githubusercontent.com/IceWhaleTech/CasaOS-AppStore/main/category-list.json'
+download_file = fetch_file
 _CATEGORIES_CACHE = None
 CATEGORY_FALLBACK = ['Media', 'Productivity', 'Home', 'Networking', 'AI', 'Finance', 'Social', 'Developer', 'Others']
 CATEGORY_ALIASES = {'utilities': 'Productivity', 'developer tools': 'Developer', 'development': 'Developer', 'network': 'Networking', 'storage': 'Productivity', 'monitoring': 'Productivity', 'games': 'Media', 'gaming': 'Media'}
@@ -15,9 +20,9 @@ def fetch_categories():
     global _CATEGORIES_CACHE
     if _CATEGORIES_CACHE is None:
         try:
-            with urllib.request.urlopen(urllib.request.Request(OFFICIAL_CATEGORIES_URL, headers={'User-Agent': 'ZimaOS-AppStore/1.0'}), timeout=10) as r:
-                names = [x['name'] for x in json.loads(r.read().decode('utf-8')) if isinstance(x, dict) and 'name' in x]
-                if names: _CATEGORIES_CACHE = names
+            data = fetch_json(CATEGORIES_URL)
+            names = [x['name'] for x in data if isinstance(x, dict) and 'name' in x]
+            if names: _CATEGORIES_CACHE = names
         except Exception: pass
         _CATEGORIES_CACHE = _CATEGORIES_CACHE or CATEGORY_FALLBACK[:]
     return _CATEGORIES_CACHE
@@ -43,25 +48,6 @@ def detect_category(title, description, image=""):
         ('Social', ['chat', 'social', 'mastodon', 'matrix', 'forum'])
     ]
     return normalize_category(next((c for c, kws in mapping if any(k in comb for k in kws)), 'Others'))
-
-# Fetches raw text from a URL with custom User-Agent
-def fetch_text(url, timeout=5):
-    with urllib.request.urlopen(urllib.request.Request(url, headers={'User-Agent': 'ZimaOS-AppStore/1.0'}), timeout=timeout) as r:
-        return r.read().decode('utf-8')
-
-# Fetches and JSON-parses a URL response
-def fetch_json(url):
-    return json.loads(fetch_text(url))
-
-# Downloads a binary file from URL to dest_path, returning True on success
-def download_file(url, dest_path):
-    try:
-        with urllib.request.urlopen(urllib.request.Request(url, headers={'User-Agent': 'ZimaOS-AppStore/1.0'}), timeout=5) as r:
-            if r.status == 200:
-                p = Path(dest_path); p.parent.mkdir(parents=True, exist_ok=True); p.write_bytes(r.read())
-                return True
-    except Exception: pass
-    return False
 
 # Loads and returns a JSON file as a Python object
 def load_json(path):
@@ -126,7 +112,7 @@ def merge_compose(local_data, upstream_data):
                 elif k == 'category': lo_c[k] = lo_c.get(k) or normalize_category(v)
                 elif k in ('title', 'tagline', 'description') and lo_c.get(k) and 'container application for ZimaOS' in str(v): pass
                 elif k in ('title', 'tagline', 'description', 'release_notes'): lo_c[k] = localize_dict(v)
-                elif k in ('icon', 'thumbnail') and ('kerklangsi.github.io' in str(lo_c.get(k, '')) or 'walkxcode' in str(v).lower() or not v): pass
+                elif k in ('icon', 'thumbnail') and ('raw.githubusercontent.com' in str(lo_c.get(k, '')) or 'walkxcode' in str(v).lower() or not v): pass
                 elif k == 'tips' and isinstance(v, dict):
                     tip = v.get('en_US') or v.get('en_us') or (v.get('before_install', {}).get('en_US') or v.get('before_install', {}).get('en_us'))
                     lo_c['tips'] = {'en_US': tip} if tip else v
@@ -146,7 +132,6 @@ def localize_dict(val):
     if isinstance(val, str): return {'en_US': val}
     if isinstance(val, dict): return {('en_US' if k.lower() == 'en_us' else k): v for k, v in val.items()}
     return {}
-
 
 # Parses numeric MB from a value string with a default fallback
 def parse_mb(val, default):
@@ -236,25 +221,3 @@ def sync_readme(readme_path, content):
         p.write_text(content, encoding='utf-8')
         return True, f"Updated {p.name} ({len(content)} chars)"
     return False, f"Up-to-date ({len(content)} chars)"
-
-# Fetches latest version tag from GitHub repository releases or Docker Hub tags
-def fetch_version(owner, repo, image=""):
-    if owner and repo:
-        try:
-            d = fetch_json(f'https://api.github.com/repos/{owner}/{repo}/releases/latest')
-            if d.get('tag_name'): return d['tag_name'].lstrip('v')
-        except Exception: pass
-        try:
-            tags = fetch_json(f'https://api.github.com/repos/{owner}/{repo}/tags')
-            if tags and isinstance(tags, list): return tags[0]['name'].lstrip('v')
-        except Exception: pass
-    if image:
-        parts = image.split(':')[0].split('/')
-        ns, name = ('library', parts[0]) if len(parts) == 1 else (parts[0], parts[1])
-        try:
-            tags = fetch_json(f'https://hub.docker.com/v2/repositories/{ns}/{name}/tags?page_size=20').get('results', [])
-            sem = [t['name'] for t in tags if re.match(r'^\d+(\.\d+)+$', t.get('name', ''))]
-            if sem: return sem[0]
-        except Exception: pass
-    return 'latest'
-

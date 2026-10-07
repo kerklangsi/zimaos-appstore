@@ -1,4 +1,6 @@
-import os, re, yaml, json
+import os, re, yaml
+from pathlib import Path
+from store_utils import load_json
 
 # Extracts docker-compose YAML code blocks from markdown documentation
 def extract_compose(md_text):
@@ -16,14 +18,8 @@ def extract_compose(md_text):
 
 # Loads Docker CLI command mapping definitions from template directory
 def load_commands(commands_path=None):
-    p = commands_path or os.path.join(os.path.dirname(__file__), '..', 'template', 'commands.json')
-    if os.path.exists(p):
-        try:
-            with open(p, 'r', encoding='utf-8') as f:
-                return json.load(f)
-        except Exception:
-            pass
-    return []
+    p = Path(commands_path) if commands_path else (Path(__file__).parent.parent / 'template' / 'commands.json')
+    return load_json(p) if p.exists() else []
 
 # Parses docker flags and keywords from markdown text into structured container config
 def parse_run(md_text, app_id, default_image, commands_path=None):
@@ -140,4 +136,3 @@ def harvest_compose(md_text, app_id, default_image, template_path=None, commands
         main_svc['ports'] = port_list
 
     return compose_data
-

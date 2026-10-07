@@ -1,10 +1,14 @@
 import os, sys, re, yaml, shutil
 from pathlib import Path
+from store_urls import (
+    GITHUB_URL, ICONS_REPO, raw_url, pages_url, github_api,
+    docker_repo, docker_web, fetch_text, fetch_json,
+    fetch_file, fetch_version, fetch_readme
+)
 from store_utils import (
-    fetch_text, fetch_json, download_file, load_json, save_json,
-    load_yaml, normalize_category, detect_category, bump_version,
-    format_title, update_catalog, update_log, print_summary,
-    sync_compose, sync_readme, fetch_version
+    load_json, save_json, load_yaml, normalize_category,
+    detect_category, bump_version, format_title, update_catalog,
+    update_log, print_summary, sync_compose, sync_readme
 )
 from compose_harvester import harvest_compose
 
@@ -24,17 +28,6 @@ def parse_apps(filepath):
             entries.append(re.match(r'^[-*]?\s*([a-zA-Z0-9_.\-]+/[a-zA-Z0-9_.\-]+(?::[a-zA-Z0-9_.\-]+)?)$', c).group(1))
     return list(dict.fromkeys(entries))
 
-# Fetches upstream README markdown content from GitHub repository branches
-def fetch_readme(owner, repo):
-    for b in ('main', 'master'):
-        try:
-            txt = fetch_text(f'https://raw.githubusercontent.com/{owner}/{repo}/{b}/README.md')
-            if txt and len(txt.strip()) > 10:
-                return txt
-        except Exception:
-            pass
-    return None
-
 # Automatically discovers and downloads application icon into app directory
 def fetch_icon(owner, repo, app_id, app_dir, is_gh=False):
     for ext in ('.svg', '.png', '.jpg', '.webp'):
@@ -44,16 +37,13 @@ def fetch_icon(owner, repo, app_id, app_dir, is_gh=False):
         for b in ('main', 'master'):
             for p in (f'Apps/{repo}/icon.svg', f'Apps/{repo}/icon.png', f'Apps/{app_id}/icon.svg', f'Apps/{app_id}/icon.png', 'icon.svg', 'icon.png', 'logo.svg', 'logo.png'):
                 ext = '.svg' if p.endswith('.svg') else '.png'
-                if download_file(f'https://raw.githubusercontent.com/{owner}/{repo}/{b}/{p}', os.path.join(app_dir, f'icon{ext}')):
+                if fetch_file(raw_url(p, f'{owner}/{repo}', b), os.path.join(app_dir, f'icon{ext}')):
                     return f'icon{ext}', f'Downloaded from upstream repo ({ext})'
     clean = re.sub(r'[-_]', '', app_id)
-    for cdn, ext in ((f'https://raw.githubusercontent.com/walkxcode/dashboard-icons/main/svg/{app_id}.svg', '.svg'),
-                     (f'https://raw.githubusercontent.com/walkxcode/dashboard-icons/main/svg/{clean}.svg', '.svg'),
-                     (f'https://raw.githubusercontent.com/walkxcode/dashboard-icons/main/png/{app_id}.png', '.png'),
-                     (f'https://raw.githubusercontent.com/walkxcode/dashboard-icons/main/png/{clean}.png', '.png')):
-        if download_file(cdn, os.path.join(app_dir, f'icon{ext}')):
+    for cdn_path, ext in ((f'svg/{app_id}.svg', '.svg'), (f'svg/{clean}.svg', '.svg'), (f'png/{app_id}.png', '.png'), (f'png/{clean}.png', '.png')):
+        if fetch_file(raw_url(cdn_path, ICONS_REPO), os.path.join(app_dir, f'icon{ext}')):
             return f'icon{ext}', f'Downloaded from Dashboard-Icons CDN ({ext})'
-    if is_gh and owner and download_file(f'https://github.com/{owner}.png', os.path.join(app_dir, 'icon.png')):
+    if is_gh and owner and fetch_file(f'{GITHUB_URL}/{owner}.png', os.path.join(app_dir, 'icon.png')):
         return 'icon.png', 'Downloaded from GitHub avatar (icon.png)'
     return 'icon.svg', 'Default SVG icon'
 
@@ -67,7 +57,7 @@ def fetch_screens(owner, repo, app_dir, compose_casaos, is_gh=False):
     saved, idx = 0, 1
     for l in (l for l in links if isinstance(l, str) and l.startswith('http')):
         ext = '.jpg' if any(e in l.lower() for e in ('.jpg', '.jpeg', '.webp')) else '.png'
-        if download_file(l, os.path.join(pic_dir, f'image{idx}{ext}')):
+        if fetch_file(l, os.path.join(pic_dir, f'image{idx}{ext}')):
             saved, idx = saved + 1, idx + 1
         if idx > 4:
             break
@@ -75,7 +65,7 @@ def fetch_screens(owner, repo, app_dir, compose_casaos, is_gh=False):
         for b in ('main', 'master'):
             for num in range(1, 4):
                 for p in (f'picture/image{num}.png', f'Apps/{repo}/picture/image{num}.png', f'screenshots/{num}.png', f'screenshot{num}.png'):
-                    if download_file(f'https://raw.githubusercontent.com/{owner}/{repo}/{b}/{p}', os.path.join(pic_dir, f'image{idx}.png')):
+                    if fetch_file(raw_url(p, f'{owner}/{repo}', b), os.path.join(pic_dir, f'image{idx}.png')):
                         saved, idx = saved + 1, idx + 1
                         break
                 if idx > 4:
@@ -99,12 +89,16 @@ def finalize_app(compose_data, app_id, title, desc, owner, repo, upstream_url, r
     is_db = any(x in title.lower() or x in str(casaos.get('id', '')).lower() for x in ('mysql', 'mariadb', 'postgres', 'redis', 'mongo'))
     cat = detect_category(title, desc, f"{owner}/{repo}" if owner else repo)
     app_ver = fetch_version(owner, repo, svc.get('image', ''))
+    app_icon = pages_url(f'apps/com.{owner.lower() if owner else "library"}.{app_id}/assets/icon.svg')
     for k, v in (('title', {'en_US': title}), ('tagline', {'en_US': tagline}), ('description', {'en_US': desc_md}),
                  ('category', normalize_category(casaos.get('category') or cat)), ('developer', owner or repo),
                  ('author', owner or repo), ('port_map', str(pmap)), ('id', f'com.{owner.lower() if owner else "library"}.{app_id}'),
                  ('main', sname), ('scheme', '' if is_db else 'http'), ('index', '' if is_db else '/'),
-                 ('version', app_ver), ('icon', f'https://kerklangsi.github.io/zimaos-appstore/apps/{app_id}/assets/icon.svg')):
+                 ('version', app_ver), ('icon', app_icon), ('thumbnail', app_icon)):
         casaos.setdefault(k, v)
+    if app_ver and app_ver != 'latest':
+        casaos['version'] = app_ver
+        casaos['release_notes'] = {'en_US': f'Update to version {app_ver}'}
     tip_msg = f'Ensure port {pmap} is not in use before installing.' if not is_db else f'Connect to database service at port {pmap}.'
     casaos.setdefault('tips', {'en_US': tip_msg})
     vols = svc.get('volumes', [])
@@ -115,21 +109,20 @@ def finalize_app(compose_data, app_id, title, desc, owner, repo, upstream_url, r
     compose_data['x-casaos'] = casaos
     return {'owner': owner, 'repo': repo, 'app_id': app_id, 'title': title, 'compose_data': compose_data, 'upstream_url': upstream_url, 'readme_content': readme}
 
-
 # Resolves repository compose manifest and metadata from a GitHub repository link
 def resolve_github(url):
     m = re.search(r'github\.com/([^/]+)/([^/#?]+)', url)
     if not m:
         return None
     owner, repo = m.group(1), m.group(2).replace('.git', '')
-    app_id, compose_data, raw_url = repo.lower(), None, None
+    app_id, compose_data, raw_target = repo.lower(), None, None
     for b in ('main', 'master'):
         for p in (f'Apps/{repo}/docker-compose.yml', f'Apps/{app_id}/docker-compose.yml', 'docker-compose.yml', 'docker-compose.yaml'):
-            c_url = f'https://raw.githubusercontent.com/{owner}/{repo}/{b}/{p}'
+            c_url = raw_url(p, f'{owner}/{repo}', b)
             try:
                 parsed = yaml.safe_load(fetch_text(c_url))
                 if isinstance(parsed, dict) and ('services' in parsed or 'name' in parsed):
-                    compose_data, raw_url = parsed, c_url
+                    compose_data, raw_target = parsed, c_url
                     break
             except Exception:
                 pass
@@ -137,22 +130,22 @@ def resolve_github(url):
             break
     desc = f"{format_title(repo)} application container for ZimaOS"
     try:
-        desc = fetch_json(f'https://api.github.com/repos/{owner}/{repo}').get('description') or desc
+        desc = fetch_json(github_api(f'{owner}/{repo}')).get('description') or desc
     except Exception:
         pass
     readme = fetch_readme(owner, repo)
     if not compose_data:
         compose_data = harvest_compose(readme, app_id, f'{owner.lower()}/{app_id}:latest')
-    return finalize_app(compose_data, app_id, format_title(repo), desc, owner, repo, raw_url or f'https://raw.githubusercontent.com/{owner}/{repo}/main/docker-compose.yml', readme)
+    return finalize_app(compose_data, app_id, format_title(repo), desc, owner, repo, raw_target or raw_url('docker-compose.yml', f'{owner}/{repo}', 'main'), readme)
 
 # Resolves image description, compose snippet, and metadata from Docker Hub API
 def resolve_docker(identifier, repo_root=None):
-    cid = identifier.replace('https://hub.docker.com/r/', '').replace('https://hub.docker.com/_/', '').strip('/').split(':')[0]
+    cid = identifier.replace(docker_web('', '').rstrip('/') + '/', '').replace('https://hub.docker.com/_/', '').strip('/').split(':')[0]
     parts = cid.split('/')
     ns, name = ('library', parts[0]) if len(parts) == 1 else (parts[0], parts[1])
     app_id, desc, full_desc = name.lower(), f"{format_title(name)} container application for ZimaOS", ""
     try:
-        d = fetch_json(f'https://hub.docker.com/v2/repositories/{ns}/{name}/')
+        d = fetch_json(docker_repo(ns, name))
         desc, full_desc = d.get('description') or desc, d.get('full_description') or ""
     except Exception as e:
         print(f"       [WARN] Docker Hub API error for {ns}/{name}: {e}")
@@ -167,7 +160,8 @@ def resolve_docker(identifier, repo_root=None):
     else:
         compose_data = harvest_compose(full_desc, app_id, f"{name}:latest" if ns == 'library' else f"{ns}/{name}:latest", template_path=tmpl_path)
 
-    return finalize_app(compose_data, app_id, format_title(name), desc, '' if ns == 'library' else ns, name, f'https://hub.docker.com/r/{ns}/{name}', full_desc)
+    readme = fetch_readme(ns, name) if ns != 'library' else None
+    return finalize_app(compose_data, app_id, format_title(name), desc, '' if ns == 'library' else ns, name, docker_web(ns, name), readme or full_desc)
 
 # Matches existing app directory taking into account slug conventions
 def find_folder(apps_dir, slug):

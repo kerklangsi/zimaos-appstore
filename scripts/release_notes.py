@@ -1,5 +1,6 @@
 import os, sys
 from pathlib import Path
+from store_urls import pages_url
 from store_utils import load_json, load_yaml
 
 # Scans Apps directory and gathers application details, ports, and image info
@@ -41,10 +42,11 @@ def build_notes(store_cfg, apps, tag):
     version = tag.lstrip('v')
     name = store_cfg.get('name', {}).get('en_US', 'Custom ZimaOS App Store')
     desc = store_cfg.get('description', {}).get('en_US', 'Curated container apps for ZimaOS and CasaOS.')
+    store_link = pages_url('store.json')
     md = [f"# 🏪 {name} — `{tag}`\n\n> **Version {version}** • {desc}\n\n---\n\n### 🚀 Available Applications Catalog\n| Application | Category | Container Image | Port | Description |\n| :--- | :--- | :--- | :--- | :--- |"]
     for a in apps:
         md.append(f"| **{a['title']}** | `{a['category']}` | `{a['image']}` | `{a['ports']}` | {a['tagline']} |")
-    md.extend(["---\n### ⚡ How to Install in ZimaOS / CasaOS\n1. Open your **ZimaOS** or **CasaOS** Web Dashboard.\n2. Navigate to **App Store** -> Click **Settings** (or Source Manager).\n3. Click **Add Source** and paste the official store repository link:\n   ```text\n   https://kerklangsi.github.io/zimaos-appstore/store.json\n   ```\n4. All applications will immediately appear with 1-click deployment, pre-configured persistent volumes, and auto-mapped ports!\n\n---\n### 📦 Release Assets\n- `appstore.zip`: Complete bundle archive of all application compose manifests and icons.\n- `store.json`: Store index and repository metadata for ZimaOS.\n- `index.json`: Full app metadata catalog and category index."])
+    md.extend([f"---\n### ⚡ How to Install in ZimaOS / CasaOS\n1. Open your **ZimaOS** or **CasaOS** Web Dashboard.\n2. Navigate to **App Store** -> Click **Settings** (or Source Manager).\n3. Click **Add Source** and paste the official store repository link:\n   ```text\n   {store_link}\n   ```\n4. All applications will immediately appear with 1-click deployment, pre-configured persistent volumes, and auto-mapped ports!\n\n---\n### 📦 Release Assets\n- `appstore.zip`: Complete bundle archive of all application compose manifests and icons.\n- `store.json`: Store index and repository metadata for ZimaOS.\n- `index.json`: Full app metadata catalog and category index."])
     return '\n'.join(md)
 
 # Program entry point for generating dynamic release notes
