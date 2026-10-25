@@ -2,6 +2,16 @@
 
 > Upstream Source: https://github.com/kerklangsi/github-runner
 
+## [4.0.5] - 2026-10-25 16:00:31 UTC
+### Action: Created / Updated
+- **Image**: `kerklangsi/github-runner:latest`
+- **Category**: `Developer`
+- **Compose**: Updated docker-compose.yml
+- **Icon**: icon.svg (Existing local icon)
+- **Screenshots**: 3 existing image(s) in picture/
+- **README**: Updated README.md (6611 chars)
+- **Source**: https://hub.docker.com/r/kerklangsi/github-runner
+
 ## [4.0.3] - 2026-10-10 16:00:34 UTC
 ### Action: Created / Updated
 - **Image**: `kerklangsi/github-runner:latest`
@@ -36,16 +46,6 @@
 ### Action: Created / Updated
 - **Image**: `kerklangsi/github-runner:latest`
 - **Category**: `Developer`
-- **Compose**: Updated docker-compose.yml
-- **Icon**: icon.svg (Existing local icon)
-- **Screenshots**: 3 existing image(s) in picture/
-- **README**: Up-to-date (6569 chars)
-- **Source**: https://hub.docker.com/r/kerklangsi/github-runner
-
-## [4.0.0] - 2026-10-04 16:00:27 UTC
-### Action: Created / Updated
-- **Image**: `kerklangsi/github-runner:latest`
-- **Category**: `AI`
 - **Compose**: Updated docker-compose.yml
 - **Icon**: icon.svg (Existing local icon)
 - **Screenshots**: 3 existing image(s) in picture/

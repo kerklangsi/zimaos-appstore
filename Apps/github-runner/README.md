@@ -1,4 +1,4 @@
-# 🚀 GitHub Runner Manager v4.0.3
+# 🚀 GitHub Runner Manager v4.0.5
 
 A modern, full-stack Web GUI and Docker container manager for GitHub Actions self-hosted runners. Easily provision, monitor, control, and update multiple GitHub runner instances from a high-performance web dashboard.
 
@@ -54,9 +54,6 @@ services:
         protocol: tcp
     volumes:
       - type: bind
-        source: /var/run/docker.sock
-        target: /var/run/docker.sock
-      - type: bind
         source: /DATA/AppData/github-runner/data
         target: /app/data
       - type: bind
@@ -97,7 +94,6 @@ docker run -d \
   --name github-runner-manager \
   --restart unless-stopped \
   -p 3000:3000 \
-  -v /var/run/docker.sock:/var/run/docker.sock \
   -v /DATA/AppData/github-runner/data:/app/data \
   -v /DATA/AppData/github-runner/runner:/opt/github-runner \
   -v /DATA/AppData/github-runner/shared_data:/opt/shared_data \
@@ -123,7 +119,7 @@ Access the Web Dashboard at **`http://localhost:3000`** (or `http://<your-server
 
 ## 🔒 Security & Persistence
 
-- All runner metadata, encrypted access tokens, system logs, and custom avatars are safely persisted inside the `/app/data` Docker volume mount.
+- All runner metadata, encrypted access tokens, global container logs (`docker.log`), and custom avatars are safely persisted inside the `/app/data` Docker volume mount.
 - Password change forms in the Settings tab allow changing the default `admin` credentials immediately.
 
 ---
